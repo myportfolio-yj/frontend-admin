@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Qr.Vet',
+    'title' => '', // 'Qr.Vet',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,10 +63,10 @@ return [
     |
     */
 
-    'logo' => '<b>QR</b>.VET',
-    'logo_img' => 'vendor/adminlte/dist/img/403890.png',
+    'logo' => '', // '<b>QR</b>.VET',
+    'logo_img' => 'https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png',
     'logo_img_class' => 'brand-image',
-    'logo_img_xl' => null,
+    'logo_img_xl' => 'brand-image-xl',
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => null,
 
@@ -86,11 +86,11 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/403890.png',
+            'path' => 'https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png',
             'alt' => '',
             'class' => '',
-            'width' => 50,
-            'height' => 50,
+            'width' => 70,
+            'height' => 70,
         ],
     ],
 

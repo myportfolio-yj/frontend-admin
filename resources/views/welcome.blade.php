@@ -231,6 +231,9 @@
             text-align: center;
             color: #495057;
         }
+        image {
+            height: 80px;
+        }
     </style>
 </head>
 
@@ -250,8 +253,8 @@
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="login-logo">
             <a href="http://localhost/qrvet/public/home">
-                <img src="http://localhost/qrvet/public/vendor/adminlte/dist/img/403890.png" alt="" height="50">
-                <b>QR</b>.VET
+                <img src="https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png" alt="" height="80">
+                <!-- b>QR</b>.VET -->
             </a>
         </div>
         <div id="reader" width="600px"></div>
@@ -331,6 +334,6 @@
     s0.parentNode.insertBefore(s1,s0);
     })();
     </script>
-    
+
 
 </html>
