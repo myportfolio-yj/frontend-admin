@@ -9,6 +9,7 @@ use App\Models\Vacunas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class VacunasController extends Controller
 {
@@ -19,11 +20,15 @@ class VacunasController extends Controller
      */
     public function index()
     {
-        $vacunas = Vacunas::paginate();
-
-        return view('vacunas.index', compact('vacunas'))
-            ->with('i', (request()->input('page', 1) - 1) * $vacunas->perPage());
-
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna');
+        if ($response->successful()) {
+            $datos = $response->json();
+            return view('vacunas.index') ->with('vacunas',$datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -81,11 +86,15 @@ class VacunasController extends Controller
      */
     public function edit($id)
     {
-        $vacuna = Vacunas::find($id);
-
-        $medico = User::pluck('name','id');
-        return view('vacunas.edit', compact('vacuna','medico'));
-
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna/'.$id);
+        if ($response->successful() ) {
+            $vacuna = $response->json();
+            return view('vacunas.edit', compact('vacuna'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -97,17 +106,20 @@ class VacunasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ido = Auth::id();
         request()->validate(Vacunas::$rules);
-        $vacuna = Vacunas::find($id);
-        $vacuna['v_nombre'] = $request['v_nombre'];
-        $vacuna['v_apuntes'] = $request['v_apuntes'];
-        $vacuna['n_expira'] = $request['n_expira'];
-        $vacuna['a_n_iduser'] = $ido; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $vacuna['n_estado'] = 1;
-        $vacuna->update($request->all());
-        return redirect()->route('Vacunas')
-            ->with('success', 'Vacuna actualizada satisfactoriamente');
+        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna/'.$id, [
+            'vacuna' => $request->input('vacuna'),
+            'duracion' => $request->input('duracion'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Vacunas')
+                ->with('success', 'Vacuna actualizada satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**

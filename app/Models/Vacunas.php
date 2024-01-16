@@ -13,9 +13,8 @@ class Vacunas extends Model
     protected $table = 'qrv_vacunas';
     public $timestamps = true;
     static $rules = [
-        'v_nombre' => 'required',
-        'v_apuntes' => 'required',
-        'n_expira' => 'required',
+        'vacuna' => 'required',
+        'duracion' => 'required'
     ];
     protected $fillable = [
         'v_nombre',

@@ -1,9 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Editar razas')
-@section('template_title')
-    Actualizar Raza
-@endsection
-
+@section('title', 'Editar Vacuna')
 @section('content')
     <section class="content container-fluid">
         <div class="">
@@ -13,15 +9,14 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Editar Raza</span>
+                        <span class="card-title">Editar Vacuna</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('razas.update', $raza->id) }}" role="form"
-                              enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('Vacunas.update', $vacuna['id']) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('razas.form')
+                            @include('vacunas.form')
 
                         </form>
                     </div>

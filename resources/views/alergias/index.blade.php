@@ -46,7 +46,7 @@
                                                         href="{{ route('Alergias.edit', $alergia['id']) }}"><i
                                                             class="fa fa-fw fa-edit"></i></a>
                                                     <a class="btn btn-sm btn-danger"
-                                                       href="{{ route('Clientes.edit', $alergia['id']) }}"><i
+                                                       href="{{ route('Alergias.edit', $alergia['id']) }}"><i
                                                             class="fa fa-fw fa-trash"></i></a>
                                                     @csrf
                                                 </form>
