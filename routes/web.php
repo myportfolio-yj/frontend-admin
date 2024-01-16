@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('Diagnosticos', 'App\Http\Controllers\DiagnosticosController');
     Route::resource('Vacunas', 'App\Http\Controllers\VacunasController');
     Route::resource('Procedimientos', 'App\Http\Controllers\ProcedimientosController');
-    Route::resource('razas', 'App\Http\Controllers\RazasController');
+    Route::resource('Razas', 'App\Http\Controllers\RazasController');
 
     //Ruta para los graficos estadisticos
     Route::resource('Graficos', 'App\Http\Controllers\Graficos');

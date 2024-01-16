@@ -19,9 +19,7 @@ class Razas extends Model
         'n_especie',
     ];
     static $rules = [
-        'v_nombre' => 'required',
-        'v_apuntes' => 'required',
-        'n_especie' => 'required',
+        'raza' => 'required',
     ];
     public function medicos()
     {

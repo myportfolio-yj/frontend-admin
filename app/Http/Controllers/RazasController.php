@@ -6,9 +6,12 @@ use App\Models\Especies;
 use App\Models\Procedimientos;
 use App\Models\Razas;
 use App\Models\User;
+use App\Models\Vacunas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Termwind\Components\Raw;
 
 class RazasController extends Controller
@@ -20,10 +23,15 @@ class RazasController extends Controller
      */
     public function index()
     {
-
-        $razas = Razas::paginate();
-        return view('razas.index', compact('razas'))
-            ->with('i', (request()->input('page', 1) - 1) * $razas->perPage());
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//raza');
+        if ($response->successful()) {
+            $datos = $response->json();
+            return view('razas.index') ->with('razas',$datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
 
     }
 
@@ -81,10 +89,18 @@ class RazasController extends Controller
      */
     public function edit($id)
     {
-        $raza = Razas::find($id);
-        $medico = User::pluck('name','id');
-        $especie = Especies::pluck('v_decripc','id');
-        return view('razas.edit',compact('raza','medico','especie'));
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//raza/'.$id);
+        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//especie');
+        if ($response->successful() ) {
+            $raza = $response->json();
+            $tipoEsp = $response2->json();
+            $tipoEsp = Arr::pluck($tipoEsp,'especie','id');
+            return view('razas.edit', compact('raza', 'tipoEsp'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -96,17 +112,20 @@ class RazasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ido = Auth::id();
         request()->validate(Razas::$rules);
-        $raza = Razas::find($id);
-        $raza['v_nombre'] = $request['v_nombre'];
-        $raza['v_apuntes'] = $request['v_apuntes'];
-        $raza['n_especie'] = $request['n_especie'];
-        $raza['a_n_iduser'] = $ido; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $raza['n_estado'] = 1;
-        $raza->update($request->all());
-        return redirect()->route('razas')
-            ->with('success', 'Raza actualizada satisfactoriamente');
+        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com/raza/'.$id, [
+            'raza' => $request->input('raza'),
+            'idEspecie' => $request->input('tipoEsp'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('razas')
+                ->with('success', 'Raza actualizada satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**

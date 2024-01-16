@@ -43,12 +43,12 @@
                                             <td>{{ $raza['especie']['especie'] }}</td>
                                             <td>{{ $raza['raza'] }}</td>
                                             <td>
-                                                <form action="{{ route('Vacunas.destroy', $raza['id']) }}" method="POST">
+                                                <form action="{{ route('Razas.destroy', $raza['id']) }}" method="POST">
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('Vacunas.edit', $raza['id']) }}"><i
+                                                        href="{{ route('Razas.edit', $raza['id']) }}"><i
                                                             class="fa fa-fw fa-edit"></i></a>
                                                     <a class="btn btn-sm btn-danger"
-                                                       href="{{ route('Vacunas.edit', $raza['id']) }}"><i
+                                                       href="{{ route('Razas.edit', $raza['id']) }}"><i
                                                             class="fa fa-fw fa-trash"></i></a>
                                                     @csrf
                                                 </form>
