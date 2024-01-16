@@ -12,8 +12,7 @@ class Alergias extends Model
     public $timestamps = true;
 
     static $rules = [
-        'v_nombre' => 'required',
-        'v_apuntes' => 'required'
+        'alergia' => 'required',
     ];
     protected $fillable = [
         'v_nombre',

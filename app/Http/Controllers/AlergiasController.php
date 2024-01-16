@@ -6,8 +6,10 @@ use App\Models\Alergias;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Http;
 
 class AlergiasController extends Controller
 {
@@ -18,10 +20,15 @@ class AlergiasController extends Controller
      */
     public function index()
     {
-        $alergias = Alergias::paginate();
-
-        return view('alergias.index', compact('alergias'))
-            ->with('i', (request()->input('page', 1) - 1) * $alergias->perPage());
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//alergia');
+        if ($response->successful()) {
+            $datos = $response->json();
+            return view('alergias.index') ->with('alergias',$datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -77,11 +84,15 @@ class AlergiasController extends Controller
      */
     public function edit($id)
     {
-        $alergia = Alergias::find($id);
-
-        $medico = User::pluck('name','id');
-        return view('alergias.edit', compact('alergia','medico'));
-
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//alergia/'.$id);
+        if ($response->successful() ) {
+            $alergia = $response->json();
+            return view('alergias.edit', compact('alergia'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -93,16 +104,19 @@ class AlergiasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ido = Auth::id();
         request()->validate(Alergias::$rules);
-        $alergia = Alergias::find($id);
-        $alergia['v_nombre'] = $request['v_nombre'];
-        $alergia['v_apuntes'] = $request['v_apuntes'];
-        $alergia['a_n_iduser'] = $ido; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $alergia['n_estado'] = 1;
-        $alergia->update($request->all());
-        return redirect()->route('Alergias')
-            ->with('success', 'Alergia actualizada satisfactoriamente');
+        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com//alergia/'.$id, [
+            'alergia' => $request->input('alergia'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Alergias')
+                ->with('success', 'Alergia actualizada satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**

@@ -1,7 +1,5 @@
 @extends('adminlte::page')
 @section('title', 'Editar Paciente')
-@section('content_header')
-@stop
 @section('template_title')
     Editar Paciente
 @endsection

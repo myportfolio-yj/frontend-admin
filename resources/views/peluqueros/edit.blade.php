@@ -1,8 +1,5 @@
 @extends('adminlte::page')
 @section('title', 'Editar Peluquero')
-@section('content_header')
-    <h1>Editar Peluquero</h1>
-@stop
 @section('content')
     <section class="content container-fluid">
         <div class="">

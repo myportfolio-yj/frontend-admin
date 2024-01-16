@@ -1,11 +1,5 @@
 @extends('adminlte::page')
 @section('title', 'Editar Alergia')
-@section('content_header')
-@stop
-@section('template_title')
-    Actualizar Alergia
-@endsection
-
 @section('content')
     <section class="content container-fluid">
         <div class="">
@@ -18,7 +12,7 @@
                         <span class="card-title">Editar Alergia</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Alergias.update', $alergia->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('Alergias.update', $alergia['id']) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

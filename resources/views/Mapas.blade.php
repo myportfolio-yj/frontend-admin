@@ -1,7 +1,5 @@
 @extends('adminlte::page')
-
 @section('title', 'FindMyPet')
-
 @section('content_header')
     <h1>FindMyPet</h1>
 @stop
@@ -31,7 +29,7 @@
 @section('js')
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        // Map initialization 
+        // Map initialization
         var map = L.map('map').setView([-12.0464, -77.0428], 6);
 
         //osm layer

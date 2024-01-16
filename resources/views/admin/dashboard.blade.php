@@ -5,7 +5,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Bienvenid@ al Sistema de Gestión de Historial Clinico Qr.Vet</h1>
+    <h1>Bienvenid@ al Sistema de Gestión de Historial Clinico AppoMSV</h1>
 @stop
 
 @section('content')

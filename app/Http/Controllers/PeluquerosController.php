@@ -73,7 +73,7 @@ class PeluquerosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Clientes  $clientes
+     * @param  \App\Models\Peluqueros  $peluqueros
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -96,12 +96,12 @@ class PeluquerosController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Clientes  $clientes
+     * @param  \App\Models\Peluqueros  $peluqueros
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        request()->validate(Clientes::$rules);
+        request()->validate(Peluqueros::$rules);
         $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/'.$id, [
             'nombres' => $request->input('nombres'),
             'apellidos' => $request->input('apellidos'),

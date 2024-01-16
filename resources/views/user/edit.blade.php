@@ -1,9 +1,8 @@
 @extends('adminlte::page')
-
+@section('title', 'Editar Medico')
 @section('template_title')
     Editar Medico
 @endsection
-
 @section('content')
     <section class="content container-fluid">
         <div class="">

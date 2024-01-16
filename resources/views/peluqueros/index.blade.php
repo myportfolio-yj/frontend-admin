@@ -42,7 +42,7 @@
                                 <?php $i = 1; ?>
                                 @foreach ($peluqueros as $peluquero)
                                     <tr>
-                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $i++ }}</td>
                                         <td>{{ $peluquero['tipoDocumento']['tipoDocumento'] }} - {{ $peluquero['documento']}}</td>
                                         <td>{{ $peluquero['nombres'] }} {{ $peluquero['apellidos'] }}</td>
                                         <td>{{ $peluquero['celular'] }} - {{ $peluquero['fijo'] }}</td>
