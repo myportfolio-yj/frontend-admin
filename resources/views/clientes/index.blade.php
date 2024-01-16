@@ -1,9 +1,4 @@
 @extends('adminlte::page')
-
-@section('template_title')
-    Nuestros Clientes
-@endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -13,7 +8,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Nuestros Clientes') }}
+                                {{ __('Listado de clientes') }}
                             </span>
 
                             <div class="float-right">
@@ -36,31 +31,32 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
-
                                     <th>Nro. Documento</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido</th>
-                                    <th>Telefono</th>
+                                    <th>Nombres completos</th>
+                                    <th>Telefonos</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <?php $i = 1; ?>
                                 @foreach ($clientes as $cliente)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $cliente->n_documento }}</td>
-                                        <td>{{ $cliente->v_nombre }}</td>
-                                        <td>{{ $cliente->v_apellido }}</td>
-                                        <td>{{ $cliente->v_telefono}}</td>
-
+                                        <td>{{ $cliente['tipoDocumento']['tipoDocumento'] }} - {{ $cliente['documento']}}</td>
+                                        <td>{{ $cliente['nombres'] }} {{ $cliente['apellidos'] }}</td>
+                                        <td>{{ $cliente['celular'] }} - {{ $cliente['fijo'] }}</td>
+                                        <td>{{ $cliente['email'] }}</td>
                                         <td>
-                                            <form action="{{ route('Clientes.destroy', $cliente->id) }}" method="POST">
+                                            <form action="{{ route('Clientes.destroy', $cliente['id']) }}" method="POST">
                                                 <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Clientes.show', $cliente->id) }}"><i
-                                                        class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
+                                                   href="{{ route('Clientes.show', $cliente['id']) }}"><i
+                                                        class="fa fa-fw fa-eye"></i></a>
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Clientes.edit', $cliente->id) }}"><i
-                                                        class="fa fa-fw fa-edit"></i> Editar Datos</a>
+                                                   href="{{ route('Clientes.edit', $cliente['id']) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="{{ route('Clientes.edit', $cliente['id']) }}"><i
+                                                        class="fa fa-fw fa-trash"></i></a>
                                                 @csrf
                                             </form>
                                         </td>

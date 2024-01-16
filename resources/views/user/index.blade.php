@@ -1,9 +1,4 @@
 @extends('adminlte::page')
-
-@section('template_title')
-    Nuestros Medicos
-@endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -13,7 +8,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Nuestros Medicos') }}
+                                {{ __('Listado de médicos') }}
                             </span>
 
                             <div class="float-right">
@@ -37,28 +32,35 @@
                                     <tr>
                                         <th>#</th>
 
-                                        <th>Nombre</th>
+                                        <th>Cod. Veterinario</th>
+                                        <th>Nro de Documento</th>
+                                        <th>Nombres Completos</th>
+                                        <th>Telefonos</th>
                                         <th>Correo</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php $i = 1; ?>
                                   @foreach ($users as $user)
                                         <tr>
-                                            <th scope="row">{{ $user->id }}</th>
+                                            <th scope="row">{{ $i++ }}</th>
 
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user['codVeterinario'] }}</td>
+                                            <td>{{ $user['tipoDocumento']['tipoDocumento'] }} - {{ $user['documento'] }}</td>
+                                            <td>{{ $user['nombres'] }} {{ $user['apellidos'] }}</td>
+                                            <td>{{ $user['celular'] }} - {{ $user['fijo'] }}</td>
+                                            <td>{{ $user['email'] }}</td>
 
                                             <td>
-                                                <form action="{{ route('Medicos.destroy', $user->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('Medicos.show', $user->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
+                                                <form action="{{ route('Medicos.destroy', $user['id']) }}" method="POST">
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('Medicos.edit', $user->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> Editar Datos</a>
+                                                        href="{{ route('Medicos.edit', $user['id']) }}"><i
+                                                            class="fa fa-fw fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn-danger"
+                                                       href="{{ route('Medicos.edit', $user['id']) }}"><i
+                                                            class="fa fa-fw fa-trash"></i></a>
                                                     @csrf
                                                 </form>
                                             </td>

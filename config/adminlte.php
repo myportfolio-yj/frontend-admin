@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => '', // 'Qr.Vet',
+    'title' => 'AppoMSV',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,10 +63,10 @@ return [
     |
     */
 
-    'logo' => '', // '<b>QR</b>.VET',
-    'logo_img' => 'https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png',
+    'logo' => '<b>AppoMSV</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/403890.png',
     'logo_img_class' => 'brand-image',
-    'logo_img_xl' => 'brand-image-xl',
+    'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => null,
 
@@ -86,11 +86,11 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png',
+            'path' => 'vendor/adminlte/dist/img/403890.png',
             'alt' => '',
             'class' => '',
-            'width' => 70,
-            'height' => 70,
+            'width' => 50,
+            'height' => 50,
         ],
     ],
 
@@ -403,7 +403,7 @@ return [
                 ]
             ],
         ],
-        [
+       /* [
             'text' => 'COMUNICATE CON NOSOTROS',
             'icon' => 'fa fa-fw fa-phone',
             'submenu' => [
@@ -420,7 +420,7 @@ return [
                     'url'  => 'Mapas',
                 ]
             ],
-        ],
+        ],*/
         /*
         [
             'text'    => 'multilevel',

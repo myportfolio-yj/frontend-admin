@@ -33,7 +33,7 @@ class User extends Authenticatable
     ];
 
     static $rulesEdit = [
-        'name' => 'required',
+        'nombres' => 'required',
         'email' => 'required',
     ];
 

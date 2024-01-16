@@ -7,6 +7,7 @@ use App\Models\Clientes;
 use App\Models\TipoDoc;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ClientesController extends Controller
 {
@@ -17,10 +18,15 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        $clientes = Clientes::paginate();
-
-        return view('clientes.index', compact('clientes'))
-            ->with('i', (request()->input('page', 1) - 1) * $clientes->perPage());
+        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente');
+        if ($response->successful()) {
+            $datos = $response->json();
+            return view('clientes.index') ->with('clientes',$datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
