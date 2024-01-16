@@ -8,13 +8,13 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Listado de clientes') }}
+                                {{ __('Listado de peluqueros') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Clientes.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Peluqueros.create') }}" class="btn btn-primary btn-sm float-right"
                                    data-placement="left">
-                                    {{ __('Crear Nuevo Cliente') }}
+                                    {{ __('Crear Nuevo Peluquero') }}
                                 </a>
                             </div>
                         </div>
@@ -34,28 +34,26 @@
                                     <th>Nro. Documento</th>
                                     <th>Nombres completos</th>
                                     <th>Telefonos</th>
+                                    <th>Correo</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 1; ?>
-                                @foreach ($clientes as $cliente)
+                                @foreach ($peluqueros as $peluquero)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $cliente['tipoDocumento']['tipoDocumento'] }} - {{ $cliente['documento']}}</td>
-                                        <td>{{ $cliente['nombres'] }} {{ $cliente['apellidos'] }}</td>
-                                        <td>{{ $cliente['celular'] }} - {{ $cliente['fijo'] }}</td>
-                                        <td>{{ $cliente['email'] }}</td>
+                                        <td>{{ $peluquero['tipoDocumento']['tipoDocumento'] }} - {{ $peluquero['documento']}}</td>
+                                        <td>{{ $peluquero['nombres'] }} {{ $peluquero['apellidos'] }}</td>
+                                        <td>{{ $peluquero['celular'] }} - {{ $peluquero['fijo'] }}</td>
+                                        <td>{{ $peluquero['email'] }}</td>
                                         <td>
-                                            <form action="{{ route('Clientes.destroy', $cliente['id']) }}" method="POST">
-                                                <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Clientes.show', $cliente['id']) }}"><i
-                                                        class="fa fa-fw fa-paw"></i></a>
+                                            <form action="{{ route('Peluqueros.destroy', $peluquero['id']) }}" method="POST">
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Clientes.edit', $cliente['id']) }}"><i
+                                                   href="{{ route('Peluqueros.edit', $peluquero['id']) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>
                                                 <a class="btn btn-sm btn-danger"
-                                                   href="{{ route('Clientes.edit', $cliente['id']) }}"><i
+                                                   href="{{ route('Peluqueros.edit', $peluquero['id']) }}"><i
                                                         class="fa fa-fw fa-trash"></i></a>
                                                 @csrf
                                             </form>

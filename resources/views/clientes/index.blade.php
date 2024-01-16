@@ -34,6 +34,7 @@
                                     <th>Nro. Documento</th>
                                     <th>Nombres completos</th>
                                     <th>Telefonos</th>
+                                    <th>Correo</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>

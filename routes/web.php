@@ -32,46 +32,56 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     //Rutas del menú
+    //USUARIOS
     Route::resource('Medicos', 'App\Http\Controllers\UserController');
+    Route::resource('Peluqueros', 'App\Http\Controllers\PeluquerosController');
     Route::resource('Clientes', 'App\Http\Controllers\ClientesController');
-    Route::resource('Pacientes', 'App\Http\Controllers\PacientesController');
+    //INGRESOS
+    Route::resource('Mascotas', 'App\Http\Controllers\MascotasController');
     Route::resource('Atenciones', 'App\Http\Controllers\AtencionesController');
     Route::resource('Historias', 'App\Http\Controllers\HistoriasController');
+    Route::resource('Recetas', 'App\Http\Controllers\RecetasController');
+    Route::resource('PacienteHasAlergias', 'App\Http\Controllers\PacienteHasAlergiasController');
+    Route::resource('PacienteHasVacunas', 'App\Http\Controllers\PacienteHasVacunasController');
+    //CONFIGURACIONES
     Route::resource('Alergias', 'App\Http\Controllers\AlergiasController');
     Route::resource('Medicamentos', 'App\Http\Controllers\MedicamentosController');
     Route::resource('Diagnosticos', 'App\Http\Controllers\DiagnosticosController');
     Route::resource('Vacunas', 'App\Http\Controllers\VacunasController');
     Route::resource('Procedimientos', 'App\Http\Controllers\ProcedimientosController');
     Route::resource('razas', 'App\Http\Controllers\RazasController');
-    Route::resource('PacienteHasAlergias', 'App\Http\Controllers\PacienteHasAlergiasController');
-    Route::resource('PacienteHasVacunas', 'App\Http\Controllers\PacienteHasVacunasController');
-    Route::resource('Recetas', 'App\Http\Controllers\RecetasController');
+
     //Ruta para los graficos estadisticos
     Route::resource('Graficos', 'App\Http\Controllers\Graficos');
     //Ruta para los mapas
     Route::resource('Mapas', 'App\Http\Controllers\Mapas');
 
-    //Rutas para Acciones de la opcion Historia
-    Route::post('GuardarHistoria', [App\Http\Controllers\HistoriasController::class, 'Historia'])->name('GuardarHistoria');
-    Route::get('/Historias', [App\Http\Controllers\HistoriasController::class, 'index'])->name('Historias');
-
-    //Rutas para Acciones de la opcion Atenciones
-    Route::post('GuardarAtencion', [App\Http\Controllers\AtencionesController::class, 'store'])->name('GuardarAtencion');
-    Route::get('/Atenciones', [App\Http\Controllers\AtencionesController::class, 'index'])->name('Atenciones');
+    //USUARIOS
+    //Rutas para Acciones de la opcion Peluqueros
+    Route::post('GuardarPeluquero', [App\Http\Controllers\PeluquerosController::class, 'store'])->name('GuardarPeluquero');
+    Route::get('/Peluqueros', [App\Http\Controllers\PeluquerosController::class, 'index'])->name('Peluqueros');
 
     //Rutas para Acciones de la opcion Clientes
     Route::post('GuardarCliente', [App\Http\Controllers\ClientesController::class, 'store'])->name('GuardarCliente');
     Route::get('/Clientes', [App\Http\Controllers\ClientesController::class, 'index'])->name('Clientes');
 
+    //INGRESO
     //Rutas para Acciones de la opcion Mascotas
-    Route::post('GuardarPaciente', [App\Http\Controllers\PacientesController::class, 'store'])->name('GuardarPaciente');
-    Route::get('/Pacientes', [App\Http\Controllers\PacientesController::class, 'index'])->name('Pacientes');
+    Route::post('GuardarMascota', [App\Http\Controllers\PacientesController::class, 'store'])->name('GuardarPaciente');
+    Route::get('/Mascotas', [App\Http\Controllers\PacientesController::class, 'index'])->name('Pacientes');
 
+    //Rutas para Acciones de la opcion Atenciones
+    Route::post('GuardarAtencion', [App\Http\Controllers\AtencionesController::class, 'store'])->name('GuardarAtencion');
+    Route::get('/Atenciones', [App\Http\Controllers\AtencionesController::class, 'index'])->name('Atenciones');
 
+    //Rutas para Acciones de la opcion Historia
+    Route::post('GuardarHistoria', [App\Http\Controllers\HistoriasController::class, 'Historia'])->name('GuardarHistoria');
+    Route::get('/Historias', [App\Http\Controllers\HistoriasController::class, 'index'])->name('Historias');
+
+    //CONFIGURACIONES
     //Rutas para Acciones de la opcion Alergias
     Route::post('GuardarAlergia', [App\Http\Controllers\AlergiasController::class, 'store'])->name('GuardarAlergia');
     Route::get('/Alergias', [App\Http\Controllers\AlergiasController::class, 'index'])->name('Alergias');
-
 
     //Rutas para Acciones de la opcion Medicamentos
     Route::post('GuardarMedicamento', [App\Http\Controllers\MedicamentosController::class, 'store'])->name('GuardarMedicamento');
