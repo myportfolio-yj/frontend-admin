@@ -13,11 +13,11 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Razas') }}
+                                {{ __('razas') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Razas.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('razas.create') }}" class="btn btn-primary btn-sm float-right"
                                    data-placement="left">
                                     {{ __('Crear Nueva Raza') }}
                                 </a>
@@ -57,12 +57,12 @@
                                         <td>{{ $raza->especies->v_decripc}}</td>
 
                                         <td>
-                                            <form action="{{ route('Razas.destroy', $raza->id) }}" method="POST">
+                                            <form action="{{ route('razas.destroy', $raza->id) }}" method="POST">
                                                 <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Razas.show', $raza->id) }}"><i
+                                                   href="{{ route('razas.show', $raza->id) }}"><i
                                                         class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Razas.edit', $raza->id) }}"><i
+                                                   href="{{ route('razas.edit', $raza->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i> Editar Datos</a>
                                                 @csrf
                                             </form>

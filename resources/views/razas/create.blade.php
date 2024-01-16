@@ -16,10 +16,11 @@
                         <span class="card-title">Crear Raza</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Razas.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('razas.store') }}" role="form"
+                              enctype="multipart/form-data">
                             @csrf
 
-                            @include('Razas.form')
+                            @include('razas.form')
 
                         </form>
                     </div>

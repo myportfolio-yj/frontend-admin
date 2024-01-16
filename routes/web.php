@@ -16,26 +16,6 @@ use Illuminate\Support\Facades\Route;
 // Ruta Inicial
 Route::get('/', function () { return view('welcome'); });
 
-Route::get('/login', [App\Http\Controllers\appoMSV\LoginController::class, 'index'])->name('login');
-Route::post('/ingresar', [App\Http\Controllers\appoMSV\LoginController::class, 'login'])->name('ingresar');
-
-Route::get('/citas', [App\Http\Controllers\appoMSV\CitaController::class, 'index'])->name('citas.index');
-
-Route::get('/clientes', [App\Http\Controllers\appoMSV\ClienteController::class, 'index'])->name('clientes.index');
-Route::get('/clientes/{idCliente}', [App\Http\Controllers\appoMSV\ClienteController::class, 'detalle'])->name('clientedetalle1');
-Route::get('/clientes/registrar', [App\Http\Controllers\appoMSV\ClienteController::class, 'registrar'])->name('clienteregistro1');
-
-Route::get('/mascotas', [App\Http\Controllers\appoMSV\MascotaController::class, 'index'])->name('mascotas.index');
-Route::get('/mascotas/registrar', [App\Http\Controllers\appoMSV\MascotaController::class, 'registrar'])->name('mascotaregistro1');
-
-Route::get('/alergias', [App\Http\Controllers\appoMSV\AlergiaController::class, 'index'])->name('alergias.index');
-Route::get('/atencion-peluqueria', [App\Http\Controllers\appoMSV\AtencionPeluqueriaController::class, 'index'])->name('atencionpeluqueria.index');
-Route::get('/especies', [App\Http\Controllers\appoMSV\EspecieController::class, 'index'])->name('especie.index');
-Route::get('/raza', [App\Http\Controllers\appoMSV\RazaController::class, 'index'])->name('raza.index');
-Route::get('/tipo-cita', [App\Http\Controllers\appoMSV\TipoCitaController::class, 'index'])->name('tipocita.index');
-Route::get('/tipo-documento', [App\Http\Controllers\appoMSV\TipoDocumentoController::class, 'index'])->name('tipodocumento.index');
-Route::get('/vacuna', [App\Http\Controllers\appoMSV\VacunaController::class, 'index'])->name('vacuna.index');
-
 // Rutas de Login
 include_once('routesLogin.php');
 
@@ -62,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('Diagnosticos', 'App\Http\Controllers\DiagnosticosController');
     Route::resource('Vacunas', 'App\Http\Controllers\VacunasController');
     Route::resource('Procedimientos', 'App\Http\Controllers\ProcedimientosController');
-    Route::resource('Razas', 'App\Http\Controllers\RazasController');
+    Route::resource('razas', 'App\Http\Controllers\RazasController');
     Route::resource('PacienteHasAlergias', 'App\Http\Controllers\PacienteHasAlergiasController');
     Route::resource('PacienteHasVacunas', 'App\Http\Controllers\PacienteHasVacunasController');
     Route::resource('Recetas', 'App\Http\Controllers\RecetasController');
@@ -109,9 +89,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('GuardarProcedimiento', [App\Http\Controllers\ProcedimientosController::class, 'store'])->name('GuardarProcedimiento');
     Route::get('/Procedimientos', [App\Http\Controllers\ProcedimientosController::class, 'index'])->name('Procedimientos');
 
-    //Rutas para Acciones de la opcion Razas
+    //Rutas para Acciones de la opcion razas
     Route::post('GuardarRaza', [App\Http\Controllers\RazasController::class, 'store'])->name('GuardarRaza');
-    Route::get('/Razas', [App\Http\Controllers\RazasController::class, 'index'])->name('Razas');
+    Route::get('/Razas', [App\Http\Controllers\RazasController::class, 'index'])->name('razas');
 });
 
 

@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\appoMSV;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
-class VacunaController extends Controller
+class CitaController extends Controller
 {
     public function index()
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente');
-
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita');
         if ($response->successful()) {
             $datos = $response->json();
-            return view('cliente', compact('datos'));
+            return view('citas', compact('datos'));
         } else {
             // Manejar error
             $error = $response->body();
             return dd($error);
         }
     }
+
 }

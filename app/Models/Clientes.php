@@ -12,13 +12,8 @@ class Clientes extends Model
     protected $table = 'qrv_clientes';
     public $timestamps = true;
     static $rules = [
-        'n_documento' => 'required',
-        'v_nombre' => 'required',
-        'v_apellido' => 'required',
-        'v_correo' => 'required',
-        'v_telefono' => 'required',
-        'v_telfijo' => 'required',
-        'n_tipodoc' => 'required',
+        'nombres' => 'required',
+        'email' => 'required',
     ];
     protected $fillable = [
         'n_documento',

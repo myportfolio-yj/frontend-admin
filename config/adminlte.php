@@ -300,56 +300,38 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-        /*
+
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],*/
         [
             'text' => 'USUARIOS',
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                 [
-                    'text' => 'Medico',
-                    'url'  => 'Medicos',/* Detalles se cambia a Medicos*/
-                ]
+                    'text' => 'Medicos',
+                    'url'  => 'Medicos',
+                ],
+                [
+                    'text' => 'Peluqueros',
+                    'url'  => 'Peluqueros',
+                ],
+                [
+                    'text' => 'Clientes',
+                    'url'  => 'Clientes',
+                ],
             ],
         ],
         [
             'text' => 'INGRESO',
             'icon' => 'fa fa-fw fa-lock',
             'submenu' => [
-                [
-                    'text' => 'Clientes',
-                    'url'  => 'Clientes',
-                ],
+
                 [
                     'text' => 'Mascotas',
-                    'url'  => 'Pacientes',
+                    'url'  => 'Mascotas',
+                ],
+                [
+                    'text' => 'Citas',
+                    'url'  => 'Citas',
                 ],
                 [
                     'text' => 'Atenciones',
@@ -358,6 +340,8 @@ return [
 
 
             ],
+
+
         ],
         [
             'text' => 'CONFIGURACIONES',
@@ -390,18 +374,9 @@ return [
             ],
         ],
         [
-            'text' => 'MONITOREO',
-            'icon' => 'fa fa-fw fa-chart-line',
-            'submenu' => [
-                [
-                    'text' => 'Graficos',
-                    'url'  => 'Graficos',
-                ],
-                [
-                    'text' => 'FindMyPet',
-                    'url'  => 'Mapas',
-                ]
-            ],
+            'text' => 'Geolocalización',
+            'url'  => 'Geolocalizacion',
+            'icon' => 'fa fa-fw fa-map-marker',
         ],
        /* [
             'text' => 'COMUNICATE CON NOSOTROS',

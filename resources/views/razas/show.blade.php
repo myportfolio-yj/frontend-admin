@@ -14,7 +14,7 @@
                             <span class="card-title">Mostrar Raza</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('Razas') }}"> Volver atras</a>
+                            <a class="btn btn-primary" href="{{ route('razas') }}"> Volver atras</a>
                         </div>
                     </div>
 

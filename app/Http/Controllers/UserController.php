@@ -125,6 +125,7 @@ class UserController extends Controller
     {
         request()->validate(User::$rulesEdit);
         $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/'.$id, [
+            'codVeterinario' => $request->input('codVeterinario'),
             'nombres' => $request->input('nombres'),
             'apellidos' => $request->input('apellidos'),
             'celular' => $request->input('celular'),

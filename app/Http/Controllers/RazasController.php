@@ -22,7 +22,7 @@ class RazasController extends Controller
     {
 
         $razas = Razas::paginate();
-        return view('Razas.index', compact('razas'))
+        return view('razas.index', compact('razas'))
             ->with('i', (request()->input('page', 1) - 1) * $razas->perPage());
 
     }
@@ -37,7 +37,7 @@ class RazasController extends Controller
         $raza=new Razas();
         $medico=User::pluck('name','id');
         $especie=Especies::pluck('v_decripc','id');
-        return view('Razas.create',compact('raza','medico','especie'));
+        return view('razas.create',compact('raza','medico','especie'));
     }
 
     /**
@@ -57,7 +57,7 @@ class RazasController extends Controller
         $razas['n_estado'] = 1;
         Razas::create($razas);
 
-        return redirect()->route('Razas')
+        return redirect()->route('razas')
             ->with('success', 'Raza creada satisfactoriamente.');
     }
 
@@ -70,7 +70,7 @@ class RazasController extends Controller
     public function show($id)
     {
         $raza = Razas::find($id);
-        return view('Razas.show', compact('raza'));
+        return view('razas.show', compact('raza'));
     }
 
     /**
@@ -84,7 +84,7 @@ class RazasController extends Controller
         $raza = Razas::find($id);
         $medico = User::pluck('name','id');
         $especie = Especies::pluck('v_decripc','id');
-        return view('Razas.edit',compact('raza','medico','especie'));
+        return view('razas.edit',compact('raza','medico','especie'));
     }
 
     /**
@@ -105,7 +105,7 @@ class RazasController extends Controller
         $raza['a_n_iduser'] = $ido; /*** Este valor hay que cambiarlo por el usuario autenticado**/
         $raza['n_estado'] = 1;
         $raza->update($request->all());
-        return redirect()->route('Razas')
+        return redirect()->route('razas')
             ->with('success', 'Raza actualizada satisfactoriamente');
     }
 

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\appoMSV;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
-class RazaController extends Controller
+class TipoCitaController extends Controller
 {
     public function index()
     {

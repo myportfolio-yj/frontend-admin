@@ -47,12 +47,18 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {{ Form::label('email') }}
+                    {{ Form::label('Email') }}
                     {{ Form::text('email', $user['email'], ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
                     {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
-
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ Form::label('Cod. Veterinario') }}
+                    {{ Form::text('codVeterinario', $user['codVeterinario'], ['class' => 'form-control' . ($errors->has('codVeterinario') ? ' is-invalid' : ''), 'placeholder' => 'codVeterinario']) }}
+                    {!! $errors->first('codVeterinario', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+            </div>
         </div>
     </div>
     <div class="box-footer mt20">
