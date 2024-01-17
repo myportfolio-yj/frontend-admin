@@ -1,53 +1,120 @@
-@extends('base')
+@extends('adminlte::page')
+@section('content')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
 
-@section('title', 'Dashboard de Citas')
+                            <span id="card_title">
+                                {{ __('Listado de citas vigentes') }}
+                            </span>
 
-@section('css',asset('/css/citas.css') )
+                            <div class="float-right">
+                                <a href="{{ route('Citas.create') }}" class="btn btn-light btn-lg float-right"
+                                   data-placement="left">
+                                    <i class="fa fa-fw fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
 
-@section('main-content')
-
-<div class="main-content">
-    <h1>Citas</h1>
-    <div class="search-box">
-        <input type="text" placeholder="Buscar...">
-        <button>Nueva cita</button>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="thead">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fecha de cita / Turno</th>
+                                    <th>Nombre de la mascota</th>
+                                    <th>Especie / Raza </th>
+                                    <th>Tipo de cita</th>
+                                    <th>Tipo atención</th>
+                                    <th>Dueño de la mascota</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($citasVigentes as $cita)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
+                                        <td>{{ $cita['nombreMascota'] }}</td>
+                                        <td> - </td>
+                                        <td>{{ $cita['tipoCita'] }} </td>
+                                        <td> - </td>
+                                        <td>{{ $cita['idCliente'] }} </td>
+                                        <td>
+                                            <form action="{{ route('Citas.destroy', $cita['id']) }}" method="POST">
+                                                <a class="btn btn-sm btn-primary "
+                                                   href="{{ route('Citas.show', $cita['id']) }}"><i
+                                                        class="fa fa-fw fa-book-medical"></i></a>
+                                                <a class="btn btn-sm btn-success"
+                                                   href="{{ route('Citas.edit', $cita['id']) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <button class="btn btn-sm btn-danger"
+                                                        type="submit"><i
+                                                        class="fa fa-fw fa-trash"></i></button>
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span id="card_title">
+                                {{ __('Historio de citas') }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="thead">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fecha de cita / Turno</th>
+                                    <th>Nombre de la mascota</th>
+                                    <th>Especie / Raza </th>
+                                    <th>Tipo de cita</th>
+                                    <th>Tipo atención</th>
+                                    <th>Dueño de la mascota</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($citas as $cita)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
+                                        <td>{{ $cita['nombreMascota'] }}</td>
+                                        <td> - </td>
+                                        <td>{{ $cita['tipoCita'] }} </td>
+                                        <td> - </td>
+                                        <td>{{ $cita['idCliente'] }} </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <table>
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Fecha</th>
-            <th>Turno</th>
-            <th>Nombre</th>
-            <th>Acción</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Los datos de la tabla se insertarán aquí -->
-        @foreach ($datos as $dato)
-        <tr>
-            <td>{{ $dato['id'] }}</td>
-            <td>{{ $dato['fecha'] }}</td>
-            <td>{{ $dato['turno'] }}</td>
-            <td>{{ $dato['nombreMascota'] }}</td>
-            <td>
-                <button value="{{ $dato['id'] }}">Atender</button>
-            </td>
-        </tr>
-        @endforeach
-        <!-- Más filas pueden ser agregadas aquí -->
-        </tbody>
-    </table>
-</div>
-
-<!-- Overlay para oscurecer la pantalla detrás del card -->
-<div class="overlay" id="overlay"></div>
-
-<!-- Card para nueva cita -->
-<div class="card" id="newAppointmentCard">
-    <h2>Nueva Cita</h2>
-    <input type="text" placeholder="Nombre de la mascota">
-    <button id="attendButton">Atender</button>
-</div>
-
 @endsection

@@ -31,7 +31,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre de alergias</th>
-                                        <th></th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>

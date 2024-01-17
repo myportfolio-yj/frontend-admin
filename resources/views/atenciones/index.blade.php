@@ -1,9 +1,7 @@
 @extends('adminlte::page')
-
 @section('template_title')
     Nuestras Atenciones
 @endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -13,13 +11,13 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Nuestras Atenciones') }}
+                                {{ __('Listado de Atenciones') }}
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Atenciones.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Atenciones.create') }}" class="btn btn-light btn-lg float-right"
                                    data-placement="left">
-                                    {{ __('Crear Nueva Atencion') }}
+                                    <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
                         </div>
@@ -38,7 +36,8 @@
                                     <th>#</th>
                                     <th>Fecha Atención</th>
                                     <th>Cliente</th>
-                                    <th>Paciente</th>
+                                    <th>Nombre de la mascota</th>
+                                    <th>Especie / Raza </th>
                                     <th>Vacuna</th>
                                     <th></th>
                                     <th>Alergia</th>
@@ -55,14 +54,15 @@
                                         <td>{{ $atencion->created_at}}</td>
                                         <td>{{ $atencion->cliente->v_nombre}}</td>
                                         <td>{{ $atencion->paciente->v_nombre}}</td>
+                                        <td> - </td>
                                         <td>@if( $atencion->paciente->vacunas->count() > 0 )
                                                 Si
                                             @else
-                                                Sin vacuna
+                                                Ninguna
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary "
+                                            <a class="btn btn-sm btn-secondary "
                                                href="{{ route('PacienteHasVacunas.create', ['id' => $atencion->id]) }}"><i
                                                     class="fa fa-fw fa-eye"></i></a>
                                         </td>
@@ -74,7 +74,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary "
+                                            <a class="btn btn-sm btn-secondary "
                                                href="{{ route('PacienteHasAlergias.create', ['id' => $atencion->id]) }}"><i
                                                     class="fa fa-fw fa-eye"></i></a>
                                         </td>
@@ -98,21 +98,23 @@
                                             @if( !isset($atencion->historia) )
                                                 <a class="btn btn-sm btn-success "
                                                    href="{{ route('Historias.create', ['id' => $atencion->id]) }}"><i
-                                                        class="fa fa-fw fa-plus"></i> Añadir Historia</a>
+                                                        class="fa fa-fw fa-book-medical"></i></a>
                                             @else
                                                 <a class="btn btn-sm btn-primary "
                                                    href="{{ route('Historias.edit', $atencion->historia->id) }}"><i
-                                                        class="fa fa-fw fa-edit"></i> Editar Historia</a>
+                                                        class="fa fa-fw fa-edit"></i></a>
                                             @endif
 
                                             @if( !isset($atencion->recetas) )
+                                                <!--//Añadir Receta -->
                                                 <a class="btn btn-sm btn-success "
                                                     href="{{ route('Recetas.create', ['id' => $atencion->id]) }}"><i
-                                                        class="fa fa-fw fa-plus"></i> Añadir Receta</a>
+                                                        class="fa fa-fw fa-prescription"></i></a>
                                             @else
-                                                <a class="btn btn-sm btn-primary "
+                                                    <!--//Editar Receta-->
+                                                <a class="btn btn-sm btn-info "
                                                    href="{{ route('Recetas.create', ['id' => $atencion->id]) }}"><i
-                                                        class="fa fa-fw fa-edit"></i> Editar Receta</a>
+                                                        class="fa fa-fw fa-prescription"></i></a>
                                             @endif
 
                                         </td>

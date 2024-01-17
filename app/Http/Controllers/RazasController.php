@@ -65,7 +65,7 @@ class RazasController extends Controller
         $razas['n_estado'] = 1;
         Razas::create($razas);
 
-        return redirect()->route('razas')
+        return redirect()->route('Razas')
             ->with('success', 'Raza creada satisfactoriamente.');
     }
 
@@ -119,7 +119,7 @@ class RazasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('razas')
+            return redirect()->route('Razas')
                 ->with('success', 'Raza actualizada satisfactoriamente');
         } else {
             // Manejar error
@@ -134,8 +134,16 @@ class RazasController extends Controller
      * @param  \App\Models\Razas  $razas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Razas $razas)
+    public function destroy($id)
     {
-        //
+        $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com/raza/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Razas')
+                ->with('success', 'Raza eliminada satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 }

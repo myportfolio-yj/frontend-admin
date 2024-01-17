@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('Clientes', 'App\Http\Controllers\ClientesController');
     //INGRESOS
     Route::resource('Mascotas', 'App\Http\Controllers\MascotasController');
+    Route::resource('Citas', 'App\Http\Controllers\CitasController');
     Route::resource('Atenciones', 'App\Http\Controllers\AtencionesController');
     Route::resource('Historias', 'App\Http\Controllers\HistoriasController');
     Route::resource('Recetas', 'App\Http\Controllers\RecetasController');
@@ -69,6 +70,10 @@ Route::middleware(['auth'])->group(function () {
     //Rutas para Acciones de la opcion Mascotas
     Route::post('GuardarMascota', [App\Http\Controllers\MascotasController::class, 'store'])->name('GuardarPaciente');
     Route::get('/Mascotas', [App\Http\Controllers\MascotasController::class, 'index'])->name('Mascotas');
+
+    //Rutas para Acciones de la opcion Atenciones
+    Route::post('GuardarCita', [App\Http\Controllers\CitasController::class, 'store'])->name('GuardarCita');
+    Route::get('/Citas', [App\Http\Controllers\CitasController::class, 'index'])->name('Citas');
 
     //Rutas para Acciones de la opcion Atenciones
     Route::post('GuardarAtencion', [App\Http\Controllers\AtencionesController::class, 'store'])->name('GuardarAtencion');

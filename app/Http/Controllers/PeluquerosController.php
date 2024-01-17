@@ -152,7 +152,7 @@ class PeluquerosController extends Controller
         $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/'.$id);
         if ($response->successful()) {
             return redirect()->route('Peluqueros')
-                ->with('success', 'Peluqueri eliminado satisfactoriamente');
+                ->with('success', 'Peluquero eliminado satisfactoriamente');
         } else {
             // Manejar error
             $error = $response->body();

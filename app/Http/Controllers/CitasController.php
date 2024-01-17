@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Alergias;
 use App\Models\Clientes;
-use App\Models\Peluqueros;
 use App\Models\TipoDoc;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
-class ClientesController extends Controller
+class CitasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,13 +19,15 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente');
-        if ($response->successful()) {
-            $datos = $response->json();
-            return view('clientes.index') ->with('clientes',$datos);
+        $responseCitas = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita');
+        $responseCitasVigentes = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita-vigentes');
+        if ($responseCitas->successful() && $responseCitasVigentes->successful()) {
+            $citas = $responseCitas->json();
+            $citasVigentes = $responseCitasVigentes->json();
+            return view('citas.index', compact('citas','citasVigentes'));
         } else {
             // Manejar error
-            $error = $response->body();
+            $error = $responseCitas->body();
             return dd($error);
         }
     }
@@ -38,16 +39,9 @@ class ClientesController extends Controller
      */
     public function create()
     {
-        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response2->successful() ) {
-            $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
-            return view('clientes.create', compact('tipoDoc'));
-        } else {
-            // Manejar error
-            $error = $response2->body();
-            return dd($error);
-        }
+        $cliente=new Clientes();
+        $tipo=TipoDoc::pluck('v_decripc','id');
+        return view('clientes.create',compact('cliente','tipo'));
     }
 
     /**
@@ -59,26 +53,11 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         request()->validate(Clientes::$rules);
-        $response = Http::post('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente', [
-            'nombres' => $request->input('nombres'),
-            'apellidos' => $request->input('apellidos'),
-            'celular' => $request->input('celular'),
-            'fijo' => $request->input('fijo'),
-            'email' => $request->input('email'),
-            'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento'),
-            'password' => $request->input('documento'),
-            'confirmarPassword' => $request->input('documento')
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('Clientes')
-                ->with('success', 'Cliente creado con exito satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+
+        $cliente = Clientes::create($request->all());
+
+        return redirect()->route('Clientes')
+            ->with('success', 'Cliente creado satisfactoriamente.');
     }
 
     /**
@@ -151,16 +130,8 @@ class ClientesController extends Controller
      * @param  \App\Models\Clientes  $clientes
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy(Clientes $clientes)
     {
-        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/'.$id);
-        if ($response->successful()) {
-            return redirect()->route('Clientes')
-                ->with('success', 'Cliente eliminado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        //
     }
 }

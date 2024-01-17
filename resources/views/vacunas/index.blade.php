@@ -32,7 +32,7 @@
                                         <th>#</th>
                                         <th>Nombre de la vacuna</th>
                                         <th>Duración</th>
-                                        <th></th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
