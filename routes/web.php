@@ -24,8 +24,8 @@ Route::post('/validarqr', [App\Http\Controllers\HomeController::class, 'validarq
 Route::get('/validarqr/{identificador}', [App\Http\Controllers\HomeController::class, 'validarqr2'])->name('validarqr2');
 
 // Resultado de Scanneo sin login
-Route::get('/Pacientes/nologin/{id}', [App\Http\Controllers\PacientesController::class, 'noLogueado'] )->name('noLogueado');
-Route::post('/Alerta/send', [App\Http\Controllers\PacientesController::class, 'sendAlert'])->name('sendAlert');
+//Route::get('/Pacientes/nologin/{id}', [App\Http\Controllers\PacientesController::class, 'noLogueado'] )->name('noLogueado');
+//Route::post('/Alerta/send', [App\Http\Controllers\PacientesController::class, 'sendAlert'])->name('sendAlert');
 
 Route::middleware(['auth'])->group(function () {
     // Inicio
@@ -67,8 +67,8 @@ Route::middleware(['auth'])->group(function () {
 
     //INGRESO
     //Rutas para Acciones de la opcion Mascotas
-    Route::post('GuardarMascota', [App\Http\Controllers\PacientesController::class, 'store'])->name('GuardarPaciente');
-    Route::get('/Mascotas', [App\Http\Controllers\PacientesController::class, 'index'])->name('Pacientes');
+    Route::post('GuardarMascota', [App\Http\Controllers\MascotasController::class, 'store'])->name('GuardarPaciente');
+    Route::get('/Mascotas', [App\Http\Controllers\MascotasController::class, 'index'])->name('Mascotas');
 
     //Rutas para Acciones de la opcion Atenciones
     Route::post('GuardarAtencion', [App\Http\Controllers\AtencionesController::class, 'store'])->name('GuardarAtencion');
@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Rutas para Acciones de la opcion razas
     Route::post('GuardarRaza', [App\Http\Controllers\RazasController::class, 'store'])->name('GuardarRaza');
-    Route::get('/Razas', [App\Http\Controllers\RazasController::class, 'index'])->name('razas');
+    Route::get('/Razas', [App\Http\Controllers\RazasController::class, 'index'])->name('Razas');
 });
 
 

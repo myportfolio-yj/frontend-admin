@@ -17,9 +17,9 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Procedimientos.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Procedimientos.create') }}" class="btn btn-primary btn-lg float-right"
                                    data-placement="left">
-                                    {{ __('Crear Nuevo Procedimiento') }}
+                                    <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
                         </div>

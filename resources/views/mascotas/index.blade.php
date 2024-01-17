@@ -1,38 +1,76 @@
-@extends('base')
+@extends('adminlte::page')
+@section('content')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
 
-@section('title', 'Listado de Mascotas')
+                            <span id="card_title">
+                                {{ __('Listado de mascotas') }}
+                            </span>
 
-@section('css',asset('/css/mascotas.css') )
+                            <div class="float-right">
+                                <a href="{{ route('Mascotas.create') }}" class="btn btn-light btn-lg float-right"
+                                   data-placement="left">
+                                    <i class="fa fa-fw fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                    @endif
 
-@section('main-content')
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="thead">
+                                <tr>
+                                    <th>#</th>
 
-    <div class="main-content">
-    <h1>Mascotas</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>CodIdent</th>
-            <th>Nombre</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Los datos de las mascotas se insertarán aquí -->
-        @foreach ($datos as $dato)
-        <tr>
-            <td>{{ $dato['id'] }}</td>
-            <td>{{ $dato['codIdentificacion'] }}</td>
-            <td>{{ $dato['nombre'] }} {{ $dato['apellido'] }}</td>
-            <td class="action-buttons">
-                <button class="view-button" value="{{ $dato['id'] }}">Ver</button>
-                <button class="delete-button" value="{{ $dato['id'] }}">Eliminar</button>
-            </td>
-        </tr>
-        @endforeach
-        <!-- Más filas pueden ser agregadas aquí -->
-        </tbody>
-    </table>
-</div>
-
+                                    <th>Nro. Identificación</th>
+                                    <th>Nombre de la mascota</th>
+                                    <th>Fecha de Nacimiento</th>
+                                    <th>Sexo</th>
+                                    <th>Especie - Raza</th>
+                                    <th>Dueño de mascota</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($mascotas as $mascota)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $mascota['codIdentificacion'] }}</td>
+                                        <td>{{ $mascota['nombre'] }} {{ $mascota['apellido'] }}</td>
+                                        <td>{{ $mascota['fechaNacimiento'] }}</td>
+                                        <td>{{ $mascota['sexo']['sexo'] }}</td>
+                                        <td>{{ $mascota['especie']['especie'] }} - {{ $mascota['raza']['raza'] }} </td>
+                                        <td> - </td>
+                                        <td>
+                                            <form action="{{ route('Mascotas.destroy', $mascota['id']) }}" method="POST">
+                                                <a class="btn btn-sm btn-success"
+                                                   href="{{ route('Mascotas.edit', $mascota['id']) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="{{ route('Mascotas.edit', $mascota['id']) }}"><i
+                                                        class="fa fa-fw fa-trash"></i></a>
+                                                @csrf
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

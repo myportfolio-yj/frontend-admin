@@ -12,9 +12,9 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Clientes.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Clientes.create') }}" class="btn btn-light btn-lg float-right"
                                    data-placement="left">
-                                    {{ __('Crear Nuevo Cliente') }}
+                                    <i class="fa fa-fw fa-user-plus"></i>
                                 </a>
                             </div>
                         </div>

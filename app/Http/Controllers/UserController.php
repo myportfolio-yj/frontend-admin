@@ -42,11 +42,16 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = new User();
-        $userDetalle = new UserDetalles();
-        $clinicas = Clinicas::pluck('v_nomclin','id');
-        $perfiles = Perfiles::pluck('v_decripc','id');
-        return view('user.create', compact('user','userDetalle','clinicas','perfiles'));
+        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
+        if ($response2->successful() ) {
+            $tipoDoc = $response2->json();
+            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
+            return view('user.create', compact('tipoDoc'));
+        } else {
+            // Manejar error
+            $error = $response2->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -58,24 +63,26 @@ class UserController extends Controller
     public function store(Request $request)
     {
         request()->validate(User::$rules);
-
-        $user = User::create($request->all());
-        $userDetalle = new UserDetalles();
-        if( is_null($request->n_estatus) )
-        {
-            $userDetalle->n_estatus = 0;
-        } else{
-            $userDetalle->n_estatus = $request->n_estatus;
+        $response = Http::post('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario', [
+            'codVeterinario' => $request->input('codVeterinario'),
+            'nombres' => $request->input('nombres'),
+            'apellidos' => $request->input('apellidos'),
+            'celular' => $request->input('celular'),
+            'fijo' => $request->input('fijo'),
+            'email' => $request->input('email'),
+            'idTipoDocumento' => $request->input('tipoDoc'),
+            'documento' => $request->input('documento')
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Medicos.index')
+                ->with('success', 'Medico creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
         }
-        $userDetalle->v_telefono = $request->v_telefono;
-        $userDetalle->v_codcolegio = $request->v_codcolegio;
-        $userDetalle->n_perfil = $request->n_perfil;
-        $userDetalle->n_clinica = $request->n_clinica;
-        $userDetalle->n_user = $user->id;
-        $userDetalle->save();
 
-        return redirect()->route('Medicos.index')
-            ->with('success', 'Medico creado satisfactoriamente.');
     }
 
     /**

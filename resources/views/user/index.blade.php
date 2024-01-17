@@ -12,9 +12,9 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Medicos.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Medicos.create') }}" class="btn btn-lg btn-light float-right"
                                     data-placement="left">
-                                    {{ __('Crear Nuevo Medico') }}
+                                    <i class="fa fa-fw fa-user-plus"></i>
                                 </a>
                             </div>
                         </div>
