@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clinicas;
-use App\Models\Perfiles;
 use App\Models\User;
-use App\Models\UserDetalles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -71,7 +68,9 @@ class UserController extends Controller
             'fijo' => $request->input('fijo'),
             'email' => $request->input('email'),
             'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento')
+            'documento' => $request->input('documento'),
+            'password' => $request->input('documento'),
+            'confirmarPassword' => $request->input('documento')
         ]);
         if ($response->successful()) {
             $datos = $response->json();
@@ -157,12 +156,16 @@ class UserController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    /*public function destroy($id)
+    public function destroy($id)
     {
-        $user = User::find($id)->delete();
-
-        return redirect()->route('users.index')
-            ->with('success', 'Usuario eliminado satisfactoriamente');
+        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Medicos.index')
+                ->with('success', 'Usuario eliminado satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
-    */
 }

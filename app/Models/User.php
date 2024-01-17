@@ -28,8 +28,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     static $rules = [
         'nombres' => 'required',
-        'email' => 'required',
-        'password' => 'required',
+        'email' => 'required'
     ];
 
     static $rulesEdit = [

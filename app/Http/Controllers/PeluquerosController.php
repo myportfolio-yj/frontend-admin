@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alergias;
-use App\Models\Clientes;
-use App\Models\TipoDoc;
-use App\Models\User;
+use App\Models\Peluqueros;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -37,9 +34,16 @@ class PeluquerosController extends Controller
      */
     public function create()
     {
-        $cliente=new Clientes();
-        $tipo=TipoDoc::pluck('v_decripc','id');
-        return view('clientes.create',compact('cliente','tipo'));
+        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
+        if ($response2->successful() ) {
+            $tipoDoc = $response2->json();
+            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
+            return view('peluqueros.create', compact('tipoDoc'));
+        } else {
+            // Manejar error
+            $error = $response2->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -50,12 +54,28 @@ class PeluquerosController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Clientes::$rules);
+        request()->validate(Peluqueros::$rules);
+        $response = Http::post('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero', [
+            'nombres' => $request->input('nombres'),
+            'apellidos' => $request->input('apellidos'),
+            'celular' => $request->input('celular'),
+            'fijo' => $request->input('fijo'),
+            'email' => $request->input('email'),
+            'idTipoDocumento' => $request->input('tipoDoc'),
+            'documento' => $request->input('documento'),
+            'password' => $request->input('documento'),
+            'confirmarPassword' => $request->input('documento')
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Peluqueros')
+                ->with('success', 'Peluquero creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
 
-        $cliente = Clientes::create($request->all());
-
-        return redirect()->route('Clientes')
-            ->with('success', 'Cliente creado satisfactoriamente.');
     }
 
     /**
@@ -66,8 +86,7 @@ class PeluquerosController extends Controller
      */
     public function show($id)
     {
-        $cliente = Clientes::find($id);
-        return view('clientes.show', compact('cliente'));
+        //
     }
 
     /**
@@ -128,8 +147,16 @@ class PeluquerosController extends Controller
      * @param  \App\Models\Peluqueros  $peluqueros
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Peluqueros $peluqueros)
+    public function destroy($id)
     {
-        //
+        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Peluqueros')
+                ->with('success', 'Peluqueri eliminado satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 }

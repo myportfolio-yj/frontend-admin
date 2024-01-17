@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function () {
     //Ruta para los graficos estadisticos
     Route::resource('Graficos', 'App\Http\Controllers\Graficos');
     //Ruta para los mapas
-    Route::resource('Mapas', 'App\Http\Controllers\Mapas');
+    // Route::resource('Mapas', 'App\Http\Controllers\Mapas'); <--------------------
 
     //USUARIOS
     //Rutas para Acciones de la opcion Peluqueros
