@@ -96,11 +96,11 @@
 
                                         <td>
                                             @if( !isset($atencion->historia) )
-                                                <a class="btn btn-sm btn-success "
+                                                <a class="btn btn-sm btn-primary "
                                                    href="{{ route('Historias.create', ['id' => $atencion->id]) }}"><i
                                                         class="fa fa-fw fa-book-medical"></i></a>
                                             @else
-                                                <a class="btn btn-sm btn-primary "
+                                                <a class="btn btn-sm btn-success "
                                                    href="{{ route('Historias.edit', $atencion->historia->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>
                                             @endif

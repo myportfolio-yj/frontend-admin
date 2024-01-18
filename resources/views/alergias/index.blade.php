@@ -12,9 +12,9 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Alergias.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Alergias.create') }}" class="btn btn-light btn-lg float-right"
                                     data-placement="left">
-                                    {{ __('Crear Nueva Alergia') }}
+                                    <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
                         </div>
@@ -45,10 +45,11 @@
                                                     <a class="btn btn-sm btn-success"
                                                         href="{{ route('Alergias.edit', $alergia['id']) }}"><i
                                                             class="fa fa-fw fa-edit"></i></a>
-                                                    <a class="btn btn-sm btn-danger"
-                                                       href="{{ route('Alergias.edit', $alergia['id']) }}"><i
-                                                            class="fa fa-fw fa-trash"></i></a>
+                                                    <button class="btn btn-sm btn-danger"
+                                                            type="submit"><i
+                                                            class="fa fa-fw fa-trash"></i></button>
                                                     @csrf
+                                                    @method('DELETE')
                                                 </form>
                                             </td>
                                         </tr>

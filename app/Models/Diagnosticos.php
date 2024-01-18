@@ -12,8 +12,8 @@ class Diagnosticos extends Model
     protected $table = 'qrv_diagnosticos';
     public $timestamps = true;
     static $rules = [
-        'v_nombre' => 'required',
-        'v_apuntes' => 'required'
+        'diagnostico' => 'required',
+        'detalle' => 'required'
     ];
     protected $fillable = [
         'v_nombre',
@@ -22,8 +22,5 @@ class Diagnosticos extends Model
         'n_estado',
     ];
 
-    public function medicos()
-    {
-        return $this->hasOne(User::class,'id','a_n_iduser');
-    }
+
 }

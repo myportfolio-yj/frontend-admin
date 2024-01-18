@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Alergias;
 use App\Models\Diagnosticos;
 use App\Models\Medicamentos;
+use App\Models\Peluqueros;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class DiagnosticosController extends Controller
 {
@@ -19,10 +22,15 @@ class DiagnosticosController extends Controller
      */
     public function index()
     {
-        $diagnosticos = Diagnosticos::paginate();
-
-        return view('diagnosticos.index', compact('diagnosticos'))
-            ->with('i', (request()->input('page', 1) - 1) * $diagnosticos->perPage());
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico');
+        if ($response->successful()) {
+            $datos = $response->json();
+            return view('diagnosticos.index') ->with('diagnosticos',$datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -32,9 +40,15 @@ class DiagnosticosController extends Controller
      */
     public function create()
     {
-        $diagnostico=new Diagnosticos();
-        $medico=User::pluck('name','id');
-        return view('diagnosticos.create',compact('diagnostico','medico'));
+        $response2 = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico');
+        if ($response2->successful() ) {
+            $datos = $response2->json();
+            return view('peluqueros.create') ->with('diagnostico',$datos);
+        } else {
+            // Manejar error
+            $error = $response2->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -45,17 +59,27 @@ class DiagnosticosController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        request()->validate(Diagnosticos::$rules);
-        $id = Auth::id();
-        $diagnosticos['v_nombre'] = $request['v_nombre'];
-        $diagnosticos['v_apuntes'] = $request['v_apuntes'];
-        $diagnosticos['a_n_iduser'] = $id; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $diagnosticos['n_estado'] = 1;
-        Diagnosticos::create($diagnosticos);
-
-        return redirect()->route('Diagnosticos')
-            ->with('success', 'Diagnostico creado satisfactoriamente.');
+        request()->validate(Peluqueros::$rules);
+        $response = Http::post('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero', [
+            'nombres' => $request->input('nombres'),
+            'apellidos' => $request->input('apellidos'),
+            'celular' => $request->input('celular'),
+            'fijo' => $request->input('fijo'),
+            'email' => $request->input('email'),
+            'idTipoDocumento' => $request->input('tipoDoc'),
+            'documento' => $request->input('documento'),
+            'password' => $request->input('documento'),
+            'confirmarPassword' => $request->input('documento')
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Peluqueros')
+                ->with('success', 'Peluquero creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -66,8 +90,7 @@ class DiagnosticosController extends Controller
      */
     public function show($id)
     {
-        $diagnostico = Diagnosticos::find($id);
-        return view('diagnosticos.show', compact('diagnostico'));
+       //
     }
 
     /**
@@ -78,10 +101,15 @@ class DiagnosticosController extends Controller
      */
     public function edit($id)
     {
-        $diagnostico = Diagnosticos::find($id);
-
-        $medico = User::pluck('name','id');
-        return view('diagnosticos.edit', compact('diagnostico','medico'));
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico/'.$id);
+        if ($response->successful() ) {
+            $diagnostico = $response->json();
+            return view('diagnosticos.edit', compact('diagnostico'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -93,16 +121,21 @@ class DiagnosticosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ido = Auth::id();
         request()->validate(Diagnosticos::$rules);
-        $diagnosticos = Diagnosticos::find($id);
-        $diagnosticos['v_nombre'] = $request['v_nombre'];
-        $diagnosticos['v_apuntes'] = $request['v_apuntes'];
-        $diagnosticos['a_n_iduser'] = $ido; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $diagnosticos['n_estado'] = 1;
-        $diagnosticos->update($request->all());
-        return redirect()->route('Diagnosticos')
-            ->with('success', 'Diagnostico actualizado satisfactoriamente');
+        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico/'.$id, [
+            'diagnostico' => $request->input('diagnostico'),
+            'detalle' => $request->input('diagnostico'),
+
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Diagnosticos')
+                ->with('success', 'Diagnostico actualizada satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -111,8 +144,16 @@ class DiagnosticosController extends Controller
      * @param  \App\Models\Diagnosticos  $diagnosticos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Diagnosticos $diagnosticos)
+    public function destroy($id)
     {
-        //
+        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Diagnosticos')
+                ->with('success', 'Diagnostico eliminado satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 }

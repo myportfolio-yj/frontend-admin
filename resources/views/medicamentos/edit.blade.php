@@ -1,9 +1,5 @@
 @extends('adminlte::page')
 @section('title', 'Editar Medicamento')
-@section('template_title')
-    Actualizar Medicamento
-@endsection
-
 @section('content')
     <section class="content container-fluid">
         <div class="">
@@ -16,7 +12,7 @@
                         <span class="card-title">Editar Medicamento</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Medicamentos.update', $medicamento->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('Medicamentos.update', $medicamento['id']) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

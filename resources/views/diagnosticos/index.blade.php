@@ -1,9 +1,4 @@
 @extends('adminlte::page')
-
-@section('template_title')
-    Diagnosticos
-@endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -13,12 +8,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Diagnosticos') }}
+                                {{ __('Listado de Diagnosticos') }}
                             </span>
 
                             <div class="float-right">
                                 <a href="{{ route('Diagnosticos.create') }}" class="btn btn-light btn-lg float-right"
-                                   data-placement="left">
+                                    data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
@@ -29,49 +24,43 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
-                                <tr>
-                                    <th>#</th>
-
-                                    <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>Especialista</th>
-
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre de diagnosticos</th>
+                                        <th>Descripción</th>
+                                        <th>Acciones</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($diagnosticos as $diagnostico)
-                                    <tr>
-                                        <td>{{ ++$i }}</td>
-
-                                        <td>{{ $diagnostico->v_nombre }}</td>
-                                        <td>{{ $diagnostico->v_apuntes }}</td>
-                                        <td>{{ $diagnostico->medicos->name}}</td>
-
-                                        <td>
-                                            <form action="{{ route('Diagnosticos.destroy', $diagnostico->id) }}" method="POST">
-                                                <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Diagnosticos.show', $diagnostico->id) }}"><i
-                                                        class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
-                                                <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Diagnosticos.edit', $diagnostico->id) }}"><i
-                                                        class="fa fa-fw fa-edit"></i> Editar Datos</a>
-                                                @csrf
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                <?php $i = 1; ?>
+                                    @foreach ($diagnosticos as $diagnostico)
+                                        <tr>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $diagnostico['diagnostico'] }}</td>
+                                            <td>{{ $diagnostico['detalle'] }}</td>
+                                            <td>
+                                                <form action="{{ route('Diagnosticos.destroy', $diagnostico['id']) }}" method="POST">
+                                                    <a class="btn btn-sm btn-success"
+                                                        href="{{ route('Diagnosticos.edit', $diagnostico['id']) }}"><i
+                                                            class="fa fa-fw fa-edit"></i></a>
+                                                    <button class="btn btn-sm btn-danger"
+                                                            type="submit"><i
+                                                            class="fa fa-fw fa-trash"></i></button>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {!! $diagnosticos->links() !!}
             </div>
         </div>
     </div>

@@ -125,8 +125,16 @@ class AlergiasController extends Controller
      * @param  \App\Models\Alergias  $alergias
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Alergias $alergias)
+    public function destroy($id)
     {
-        //
+        $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com//alergia/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Alergias')
+                ->with('success', 'Alergia eliminado satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 }
