@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mascotas extends Model
+class Geolocalizaciones extends Model
 {
     use HasFactory;
-    protected $table = 'qrv_pacientes';
+
     public $timestamps = true;
     static $rules = [
         'codIdentificacion' => 'required',

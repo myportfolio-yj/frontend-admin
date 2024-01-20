@@ -51,9 +51,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('Vacunas', 'App\Http\Controllers\VacunasController');
     Route::resource('Procedimientos', 'App\Http\Controllers\ProcedimientosController');
     Route::resource('Razas', 'App\Http\Controllers\RazasController');
+    //GEOLOCALIZACIION
+    Route::resource('Geolocalizacion', 'App\Http\Controllers\GeolocalizacionesController');
 
-    //Ruta para los graficos estadisticos
-    Route::resource('Graficos', 'App\Http\Controllers\Graficos');
     //Ruta para los mapas
     // Route::resource('Mapas', 'App\Http\Controllers\Mapas'); <--------------------
 
@@ -104,9 +104,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('GuardarProcedimiento', [App\Http\Controllers\ProcedimientosController::class, 'store'])->name('GuardarProcedimiento');
     Route::get('/Procedimientos', [App\Http\Controllers\ProcedimientosController::class, 'index'])->name('Procedimientos');
 
-    //Rutas para Acciones de la opcion razas
+    //Rutas para Acciones de la opcion Razas
     Route::post('GuardarRaza', [App\Http\Controllers\RazasController::class, 'store'])->name('GuardarRaza');
     Route::get('/Razas', [App\Http\Controllers\RazasController::class, 'index'])->name('Razas');
+
+    //Rutas para Acciones de la opcion Geolocalizacion
+    Route::post('GuardarGeolocalizacion', [App\Http\Controllers\GeolocalizacionesController::class, 'store'])->name('GuardarGeolocalizacion');
+    Route::get('/Geolocalizaciones', [App\Http\Controllers\GeolocalizacionesController::class, 'index'])->name('Geolocalizaciones');
 });
 
 
