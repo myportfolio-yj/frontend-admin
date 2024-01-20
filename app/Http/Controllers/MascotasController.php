@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alergias;
+use App\Models\Diagnosticos;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -36,9 +37,18 @@ class MascotasController extends Controller
      */
     public function create()
     {
-        $alergia=new Alergias();
-        $medico=User::pluck('name','id');
-        return view('alergias.create',compact('alergia','medico'));
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//mascota');
+        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//sexo');
+        if ($response->successful() ) {
+            $mascota = $response->json();
+            $tipoSex = $response2->json();
+            $tipoSex = Arr::pluck($tipoSex,'sexo','id');
+            return view('mascotas.create', compact('mascota','tipoSex'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -49,16 +59,23 @@ class MascotasController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Alergias::$rules);
-        $id = Auth::id();
-        $alergias['v_nombre'] = $request['v_nombre'];
-        $alergias['v_apuntes'] = $request['v_apuntes'];
-        $alergias['a_n_iduser'] =$id;
-        $alergias['n_estado'] = 1;
-        Alergias::create($alergias);
-
-        return redirect()->route('Alergias')
-            ->with('success', 'Alergia creada satisfactoriamente.');
+        request()->validate(Mascotas::$rules);
+        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com//mascota', [
+            'codIdentificacion' => $request->input('codIdentificacion'),
+            'nombre' => $request->input('nombre'),
+            'apellido' => $request->input('apellido'),
+            'fechaNacimiento' => $request->input('fechaNacimiento'),
+            'esterilizado' => $request->input('esterilizado'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Mascotas')
+                ->with('success', 'Diagnostico creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -69,9 +86,7 @@ class MascotasController extends Controller
      */
     public function show($id)
     {
-        $alergia = Alergias::find($id);
-
-        return view('alergias.show', compact('alergia'));
+        //
     }
 
     /**

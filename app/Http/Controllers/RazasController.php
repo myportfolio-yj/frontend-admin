@@ -43,9 +43,12 @@ class RazasController extends Controller
     public function create()
     {
         $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//raza');
+        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//especie');
         if ($response->successful() ) {
             $raza = $response->json();
-            return view('razas.create', compact('raza'));
+            $tipoEsp = $response2->json();
+            $tipoEsp = Arr::pluck($tipoEsp,'especie','id');
+            return view('razas.create', compact('raza','tipoEsp'));
         } else {
             // Manejar error
             $error = $response->body();
@@ -68,8 +71,8 @@ class RazasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Procedimientos')
-                ->with('success', 'Procedimiento creado con exito satisfactoriamente');
+            return redirect()->route('Razas')
+                ->with('success', 'Raza creado con exito satisfactoriamente');
         } else {
             // Manejar error
             $error = $response->body();

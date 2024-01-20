@@ -23,8 +23,5 @@ class Procedimientos extends Model
         'procedimiento' => 'required',
         'descripcion' => 'required',
     ];
-    public function medicos()
-    {
-        return $this->hasOne(User::class,'id','a_n_iduser');
-    }
+
 }

@@ -5,25 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pacientes extends Model
+class Mascotas extends Model
 {
     use HasFactory;
 
-    protected $table = 'qrv_pacientes';
     public $timestamps = true;
     static $rules = [
-        'v_identifica' => 'required',
-        'v_nombre' => 'required',
-        'v_apellido' => 'required',
-        'd_fecnaci' => 'required',
-        'n_sexo' => 'required',
-        'n_raza' => 'required',
-        'n_cliente' => 'required',
+        'codIdentificacion' => 'required',
+        'nombre' => 'required',
+        'apellido' => 'required',
+        'fechaNacimiento' => 'required',
+        'esterilizado' => 'required',
     ];
 
-    static $rules2 = [
-        'phone' => 'required|integer|min:900000000|max:999999999',
-    ];
 
     protected $fillable = [
         'v_identifica',

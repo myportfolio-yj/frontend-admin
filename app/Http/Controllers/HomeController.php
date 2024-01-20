@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pacientes;
+use App\Models\Mascotas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +20,7 @@ class HomeController extends Controller
 
     public function validarqr(Request $request){
         $qr=$request->qr_code;
-        $paciente = Pacientes::where('v_identifica', $qr)->first();
+        $paciente = Mascotas::where('v_identifica', $qr)->first();
         if( is_null($paciente) ) {
             return response()->json(['status' => 400,]);
         }
@@ -34,7 +34,7 @@ class HomeController extends Controller
     }
 
     public function validarqr2(string $identificador){
-        $paciente = Pacientes::where('v_identifica', $identificador)->first();
+        $paciente = Mascotas::where('v_identifica', $identificador)->first();
         if( is_null($paciente) ) {
             return response()->json(['status' => 400,]);
         }

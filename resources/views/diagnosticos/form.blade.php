@@ -2,12 +2,12 @@
     <div class="box-body">
         <div class="form-group">
             {{ Form::label('Nombre del diagnostico') }}
-            {{ Form::text('diagnostico', $diagnostico['diagnostico'], ['class' => 'form-control' . ($errors->has('diagnostico') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del diagnostico']) }}
+            {{ Form::text('diagnostico', $diagnostico['diagnostico'] ?? '', ['class' => 'form-control' . ($errors->has('diagnostico') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del diagnostico']) }}
             {!! $errors->first('diagnostico', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Descripcion del medicamento') }}
-            {{ Form::text('detalle', $diagnostico['detalle'], ['class' => 'form-control' . ($errors->has('detalle') ? ' is-invalid' : ''), 'placeholder' => 'Nombre de la Alergia']) }}
+            {{ Form::label('Descripcion del diagnostico') }}
+            {{ Form::text('detalle', $diagnostico['detalle'] ?? '', ['class' => 'form-control' . ($errors->has('detalle') ? ' is-invalid' : ''), 'placeholder' => 'Nombre de la Alergia']) }}
             {!! $errors->first('detalle', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>

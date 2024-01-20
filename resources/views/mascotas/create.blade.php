@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('template_title')
-    Crear Raza
+    Crear Mascota
 @endsection
 
 @section('content')
@@ -13,14 +13,14 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Crear Raza</span>
+                        <span class="card-title">Crear Mascota</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Razas.store') }}" role="form"
+                        <form method="POST" action="{{ route('Mascotas.store') }}" role="form"
                               enctype="multipart/form-data">
                             @csrf
 
-                            @include('razas.form')
+                            @include('mascotas.form')
 
                         </form>
                     </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Atenciones;
 use App\Models\Clientes;
 use App\Models\Historias;
-use App\Models\Pacientes;
+use App\Models\Mascotas;
 use App\Models\Vacunas;
 use Illuminate\Http\Request;
 
@@ -32,7 +32,7 @@ class AtencionesController extends Controller
     {
         $atencion=new Atenciones();
         $cliente=Clientes::pluck('v_nombre','id');
-        $paciente=Pacientes::pluck('v_nombre','id');
+        $paciente=Mascotas::pluck('v_nombre','id');
         $vacuna=Vacunas::pluck('v_nombre','id');
         return view('atenciones.create',compact('atencion','cliente','paciente','vacuna'));
     }

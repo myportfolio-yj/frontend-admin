@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Alert;
 use App\Models\Clientes;
-use App\Models\Pacientes;
+use App\Models\Mascotas;
 use App\Models\Razas;
 use App\Models\Sexo;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class PacientesController extends Controller
      */
     public function index()
     {
-        $pacientes = Pacientes::paginate();
+        $pacientes = Mascotas::paginate();
 
         return view('pacientes.index', compact('pacientes'))
             ->with('i', (request()->input('page', 1) - 1) * $pacientes->perPage());
@@ -33,7 +33,7 @@ class PacientesController extends Controller
      */
     public function create()
     {
-        $paciente = new Pacientes();
+        $paciente = new Mascotas();
 
         $sexo = Sexo::pluck('v_decripc', 'id');
         $raza = Razas::pluck('v_nombre', 'id');
@@ -43,7 +43,7 @@ class PacientesController extends Controller
         $primerCaracter = $user->detalle->clinica->v_nomclin[0];
         $month = date("m");
         $year = date("Y");
-        $data = Pacientes::latest('id')->first();
+        $data = Mascotas::latest('id')->first();
         if (is_null($data)) {
             $data = 1;
         } else {
@@ -63,9 +63,9 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Pacientes::$rules);
+        request()->validate(Mascotas::$rules);
 
-        $paciente = Pacientes::create($request->all());
+        $paciente = Mascotas::create($request->all());
 
         return redirect()->route('Pacientes')
             ->with('success', 'Paciente creado satisfactoriamente.');
@@ -74,24 +74,24 @@ class PacientesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Pacientes $pacientes
+     * @param \App\Models\Mascotas $pacientes
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $paciente = Pacientes::find($id);
+        $paciente = Mascotas::find($id);
         return view('pacientes.show', compact('paciente'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Pacientes $pacientes
+     * @param \App\Models\Mascotas $pacientes
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $paciente = Pacientes::find($id);
+        $paciente = Mascotas::find($id);
         $sexo = Sexo::pluck('v_decripc', 'id');
         $raza = Razas::pluck('v_nombre', 'id');
         $cliente = Clientes::pluck('v_nombre', 'id');
@@ -102,13 +102,13 @@ class PacientesController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Pacientes $pacientes
+     * @param \App\Models\Mascotas $pacientes
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        request()->validate(Pacientes::$rules);
-        $paciente = Pacientes::find($id);
+        request()->validate(Mascotas::$rules);
+        $paciente = Mascotas::find($id);
         $paciente->update($request->all());
         return redirect()->route('Pacientes')
             ->with('success', 'Cliente actualizado satisfactoriamente');
@@ -117,26 +117,26 @@ class PacientesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Pacientes $pacientes
+     * @param \App\Models\Mascotas $pacientes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pacientes $pacientes)
+    public function destroy(Mascotas $pacientes)
     {
         //
     }
 
     public function noLogueado($id)
     {
-        $paciente = Pacientes::find($id);
+        $paciente = Mascotas::find($id);
         return view('pacienteNoLogueado.show', compact('paciente'));
     }
 
     public function sendAlert(Request $request)
     {
-        request()->validate(Pacientes::$rules2);
+        request()->validate(Mascotas::$rules2);
         $identificador = $request->identificador;
         $phone = $request->phone;
-        $paciente = Pacientes::where('v_identifica', $identificador)->first();
+        $paciente = Mascotas::where('v_identifica', $identificador)->first();
         $cliente = $paciente->cliente;
         Mail::to($cliente->v_correo)->send(new Alert($cliente->v_correo, compact('cliente', 'phone', 'paciente')));
         return redirect()->route('noLogueado', ['id' => $paciente->id]);

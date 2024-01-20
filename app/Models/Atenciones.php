@@ -26,7 +26,7 @@ class Atenciones extends Model
     }
     public function paciente()
     {
-        return $this->hasOne(Pacientes::class,'id','n_paciente');
+        return $this->hasOne(Mascotas::class,'id','n_paciente');
     }
     public function historia(){
         return $this->belongsTo(Historias::class, 'id', 'n_atencion');

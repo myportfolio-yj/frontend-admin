@@ -43,7 +43,7 @@ class DiagnosticosController extends Controller
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico');
         if ($response->successful() ) {
             $diagnostico = $response->json();
-            return view('procedimientos.create', compact('diagnostico'));
+            return view('diagnosticos.create', compact('diagnostico'));
         } else {
             // Manejar error
             $error = $response->body();
@@ -117,7 +117,7 @@ class DiagnosticosController extends Controller
         request()->validate(Diagnosticos::$rules);
         $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico/'.$id, [
             'diagnostico' => $request->input('diagnostico'),
-            'detalle' => $request->input('diagnostico'),
+            'detalle' => $request->input('detalle'),
 
         ]);
         if ($response->successful()) {

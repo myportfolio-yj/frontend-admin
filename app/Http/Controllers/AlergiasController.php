@@ -39,10 +39,10 @@ class AlergiasController extends Controller
      */
     public function create()
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//alergia');
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/alergia');
         if ($response->successful() ) {
             $alergia = $response->json();
-            return view('alergias.edit', compact('alergia'));
+            return view('alergias.create', compact('alergia'));
         } else {
             // Manejar error
             $error = $response->body();
@@ -59,7 +59,7 @@ class AlergiasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Alergias::$rules);
-        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//alergia', [
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/alergia', [
             'alergia' => $request->input('alergia'),
         ]);
         if ($response->successful()) {

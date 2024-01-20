@@ -57,10 +57,11 @@
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('Mascotas.edit', $mascota['id']) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>
-                                                <a class="btn btn-sm btn-danger"
-                                                   href="{{ route('Mascotas.edit', $mascota['id']) }}"><i
-                                                        class="fa fa-fw fa-trash"></i></a>
+                                                <button class="btn btn-sm btn-danger"
+                                                        type="submit"><i
+                                                        class="fa fa-fw fa-trash"></i></button>
                                                 @csrf
+                                                @method('DELETE')
                                             </form>
                                         </td>
                                     </tr>

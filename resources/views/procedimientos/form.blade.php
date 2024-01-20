@@ -2,12 +2,12 @@
     <div class="box-body">
         <div class="form-group">
             {{ Form::label('Nombre del procedimiento') }}
-            {{ Form::text('procedimiento', $alergia['alergia'], ['class' => 'form-control' . ($errors->has('procedimiento') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del Procedimiento']) }}
-            {!! $errors->first('alergia', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::text('procedimiento', $procedimiento['procedimiento'] ?? '', ['class' => 'form-control' . ($errors->has('procedimiento') ? ' is-invalid' : ''), 'placeholder' => 'Nombre del Procedimiento']) }}
+            {!! $errors->first('procedimiento', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('Descripcion del procedimiento') }}
-            {{ Form::text('descripcion', $alergia['descripcion'], ['class' => 'form-control' . ($errors->has('descripcion') ? ' is-invalid' : ''), 'placeholder' => 'Descripcion del procedimiento']) }}
+            {{ Form::text('descripcion', $procedimiento['descripcion'] ?? '', ['class' => 'form-control' . ($errors->has('descripcion') ? ' is-invalid' : ''), 'placeholder' => 'Descripcion del procedimiento']) }}
             {!! $errors->first('descripcion', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>

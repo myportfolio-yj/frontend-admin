@@ -42,7 +42,7 @@ class MedicamentosController extends Controller
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento');
         if ($response->successful() ) {
             $medicamento = $response->json();
-            return view('medicamentos.edit', compact('medicamento'));
+            return view('medicamentos.create', compact('medicamento'));
         } else {
             // Manejar error
             $error = $response->body();

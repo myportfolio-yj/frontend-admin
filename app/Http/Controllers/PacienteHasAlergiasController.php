@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Atenciones;
 use App\Models\Clientes;
-use App\Models\Pacientes;
+use App\Models\Mascotas;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Alergias;
 use App\Models\PacienteHasAlergias;

@@ -7,7 +7,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Nombre de la raza') }}
-            {{ Form::text('raza', $raza['raza'], ['class' => 'form-control' . ($errors->has('raza') ? ' is-invalid' : ''), 'placeholder' => 'Nombre de la raza']) }}
+            {{ Form::text('raza', $raza['raza'] ?? '', ['class' => 'form-control' . ($errors->has('raza') ? ' is-invalid' : ''), 'placeholder' => 'Nombre de la raza']) }}
             {!! $errors->first('raza', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>

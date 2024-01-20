@@ -2,7 +2,7 @@
     <div class="box-body">
         <div class="form-group">
             {{ Form::label('Nombre de la Alergia') }}
-            {{ Form::text('alergia', $alergia['alergia'], ['class' => 'form-control' . ($errors->has('alergia') ? ' is-invalid' : ''), 'placeholder' => 'Nombre de la Alergia']) }}
+            {{ Form::text('alergia', $alergia['alergia'] ?? '', ['class' => 'form-control' . ($errors->has('alergia') ? ' is-invalid' : ''), 'placeholder' => 'Nombre de la Alergia']) }}
             {!! $errors->first('alergia', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>
