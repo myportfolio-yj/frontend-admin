@@ -12,9 +12,9 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Razas.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Razas.create') }}" class="btn btn-light btn-lg float-right"
                                     data-placement="left">
-                                    {{ __('Crear Nueva Raza') }}
+                                    <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
                         </div>

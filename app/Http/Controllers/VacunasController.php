@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alergias;
 use App\Models\Medicamentos;
+use App\Models\Procedimientos;
 use App\Models\User;
 use App\Models\Vacunas;
 use Carbon\Carbon;
@@ -38,9 +39,15 @@ class VacunasController extends Controller
      */
     public function create()
     {
-        $vacuna=new Vacunas();
-        $medico=User::pluck('name','id');
-        return view('vacunas.create',compact('vacuna','medico'));
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna');
+        if ($response->successful() ) {
+            $vacuna = $response->json();
+            return view('vacunas.create', compact('vacuna'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
 
     }
 
@@ -53,16 +60,19 @@ class VacunasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Vacunas::$rules);
-        $id = Auth::id();
-        $vacunas['v_nombre'] = $request['v_nombre'];
-        $vacunas['v_apuntes'] = $request['v_apuntes'];
-        $vacunas['n_expira'] = $request['n_expira'];
-        $vacunas['a_n_iduser'] =$id; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $vacunas['n_estado'] = 1;
-        Vacunas::create($vacunas);
-
-        return redirect()->route('Vacunas')
-            ->with('success', 'Vacuna creada satisfactoriamente.');
+        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna', [
+            'vacuna' => $request->input('vacuna'),
+            'duracion ' => $request->input('duracion'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Vacunas')
+                ->with('success', 'Vacuna creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -73,9 +83,7 @@ class VacunasController extends Controller
      */
     public function show($id)
     {
-        $vacuna = Vacunas::find($id);
-
-        return view('vacunas.show', compact('vacuna'));
+      //
     }
 
     /**
@@ -128,8 +136,16 @@ class VacunasController extends Controller
      * @param  \App\Models\Vacunas  $vacunas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vacunas $vacunas)
+    public function destroy($id)
     {
-        //
+        $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Vacunas')
+                ->with('success', 'Vacuna eliminado satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 }

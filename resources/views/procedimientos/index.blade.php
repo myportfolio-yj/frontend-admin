@@ -17,7 +17,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Procedimientos.create') }}" class="btn btn-primary btn-lg float-right"
+                                <a href="{{ route('Procedimientos.create') }}" class="btn btn-light btn-lg float-right"
                                    data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
@@ -37,33 +37,31 @@
                                 <tr>
                                     <th>#</th>
 
-                                    <th>Nombre</th>
+                                    <th>Procedimiento</th>
                                     <th>Descripcion</th>
-                                    <th>Notificacion</th>
-                                    <th>Especialista</th>
 
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <?php $i = 1; ?>
                                 @foreach ($procedimientos as $procedimiento)
                                     <tr>
-                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $i++ }}</td>
 
-                                        <td>{{ $procedimiento->v_nombre }}</td>
-                                        <td>{{ $procedimiento->v_apuntes }}</td>
-                                        <td>{{ $procedimiento->n_notifica }}</td>
-                                        <td>{{ $procedimiento->medicos->name}}</td>
+                                        <td>{{ $procedimiento['procedimiento'] }}</td>
+                                        <td>{{ $procedimiento['descripcion'] }}</td>
 
                                         <td>
-                                            <form action="{{ route('Procedimientos.destroy', $procedimiento->id) }}" method="POST">
-                                                <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Procedimientos.show', $procedimiento->id) }}"><i
-                                                        class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
+                                            <form action="{{ route('Procedimientos.destroy', $procedimiento['id'] ) }}" method="POST">
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Procedimientos.edit', $procedimiento->id) }}"><i
-                                                        class="fa fa-fw fa-edit"></i> Editar Datos</a>
+                                                   href="{{ route('Procedimientos.edit', $procedimiento['id'] ) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <button class="btn btn-sm btn-danger"
+                                                        type="submit"><i
+                                                        class="fa fa-fw fa-trash"></i></button>
                                                 @csrf
+                                                @method('DELETE')
                                             </form>
                                         </td>
                                     </tr>
@@ -73,7 +71,6 @@
                         </div>
                     </div>
                 </div>
-                {!! $procedimientos->links() !!}
             </div>
         </div>
     </div>

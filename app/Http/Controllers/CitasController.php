@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alergias;
 use App\Models\Clientes;
+use App\Models\Diagnosticos;
 use App\Models\TipoDoc;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,9 +40,15 @@ class CitasController extends Controller
      */
     public function create()
     {
-        $cliente=new Clientes();
-        $tipo=TipoDoc::pluck('v_decripc','id');
-        return view('clientes.create',compact('cliente','tipo'));
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//cita');
+        if ($response->successful() ) {
+            $cita = $response->json();
+            return view('citas.create', compact('cita'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -52,12 +59,25 @@ class CitasController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Clientes::$rules);
-
-        $cliente = Clientes::create($request->all());
-
-        return redirect()->route('Clientes')
-            ->with('success', 'Cliente creado satisfactoriamente.');
+        request()->validate(Citas::$rules);
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//cita', [
+            'idCliente' => $request->input('idCliente'),
+            'idMascota' => $request->input('idMascota'),
+            'idTipoCita' => $request->input('idTipoCita'),
+            'fecha' => $request->input('fecha'),
+            'turno' => $request->input('turno'),
+            'observaciones' => $request->input('observaciones'),
+            'atencionesPeluqueria' => $request->input('atencionesPeluqueria'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Citas')
+                ->with('success', 'Cita creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -68,8 +88,7 @@ class CitasController extends Controller
      */
     public function show($id)
     {
-        $cliente = Clientes::find($id);
-        return view('clientes.show', compact('cliente'));
+
     }
 
     /**
@@ -80,7 +99,7 @@ class CitasController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/'.$id);
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//cita/'.$id);
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
         if ($response->successful() && $response2->successful() ) {
             $cliente = $response->json();
@@ -104,19 +123,19 @@ class CitasController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate(Clientes::$rules);
-        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/'.$id, [
-            'nombres' => $request->input('nombres'),
-            'apellidos' => $request->input('apellidos'),
-            'celular' => $request->input('celular'),
-            'fijo' => $request->input('fijo'),
-            'email' => $request->input('email'),
-            'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento')
+        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//cita/'.$id, [
+            'idCliente' => $request->input('idCliente'),
+            'idMascota' => $request->input('idMascota'),
+            'idTipoCita' => $request->input('idTipoCita'),
+            'fecha' => $request->input('fecha'),
+            'turno' => $request->input('turno'),
+            'observaciones' => $request->input('observaciones'),
+            'atencionesPeluqueria' => $request->input('atencionesPeluqueria')
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Clientes')
-                ->with('success', 'Cliente actualizado satisfactoriamente');
+            return redirect()->route('Citas')
+                ->with('success', 'Cita actualizado satisfactoriamente');
         } else {
             // Manejar error
             $error = $response->body();
@@ -130,8 +149,16 @@ class CitasController extends Controller
      * @param  \App\Models\Clientes  $clientes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Clientes $clientes)
+    public function destroy($id)
     {
-        //
+        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com//cita/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Citas')
+                ->with('success', 'Cita eliminado satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 }

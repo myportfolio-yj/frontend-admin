@@ -42,10 +42,15 @@ class RazasController extends Controller
      */
     public function create()
     {
-        $raza=new Razas();
-        $medico=User::pluck('name','id');
-        $especie=Especies::pluck('v_decripc','id');
-        return view('razas.create',compact('raza','medico','especie'));
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//raza');
+        if ($response->successful() ) {
+            $raza = $response->json();
+            return view('razas.create', compact('raza'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -57,16 +62,19 @@ class RazasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Razas::$rules);
-        $id = Auth::id();
-        $razas['v_nombre'] = $request['v_nombre'];
-        $razas['v_apuntes'] = $request['v_apuntes'];
-        $razas['n_especie'] = $request['n_especie'];
-        $razas['a_n_iduser'] = $id; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $razas['n_estado'] = 1;
-        Razas::create($razas);
-
-        return redirect()->route('Razas')
-            ->with('success', 'Raza creada satisfactoriamente.');
+        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com//raza', [
+            'raza' => $request->input('raza'),
+            'especie ' => $request->input('especie'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Procedimientos')
+                ->with('success', 'Procedimiento creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -77,8 +85,7 @@ class RazasController extends Controller
      */
     public function show($id)
     {
-        $raza = Razas::find($id);
-        return view('razas.show', compact('raza'));
+        //
     }
 
     /**

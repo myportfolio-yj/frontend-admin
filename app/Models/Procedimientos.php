@@ -20,9 +20,8 @@ class Procedimientos extends Model
         'n_notifica',
     ];
     static $rules = [
-        'v_nombre' => 'required',
-        'v_apuntes' => 'required',
-        'n_notifica' => 'required',
+        'procedimiento' => 'required',
+        'descripcion' => 'required',
     ];
     public function medicos()
     {

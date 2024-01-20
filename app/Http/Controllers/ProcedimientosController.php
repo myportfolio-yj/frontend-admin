@@ -9,6 +9,7 @@ use App\Models\Vacunas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class ProcedimientosController extends Controller
 {
@@ -19,10 +20,15 @@ class ProcedimientosController extends Controller
      */
     public function index()
     {
-        $procedimientos = Procedimientos::paginate();
-        return view('procedimientos.index', compact('procedimientos'))
-            ->with('i', (request()->input('page', 1) - 1) * $procedimientos->perPage());
-
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//procedimiento');
+        if ($response->successful()) {
+            $datos = $response->json();
+            return view('procedimientos.index') ->with('procedimientos',$datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -32,10 +38,15 @@ class ProcedimientosController extends Controller
      */
     public function create()
     {
-        $procedimiento=new Procedimientos();
-        $medico=User::pluck('name','id');
-        return view('procedimientos.create',compact('procedimiento','medico'));
-
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//procedimiento');
+        if ($response->successful() ) {
+            $procedimiento = $response->json();
+            return view('procedimientos.create', compact('procedimiento'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -47,18 +58,19 @@ class ProcedimientosController extends Controller
     public function store(Request $request)
     {
         request()->validate(Procedimientos::$rules);
-        $id = Auth::id();
-        $procedimientos['v_nombre'] = $request['v_nombre'];
-        $procedimientos['v_apuntes'] = $request['v_apuntes'];
-        $procedimientos['n_notifica'] = $request['n_notifica'];
-        $procedimientos['a_n_iduser'] = $id; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $procedimientos['n_estado'] = 1;
-
-
-        Procedimientos::create($procedimientos);
-
-        return redirect()->route('Procedimientos')
-            ->with('success', 'Procedimiento creado satisfactoriamente.');
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//procedimiento', [
+            'procedimiento' => $request->input('procedimiento'),
+            'descripcion ' => $request->input('descripcion'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Procedimientos')
+                ->with('success', 'Procedimiento creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -69,9 +81,7 @@ class ProcedimientosController extends Controller
      */
     public function show($id)
     {
-        $procedimiento = Procedimientos::find($id);
-
-        return view('procedimientos.show', compact('procedimiento'));
+        //
     }
 
     /**
@@ -82,10 +92,15 @@ class ProcedimientosController extends Controller
      */
     public function edit($id)
     {
-        $procedimiento = Procedimientos::find($id);
-
-        $medico = User::pluck('name','id');
-        return view('procedimientos.edit', compact('procedimiento','medico'));
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//procedimiento/'.$id);
+        if ($response->successful() ) {
+            $procedimiento = $response->json();
+            return view('procedimientos.edit', compact('procedimiento'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
 
     }
 
@@ -98,17 +113,21 @@ class ProcedimientosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ido = Auth::id();
         request()->validate(Procedimientos::$rules);
-        $procedimiento = Procedimientos::find($id);
-        $procedimiento['v_nombre'] = $request['v_nombre'];
-        $procedimiento['v_apuntes'] = $request['v_apuntes'];
-        $procedimiento['n_notifica'] = $request['n_notifica'];
-        $procedimiento['a_n_iduser'] = $ido; /*** Este valor hay que cambiarlo por el usuario autenticado**/
-        $procedimiento['n_estado'] = 1;
-        $procedimiento->update($request->all());
-        return redirect()->route('Procedimientos')
-            ->with('success', 'Procedimiento actualizado satisfactoriamente');
+        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//procedimiento/'.$id, [
+            'procedimiento' => $request->input('procedimiento'),
+            'descripcion' => $request->input('descripcion'),
+
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Procedimientos')
+                ->with('success', 'Procedimiento actualizada satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -117,8 +136,16 @@ class ProcedimientosController extends Controller
      * @param  \App\Models\Procedimientos  $procedimientos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Procedimientos $procedimientos)
+    public function destroy($id)
     {
-        //
+        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com//procedimiento/'.$id);
+        if ($response->successful()) {
+            return redirect()->route('Procedimientos')
+                ->with('success', 'Procedimiento eliminado satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 }

@@ -117,7 +117,7 @@ class MedicamentosController extends Controller
         request()->validate(Medicamentos::$rules);
         $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento/'.$id, [
             'medicamento' => $request->input('medicamento'),
-            'descripcion' => $request->input('medicamento'),
+            'descripcion' => $request->input('descripcion'),
 
         ]);
         if ($response->successful()) {

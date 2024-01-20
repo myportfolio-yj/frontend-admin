@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('template_title')
-    Crear Cliente
+    Crear Cita
 @endsection
 
 @section('content')
@@ -13,13 +13,12 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Crear Cliente</span>
+                        <span class="card-title">Crear Cita</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Clientes.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('Citas.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
-
-                            @include('clientes.form')
+                            @include('citas.form')
 
                         </form>
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alergias;
+use App\Models\Medicamentos;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,9 +39,15 @@ class AlergiasController extends Controller
      */
     public function create()
     {
-        $alergia=new Alergias();
-        $medico=User::pluck('name','id');
-        return view('alergias.create',compact('alergia','medico'));
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//alergia');
+        if ($response->successful() ) {
+            $alergia = $response->json();
+            return view('alergias.edit', compact('alergia'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -52,15 +59,18 @@ class AlergiasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Alergias::$rules);
-        $id = Auth::id();
-        $alergias['v_nombre'] = $request['v_nombre'];
-        $alergias['v_apuntes'] = $request['v_apuntes'];
-        $alergias['a_n_iduser'] =$id;
-        $alergias['n_estado'] = 1;
-        Alergias::create($alergias);
-
-        return redirect()->route('Alergias')
-            ->with('success', 'Alergia creada satisfactoriamente.');
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//alergia', [
+            'alergia' => $request->input('alergia'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Alergias')
+                ->with('success', 'Alergia creado con exito satisfactoriamente');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -71,9 +81,7 @@ class AlergiasController extends Controller
      */
     public function show($id)
     {
-        $alergia = Alergias::find($id);
-
-        return view('alergias.show', compact('alergia'));
+        //
     }
 
     /**

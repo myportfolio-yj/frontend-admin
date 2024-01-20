@@ -40,13 +40,13 @@ class DiagnosticosController extends Controller
      */
     public function create()
     {
-        $response2 = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico');
-        if ($response2->successful() ) {
-            $datos = $response2->json();
-            return view('peluqueros.create') ->with('diagnostico',$datos);
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico');
+        if ($response->successful() ) {
+            $diagnostico = $response->json();
+            return view('procedimientos.create', compact('diagnostico'));
         } else {
             // Manejar error
-            $error = $response2->body();
+            $error = $response->body();
             return dd($error);
         }
     }
@@ -59,22 +59,15 @@ class DiagnosticosController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Peluqueros::$rules);
-        $response = Http::post('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero', [
-            'nombres' => $request->input('nombres'),
-            'apellidos' => $request->input('apellidos'),
-            'celular' => $request->input('celular'),
-            'fijo' => $request->input('fijo'),
-            'email' => $request->input('email'),
-            'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento'),
-            'password' => $request->input('documento'),
-            'confirmarPassword' => $request->input('documento')
+        request()->validate(Diagnosticos::$rules);
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico', [
+            'diagnostico' => $request->input('diagnostico'),
+            'detalle' => $request->input('detalle'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Peluqueros')
-                ->with('success', 'Peluquero creado con exito satisfactoriamente');
+            return redirect()->route('Diagnosticos')
+                ->with('success', 'Diagnostico creado con exito satisfactoriamente');
         } else {
             // Manejar error
             $error = $response->body();

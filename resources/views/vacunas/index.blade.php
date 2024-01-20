@@ -12,9 +12,9 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Vacunas.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('Vacunas.create') }}" class="btn btn-light btn-lg float-right"
                                     data-placement="left">
-                                    {{ __('Crear Nueva Vacuna') }}
+                                    <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
                         </div>
