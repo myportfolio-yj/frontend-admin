@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Providers\ApiUserProvider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,7 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
+        Auth::provider('api', function ($app, array $config) {
+            return new ApiUserProvider();
+        });
         //
     }
 }
