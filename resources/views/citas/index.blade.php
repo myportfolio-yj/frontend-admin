@@ -50,7 +50,7 @@
                                         <td> - </td>
                                         <td>{{ $cita['tipoCita'] }} </td>
                                         <td> - </td>
-                                        <td>{{ $cita['cliente']['id'] }} </td>
+                                        <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
                                             <form action="{{ route('Citas.destroy', $cita['id']) }}" method="POST">
                                                 <a class="btn btn-sm btn-primary "
@@ -104,7 +104,7 @@
                                         <td> - </td>
                                         <td>{{ $cita['tipoCita'] }} </td>
                                         <td> - </td>
-                                        <td>{{ $cita['cliente']['id'] }} </td>
+                                        <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
                                         </td>
                                     </tr>
