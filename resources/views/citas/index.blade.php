@@ -52,10 +52,13 @@
                                         <td> - </td>
                                         <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
+                                            <form action="@if($cita['tipoCita'] == 'Cita Veterinaria'){{ route('veterinariaCheckin', $cita['id']) }}@else{{ route('peluqueriaCheckin', $cita['id']) }}" method="POST">
+                                                <button class="btn btn-sm btn-primary"
+                                                        type="submit"><i
+                                                        class="fa fa-fw fa-book-medical"></i></button>
+                                                @csrf
+                                            </form>
                                             <form action="{{ route('Citas.destroy', $cita['id']) }}" method="POST">
-                                                <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Citas.show', $cita['id']) }}"><i
-                                                        class="fa fa-fw fa-book-medical"></i></a>
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('Citas.edit', $cita['id']) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>

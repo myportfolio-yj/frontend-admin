@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
     //INGRESOS
     Route::resource('Mascotas', 'App\Http\Controllers\MascotasController');
     Route::resource('Citas', 'App\Http\Controllers\CitasController');
+    Route::post('/peluqueria/checkin', [App\Http\Controllers\CitasController::class, 'peluqueriaCheckIn'])->name('peluqueriaCheckin');
+    Route::post('/veterinaria/checkin', [App\Http\Controllers\CitasController::class, 'veterinariaCheckIn'])->name('veterinariaCheckin');
     Route::resource('Atenciones', 'App\Http\Controllers\AtencionesController');
     Route::resource('Historias', 'App\Http\Controllers\HistoriasController');
     Route::resource('Recetas', 'App\Http\Controllers\RecetasController');

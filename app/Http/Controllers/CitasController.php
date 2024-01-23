@@ -33,6 +33,14 @@ class CitasController extends Controller
         }
     }
 
+    public function peluqueriaCheckIn($id) {
+        dd($id);
+    }
+
+    public function veterinariaCheckIn($id) {
+        dd($id);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
