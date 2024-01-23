@@ -79,47 +79,6 @@
                             </table>
                         </div>
                     </div>
-                    <hr>
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="card_title">
-                                {{ __('Historio de citas') }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Fecha de cita / Turno</th>
-                                    <th>Nombre de la mascota</th>
-                                    <th>Especie / Raza </th>
-                                    <th>Tipo de cita</th>
-                                    <th>Tipo atención</th>
-                                    <th>Dueño de la mascota</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php $i = 1; ?>
-                                @foreach ($citas as $cita)
-                                    <tr>
-                                        <td>{{ $i++ }}</td>
-                                        <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
-                                        <td>{{ $cita['nombreMascota'] }}</td>
-                                        <td> - </td>
-                                        <td>{{ $cita['tipoCita'] }} </td>
-                                        <td> - </td>
-                                        <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
-                                        <td>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
