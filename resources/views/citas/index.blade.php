@@ -52,7 +52,11 @@
                                         <td> - </td>
                                         <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
-                                            <form action="@if($cita['tipoCita'] == 'Cita Veterinaria'){{ route('veterinariaCheckin', $cita['id']) }}@else{{ route('peluqueriaCheckin', $cita['id']) }}" method="POST">
+                                            <form action=@if($cita['tipoCita'] == 'Cita Veterinaria')
+                                                "{{ route('veterinariaCheckin', $cita['id']) }}"
+                                            @else
+                                                "{{ route('peluqueriaCheckin', $cita['id']) }}"
+                                            method="POST">
                                                 <button class="btn btn-sm btn-primary"
                                                         type="submit"><i
                                                         class="fa fa-fw fa-book-medical"></i></button>
