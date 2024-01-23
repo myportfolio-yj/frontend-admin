@@ -25,7 +25,6 @@ class CitasController extends Controller
         if ($responseCitas->successful() && $responseCitasVigentes->successful()) {
             $citas = $responseCitas->json();
             $citasVigentes = $responseCitasVigentes->json();
-            dd($citas, $citasVigentes);
             return view('citas.index', compact('citas','citasVigentes'));
         } else {
             // Manejar error
