@@ -21,7 +21,7 @@ class AlergiasController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//alergia');
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/alergia');
         if ($response->successful()) {
             $datos = $response->json();
             return view('alergias.index') ->with('alergias',$datos);
@@ -64,7 +64,7 @@ class AlergiasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Alergias')
+            return redirect()->route('alergias')
                 ->with('success', 'Alergia creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -92,7 +92,7 @@ class AlergiasController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//alergia/'.$id);
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/alergia/'.$id);
         if ($response->successful() ) {
             $alergia = $response->json();
             return view('alergias.edit', compact('alergia'));
@@ -113,12 +113,12 @@ class AlergiasController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate(Alergias::$rules);
-        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com//alergia/'.$id, [
+        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com/alergia/'.$id, [
             'alergia' => $request->input('alergia'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Alergias')
+            return redirect()->route('alergias')
                 ->with('success', 'Alergia actualizada satisfactoriamente');
         } else {
             // Manejar error
@@ -135,9 +135,9 @@ class AlergiasController extends Controller
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com//alergia/'.$id);
+        $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com/alergia/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Alergias')
+            return redirect()->route('alergias')
                 ->with('success', 'Alergia eliminado satisfactoriamente');
         } else {
             // Manejar error

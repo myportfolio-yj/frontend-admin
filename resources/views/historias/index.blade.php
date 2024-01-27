@@ -17,7 +17,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Atenciones.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('atenciones.create') }}" class="btn btn-primary btn-sm float-right"
                                    data-placement="left">
                                     {{ __('Crear Nueva Atencion') }}
                                 </a>
@@ -55,17 +55,16 @@
                                         <td>Ninguna</td>
                                         <td>No</td>
                                         <td>
-                                            <form action="{{ route('Atenciones.destroy', $atencion->id) }}" method="POST">
+                                            <form action="{{ route('atenciones.destroy', $atencion->id) }}" method="POST">
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Atenciones.show', $atencion->id) }}"><i
+                                                   href="{{ route('atenciones.show', $atencion->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i> Editar Atencion</a>
                                                 <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Atenciones.show', $atencion->id) }}"><i
+                                                   href="{{ route('atenciones.show', $atencion->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i> Añadir Alergia</a>
                                                 <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Historias.create', $atencion->id) }}"><i
+                                                   href="{{ route('historias.create', $atencion->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i> Añadir Historia</a>
-
                                                 @csrf
                                             </form>
                                         </td>

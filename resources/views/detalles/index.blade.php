@@ -17,7 +17,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Detalles.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('detalles.create') }}" class="btn btn-primary btn-sm float-right"
                                     data-placement="left">
                                     {{ __('Crear Nuevo Medico') }}
                                 </a>
@@ -56,12 +56,12 @@
                                             <td>{{ $detalle->perfiles->v_apuntes}}</td>
 
                                             <td>
-                                                <form action="{{ route('Detalles.destroy', $detalle->id) }}" method="POST">
+                                                <form action="{{ route('detalles.destroy', $detalle->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('Detalles.show', $detalle->id) }}"><i
+                                                        href="{{ route('detalles.show', $detalle->id) }}"><i
                                                             class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('Detalles.edit', $detalle->id) }}"><i
+                                                        href="{{ route('detalles.edit', $detalle->id) }}"><i
                                                             class="fa fa-fw fa-edit"></i> Editar Datos</a>
                                                     @csrf
                                                 </form>

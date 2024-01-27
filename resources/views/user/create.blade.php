@@ -16,7 +16,7 @@
                         <span class="card-title">Añadir Nuevo Medico</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Medicos.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('medicos.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('user.form')

@@ -16,10 +16,9 @@
                         <span class="card-title">Crear Cita</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Citas.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('citas.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
                             @include('citas.form')
-
                         </form>
                     </div>
                 </div>

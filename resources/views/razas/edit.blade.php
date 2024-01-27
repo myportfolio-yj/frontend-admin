@@ -12,7 +12,7 @@
                         <span class="card-title">Editar Raza</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Razas.update', $raza['id']) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('razas.update', $raza['id']) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

@@ -74,7 +74,7 @@ class UserController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Medicos.index')
+            return redirect()->route('medicos.index')
                 ->with('success', 'Medico creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -142,7 +142,7 @@ class UserController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Medicos.index')
+            return redirect()->route('medicos.index')
                 ->with('success', 'Medico actualizado satisfactoriamente');
         } else {
             // Manejar error
@@ -160,7 +160,7 @@ class UserController extends Controller
     {
         $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Medicos.index')
+            return redirect()->route('medicos.index')
                 ->with('success', 'Usuario eliminado satisfactoriamente');
         } else {
             // Manejar error

@@ -12,7 +12,7 @@
                         <span class="card-title">Editar Procedimiento</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Procedimientos.update', $procedimiento['id']) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('procedimientos.update', $procedimiento['id']) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
                             @include('procedimientos.form')

@@ -12,7 +12,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Vacunas.create') }}" class="btn btn-light btn-lg float-right"
+                                <a href="{{ route('vacunas.create') }}" class="btn btn-light btn-lg float-right"
                                     data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
@@ -43,12 +43,12 @@
                                             <td>{{ $vacuna['vacuna'] }}</td>
                                             <td>{{ $vacuna['duracion'] }}</td>
                                             <td>
-                                                <form action="{{ route('Vacunas.destroy', $vacuna['id']) }}" method="POST">
+                                                <form action="{{ route('vacunas.destroy', $vacuna['id']) }}" method="POST">
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('Vacunas.edit', $vacuna['id']) }}"><i
+                                                        href="{{ route('vacunas.edit', $vacuna['id']) }}"><i
                                                             class="fa fa-fw fa-edit"></i></a>
                                                     <a class="btn btn-sm btn-danger"
-                                                       href="{{ route('Vacunas.edit', $vacuna['id']) }}"><i
+                                                       href="{{ route('vacunas.edit', $vacuna['id']) }}"><i
                                                             class="fa fa-fw fa-trash"></i></a>
                                                     @csrf
                                                 </form>

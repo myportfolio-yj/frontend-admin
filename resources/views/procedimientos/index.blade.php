@@ -17,7 +17,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Procedimientos.create') }}" class="btn btn-light btn-lg float-right"
+                                <a href="{{ route('procedimientos.create') }}" class="btn btn-light btn-lg float-right"
                                    data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
@@ -53,9 +53,9 @@
                                         <td>{{ $procedimiento['descripcion'] }}</td>
 
                                         <td>
-                                            <form action="{{ route('Procedimientos.destroy', $procedimiento['id'] ) }}" method="POST">
+                                            <form action="{{ route('procedimientos.destroy', $procedimiento['id'] ) }}" method="POST">
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Procedimientos.edit', $procedimiento['id'] ) }}"><i
+                                                   href="{{ route('procedimientos.edit', $procedimiento['id'] ) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>
                                                 <button class="btn btn-sm btn-danger"
                                                         type="submit"><i

@@ -47,7 +47,7 @@ class DetallesController extends Controller
     {
         $detalle = detalles::create($request->all());
 
-        return redirect()->route('Detalles')
+        return redirect()->route('detalles')
             ->with('success', 'Detalles de Usuario creados satisfactoriamente.');
     }
 
@@ -71,7 +71,7 @@ class DetallesController extends Controller
     public function edit($id)
     {
         $detalle = detalles::find($id);
-       
+
         $medico = User::pluck('name','id');
         $clinica = Clinicas::pluck('v_nomclin','id');
         $perfil = Perfiles::pluck('v_apuntes','id');
@@ -90,7 +90,7 @@ class DetallesController extends Controller
     {
         $detalle = detalles::find($id);
         $detalle->update($request->all());
-        return redirect()->route('Detalles')
+        return redirect()->route('detalles')
             ->with('success', 'Detalles actualizados satisfactoriamente');
     }
 

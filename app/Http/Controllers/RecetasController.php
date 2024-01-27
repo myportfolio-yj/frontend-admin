@@ -6,6 +6,8 @@ use App\Models\Atenciones;
 use App\Models\Medicamentos;
 use App\Models\Recetas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 
 class RecetasController extends Controller
 {
@@ -27,11 +29,27 @@ class RecetasController extends Controller
     public function create()
     {
         $id = $_GET['id'];
-        $atencion = Atenciones::find($id);
-        $medicamentos = Medicamentos::pluck('v_nombre','id');
-        $recetas = Recetas::where('n_atencion', $atencion->id)->get();
-        $receta = new Recetas();
-        return view('Recetas.create',compact('id', 'medicamentos', 'receta', 'recetas'));
+        $response = Http::get('http://api3.v1.appomsv.com/cita/'.$id);
+        if ($response->successful()) {
+            $response = $response->json();
+            $medicamentos = Http::get('http://api3.v1.appomsv.com/medicamento');
+            if ($medicamentos->successful()) {
+                $medicamentos = $medicamentos->json();
+                $medicamentos = Arr::pluck($medicamentos,'medicamento','id');
+            } else {
+                // Manejar error
+                $error = $response->body();
+                return dd($error);
+            }
+            // $recetas = Recetas::where('n_atencion', $atencion->id)->get();
+            $recetas = [];
+            $receta = new Recetas();
+            return view('Recetas.create',compact('id', 'medicamentos', 'receta', 'recetas'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -50,7 +68,7 @@ class RecetasController extends Controller
 
         $receta->save();
 
-        return redirect()->route('Recetas.create', ['id' => $receta->n_atencion])
+        return redirect()->route('recetas.create', ['id' => $receta->n_atencion])
             ->with('success', 'Receta de paciente se ha añadido satisfactoriamente.');
     }
 

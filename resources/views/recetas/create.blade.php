@@ -41,7 +41,7 @@
                             </table>
                         </div>
 
-                        <form method="POST" action="{{ route('Recetas.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('recetas.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('recetas.form')

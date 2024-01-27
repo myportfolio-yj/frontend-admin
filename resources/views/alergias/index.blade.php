@@ -12,7 +12,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Alergias.create') }}" class="btn btn-light btn-lg float-right"
+                                <a href="{{ route('alergias.create') }}" class="btn btn-light btn-lg float-right"
                                     data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
@@ -41,9 +41,9 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $alergia['alergia'] }}</td>
                                             <td>
-                                                <form action="{{ route('Alergias.destroy', $alergia['id']) }}" method="POST">
+                                                <form action="{{ route('alergias.destroy', $alergia['id']) }}" method="POST">
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('Alergias.edit', $alergia['id']) }}"><i
+                                                        href="{{ route('alergias.edit', $alergia['id']) }}"><i
                                                             class="fa fa-fw fa-edit"></i></a>
                                                     <button class="btn btn-sm btn-danger"
                                                             type="submit"><i

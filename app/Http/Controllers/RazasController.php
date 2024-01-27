@@ -23,7 +23,7 @@ class RazasController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//raza');
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza');
         if ($response->successful()) {
             $datos = $response->json();
             return view('razas.index') ->with('razas',$datos);
@@ -42,8 +42,8 @@ class RazasController extends Controller
      */
     public function create()
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//raza');
-        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//especie');
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza');
+        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/especie');
         if ($response->successful() ) {
             $raza = $response->json();
             $tipoEsp = $response2->json();
@@ -65,13 +65,13 @@ class RazasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Razas::$rules);
-        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com//raza', [
+        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com/raza', [
             'raza' => $request->input('raza'),
             'especie ' => $request->input('especie'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Razas')
+            return redirect()->route('razas')
                 ->with('success', 'Raza creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -99,8 +99,8 @@ class RazasController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//raza/'.$id);
-        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//especie');
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza/'.$id);
+        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/especie');
         if ($response->successful() ) {
             $raza = $response->json();
             $tipoEsp = $response2->json();
@@ -129,7 +129,7 @@ class RazasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Razas')
+            return redirect()->route('razas')
                 ->with('success', 'Raza actualizada satisfactoriamente');
         } else {
             // Manejar error
@@ -148,7 +148,7 @@ class RazasController extends Controller
     {
         $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com/raza/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Razas')
+            return redirect()->route('razas')
                 ->with('success', 'Raza eliminada satisfactoriamente');
         } else {
             // Manejar error

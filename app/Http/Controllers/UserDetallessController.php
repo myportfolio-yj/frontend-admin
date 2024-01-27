@@ -49,7 +49,7 @@ class UserDetallessController extends Controller
 
         $detalle = UserDetalless::create($request->all());
 
-        return redirect()->route('Detalles')
+        return redirect()->route('detalles')
             ->with('success', 'Detalles de Usuario creados satisfactoriamente.');
     }
 
@@ -73,7 +73,7 @@ class UserDetallessController extends Controller
     public function edit($id)
     {
         $detalle = UserDetalless::find($id);
-       
+
         $medico = User::pluck('name','id');
         $clinica = Clinicas::pluck('v_nomclin','id');
         $perfil = Perfiles::pluck('v_apuntes','id');
@@ -93,7 +93,7 @@ class UserDetallessController extends Controller
         //request()->validate(UserDetalle::$rules);
         $detalle = UserDetalless::find($id);
         $detalle->update($request->all());
-        return redirect()->route('Detalles')
+        return redirect()->route('detalles')
             ->with('success', 'Detalles actualizados satisfactoriamente');
     }
 

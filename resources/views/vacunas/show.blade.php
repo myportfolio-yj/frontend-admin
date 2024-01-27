@@ -14,7 +14,7 @@
                             <span class="card-title">Mostrar Vacuna</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('Vacunas') }}"> Volver atras</a>
+                            <a class="btn btn-primary" href="{{ route('vacunas') }}"> Volver atras</a>
                         </div>
                     </div>
 

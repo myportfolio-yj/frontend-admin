@@ -33,12 +33,26 @@ class CitasController extends Controller
         }
     }
 
-    public function peluqueriaCheckIn($id) {
-        dd($id);
+    public function peluqueriaCheckIn($idCita) {
+        $response = Http::post('http://api3.v1.appomsv.com/peluqueria/checkin/'.$idCita,[]);
+        if ($response->successful()) {
+            return redirect()->route('citas.index');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
-    public function veterinariaCheckIn($id) {
-        dd($id);
+    public function veterinariaCheckIn($idCita) {
+        $response = Http::post('http://api3.v1.appomsv.com/veterinaria/checkin/'.$idCita,[]);
+        if ($response->successful()) {
+            return redirect()->route('Citas');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -48,7 +62,7 @@ class CitasController extends Controller
      */
     public function create()
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//cita');
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita');
         if ($response->successful() ) {
             $cita = $response->json();
             return view('citas.create', compact('cita'));
@@ -68,7 +82,7 @@ class CitasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Citas::$rules);
-        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//cita', [
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/cita', [
             'idCliente' => $request->input('idCliente'),
             'idMascota' => $request->input('idMascota'),
             'idTipoCita' => $request->input('idTipoCita'),
@@ -79,7 +93,7 @@ class CitasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Citas')
+            return redirect()->route('citas')
                 ->with('success', 'Cita creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -107,7 +121,7 @@ class CitasController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//cita/'.$id);
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita/'.$id);
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
         if ($response->successful() && $response2->successful() ) {
             $cliente = $response->json();
@@ -131,7 +145,7 @@ class CitasController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate(Clientes::$rules);
-        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//cita/'.$id, [
+        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com/cita/'.$id, [
             'idCliente' => $request->input('idCliente'),
             'idMascota' => $request->input('idMascota'),
             'idTipoCita' => $request->input('idTipoCita'),
@@ -142,7 +156,7 @@ class CitasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Citas')
+            return redirect()->route('citas')
                 ->with('success', 'Cita actualizado satisfactoriamente');
         } else {
             // Manejar error
@@ -159,9 +173,9 @@ class CitasController extends Controller
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com//cita/'.$id);
+        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/cita/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Citas')
+            return redirect()->route('citas')
                 ->with('success', 'Cita eliminado satisfactoriamente');
         } else {
             // Manejar error

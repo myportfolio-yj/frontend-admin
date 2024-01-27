@@ -72,7 +72,7 @@ class ClientesController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Clientes')
+            return redirect()->route('clientes')
                 ->with('success', 'Cliente creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -136,7 +136,7 @@ class ClientesController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Clientes')
+            return redirect()->route('clientes')
                 ->with('success', 'Cliente actualizado satisfactoriamente');
         } else {
             // Manejar error
@@ -155,7 +155,7 @@ class ClientesController extends Controller
     {
         $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Clientes')
+            return redirect()->route('clientes')
                 ->with('success', 'Cliente eliminado satisfactoriamente');
         } else {
             // Manejar error

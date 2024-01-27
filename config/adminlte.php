@@ -308,15 +308,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'Medicos',
-                    'url'  => 'Medicos',
+                    'url'  => 'medicos',
                 ],
                 [
                     'text' => 'Peluqueros',
-                    'url'  => 'Peluqueros',
+                    'url'  => 'peluqueros',
                 ],
                 [
                     'text' => 'Clientes',
-                    'url'  => 'Clientes',
+                    'url'  => 'clientes',
                 ],
             ],
         ],
@@ -327,21 +327,17 @@ return [
 
                 [
                     'text' => 'Mascotas',
-                    'url'  => 'Mascotas',
+                    'url'  => 'mascotas',
                 ],
                 [
                     'text' => 'Citas',
-                    'url'  => 'Citas',
+                    'url'  => 'citas',
                 ],
                 [
                     'text' => 'Atenciones',
-                    'url'  => 'Atenciones',
+                    'url'  => 'atenciones',
                 ],
-
-
             ],
-
-
         ],
         [
             'text' => 'CONFIGURACIONES',
@@ -349,33 +345,33 @@ return [
             'submenu' => [
                 [
                     'text' => 'Alergias',
-                    'url'  => 'Alergias',
+                    'url'  => 'alergias',
                 ],
                 [
                     'text' => 'Medicamentos',
-                    'url'  => 'Medicamentos',
+                    'url'  => 'medicamentos',
                 ],
                 [
                     'text' => 'Diagnosticos',
-                    'url'  => 'Diagnosticos',
+                    'url'  => 'diagnosticos',
                 ],
                 [
                     'text' => 'Vacunas',
-                    'url'  => 'Vacunas',
+                    'url'  => 'vacunas',
                 ],
                 [
                     'text' => 'Procedimientos',
-                    'url'  => 'Procedimientos',
+                    'url'  => 'procedimientos',
                 ],
                 [
                     'text' => 'Razas',
-                    'url'  => 'Razas',
+                    'url'  => 'razas',
                 ],
             ],
         ],
         [
             'text' => 'Geolocalización',
-            'url'  => 'Geolocalizacion',
+            'url'  => 'geolocalizacion',
             'icon' => 'fa fa-fw fa-map-marker',
         ],
        /* [

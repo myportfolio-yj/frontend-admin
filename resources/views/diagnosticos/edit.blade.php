@@ -12,7 +12,7 @@
                         <span class="card-title">Editar Diagnostico</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Medicamentos.update', $diagnostico['id']) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('medicamentos.update', $diagnostico['id']) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

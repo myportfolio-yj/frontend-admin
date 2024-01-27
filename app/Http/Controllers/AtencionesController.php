@@ -8,6 +8,7 @@ use App\Models\Historias;
 use App\Models\Mascotas;
 use App\Models\Vacunas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AtencionesController extends Controller
 {
@@ -18,9 +19,15 @@ class AtencionesController extends Controller
      */
     public function index()
     {
-        $atenciones = Atenciones::paginate();
-        return view('atenciones.index', compact('atenciones'))
-            ->with('i', (request()->input('page', 1) - 1) * $atenciones->perPage());
+        $response = Http::get('http://api3.v1.appomsv.com/historial');
+        if ($response->successful()) {
+            $atenciones = $response->json();
+            return view('atenciones.index', compact('atenciones'));
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -49,7 +56,7 @@ class AtencionesController extends Controller
 
         Atenciones::create($request->all());
 
-        return redirect()->route('Atenciones')
+        return redirect()->route('atenciones')
             ->with('success', 'Atencion creada satisfactoriamente.');
     }
 

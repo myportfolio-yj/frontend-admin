@@ -37,8 +37,8 @@ class MascotasController extends Controller
      */
     public function create()
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//mascota');
-        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//sexo');
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/mascota');
+        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/sexo');
         if ($response->successful() ) {
             $mascota = $response->json();
             $tipoSex = $response2->json();
@@ -60,7 +60,7 @@ class MascotasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Mascotas::$rules);
-        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com//mascota', [
+        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com/mascota', [
             'codIdentificacion' => $request->input('codIdentificacion'),
             'nombre' => $request->input('nombre'),
             'apellido' => $request->input('apellido'),
@@ -69,7 +69,7 @@ class MascotasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Mascotas')
+            return redirect()->route('mascotas')
                 ->with('success', 'Diagnostico creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -97,8 +97,8 @@ class MascotasController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//mascota/'.$id);
-        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com//sexo');
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/mascota/'.$id);
+        $response2 = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/sexo');
         if ($response->successful() ) {
             $mascota = $response->json();
             $tipoSex = $response2->json();
@@ -121,7 +121,7 @@ class MascotasController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate(Mascotas::$rules);
-        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com//mascota/'.$id, [
+        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com/mascota/'.$id, [
             'codIdentificacion' => $request->input('codIdentificacion'),
             'nombre' => $request->input('nombre'),
             'apellido' => $request->input('apellido'),
@@ -130,7 +130,7 @@ class MascotasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Mascotas')
+            return redirect()->route('mascotas')
                 ->with('success', 'Mascota actualizada satisfactoriamente');
         } else {
             // Manejar error

@@ -12,7 +12,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Clientes.create') }}" class="btn btn-light btn-lg float-right"
+                                <a href="{{ route('clientes.create') }}" class="btn btn-light btn-lg float-right"
                                    data-placement="left">
                                     <i class="fa fa-fw fa-user-plus"></i>
                                 </a>
@@ -48,12 +48,12 @@
                                         <td>{{ $cliente['celular'] }} - {{ $cliente['fijo'] }}</td>
                                         <td>{{ $cliente['email'] }}</td>
                                         <td>
-                                            <form action="{{ route('Clientes.destroy', $cliente['id']) }}" method="POST">
+                                            <form action="{{ route('clientes.destroy', $cliente['id']) }}" method="POST">
                                                 <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Clientes.show', $cliente['id']) }}"><i
+                                                   href="{{ route('clientes.show', $cliente['id']) }}"><i
                                                         class="fa fa-fw fa-paw"></i></a>
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Clientes.edit', $cliente['id']) }}"><i
+                                                   href="{{ route('clientes.edit', $cliente['id']) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>
                                                 <button class="btn btn-sm btn-danger"
                                                         type="submit"><i

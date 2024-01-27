@@ -68,7 +68,7 @@ class PeluquerosController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Peluqueros')
+            return redirect()->route('peluqueros')
                 ->with('success', 'Peluquero creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -132,7 +132,7 @@ class PeluquerosController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Peluqueros')
+            return redirect()->route('peluqueros')
                 ->with('success', 'Peluquero actualizado satisfactoriamente');
         } else {
             // Manejar error
@@ -151,7 +151,7 @@ class PeluquerosController extends Controller
     {
         $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Peluqueros')
+            return redirect()->route('peluqueros')
                 ->with('success', 'Peluquero eliminado satisfactoriamente');
         } else {
             // Manejar error

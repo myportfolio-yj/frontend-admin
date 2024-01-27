@@ -16,7 +16,7 @@
                         <span class="card-title">Crear Raza</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Razas.store') }}" role="form"
+                        <form method="POST" action="{{ route('razas.store') }}" role="form"
                               enctype="multipart/form-data">
                             @csrf
 

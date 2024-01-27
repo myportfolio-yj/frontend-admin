@@ -19,7 +19,7 @@ class GeolocalizacionesController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//geolocalizacion');
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/geolocalizacion');
         if ($response->successful()) {
             $datos = $response->json();
             return view('geolocalizaciones.index') ->with('geolocalizaciones',$datos);

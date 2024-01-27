@@ -12,7 +12,7 @@
                         <span class="card-title">Editar Vacuna</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Vacunas.update', $vacuna['id']) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('vacunas.update', $vacuna['id']) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

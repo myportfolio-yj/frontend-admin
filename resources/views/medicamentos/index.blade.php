@@ -12,7 +12,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Medicamentos.create') }}" class="btn btn-light btn-lg float-right"
+                                <a href="{{ route('medicamentos.create') }}" class="btn btn-light btn-lg float-right"
                                     data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
@@ -43,9 +43,9 @@
                                             <td>{{ $medicamento['medicamento'] }}</td>
                                             <td>{{ $medicamento['descripcion'] }}</td>
                                             <td>
-                                                <form action="{{ route('Medicamentos.destroy', $medicamento['id']) }}" method="POST">
+                                                <form action="{{ route('medicamentos.destroy', $medicamento['id']) }}" method="POST">
                                                     <a class="btn btn-sm btn-success"
-                                                        href="{{ route('Medicamentos.edit', $medicamento['id']) }}"><i
+                                                        href="{{ route('medicamentos.edit', $medicamento['id']) }}"><i
                                                             class="fa fa-fw fa-edit"></i></a>
                                                     <button class="btn btn-sm btn-danger"
                                                             type="submit"><i

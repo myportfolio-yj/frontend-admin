@@ -16,7 +16,7 @@
                         <span class="card-title">Crear Atención</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Atenciones.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('atenciones.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('atenciones.form')

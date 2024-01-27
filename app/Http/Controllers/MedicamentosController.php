@@ -21,7 +21,7 @@ class MedicamentosController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento');
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento');
         if ($response->successful()) {
             $datos = $response->json();
             return view('medicamentos.index') ->with('medicamentos',$datos);
@@ -39,7 +39,7 @@ class MedicamentosController extends Controller
      */
     public function create()
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento');
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento');
         if ($response->successful() ) {
             $medicamento = $response->json();
             return view('medicamentos.create', compact('medicamento'));
@@ -60,13 +60,13 @@ class MedicamentosController extends Controller
     public function store(Request $request)
     {
         request()->validate(Medicamentos::$rules);
-        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento', [
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento', [
             'medicamento' => $request->input('medicamento'),
             'descripcion ' => $request->input('descripcion'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Medicamentos')
+            return redirect()->route('medicamentos')
                 ->with('success', 'Medicamento creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -94,7 +94,7 @@ class MedicamentosController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento/'.$id);
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento/'.$id);
         if ($response->successful() ) {
             $medicamento = $response->json();
             return view('medicamentos.edit', compact('medicamento'));
@@ -115,14 +115,14 @@ class MedicamentosController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate(Medicamentos::$rules);
-        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento/'.$id, [
+        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento/'.$id, [
             'medicamento' => $request->input('medicamento'),
             'descripcion' => $request->input('descripcion'),
 
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Medicamentos')
+            return redirect()->route('medicamentos')
                 ->with('success', 'Medicamento actualizada satisfactoriamente');
         } else {
             // Manejar error
@@ -139,9 +139,9 @@ class MedicamentosController extends Controller
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com//medicamento/'.$id);
+        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Medicamentos')
+            return redirect()->route('medicamentos')
                 ->with('success', 'Medicamento eliminado satisfactoriamente');
         } else {
             // Manejar error

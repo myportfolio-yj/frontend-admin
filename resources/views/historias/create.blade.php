@@ -16,7 +16,7 @@
                         <span class="card-title">Crear Historia</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Historias.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('historias.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
                             @include('historias.form')

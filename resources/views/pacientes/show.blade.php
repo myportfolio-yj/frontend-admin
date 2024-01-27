@@ -14,7 +14,7 @@
                             <span class="card-title">Mostrar Paciente</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('Pacientes') }}"> Volver atras</a>
+                            <a class="btn btn-primary" href="{{ route('pacientes') }}"> Volver atras</a>
                         </div>
                     </div>
 

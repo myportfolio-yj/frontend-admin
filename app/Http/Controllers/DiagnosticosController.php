@@ -22,7 +22,7 @@ class DiagnosticosController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico');
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico');
         if ($response->successful()) {
             $datos = $response->json();
             return view('diagnosticos.index') ->with('diagnosticos',$datos);
@@ -40,7 +40,7 @@ class DiagnosticosController extends Controller
      */
     public function create()
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico');
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico');
         if ($response->successful() ) {
             $diagnostico = $response->json();
             return view('diagnosticos.create', compact('diagnostico'));
@@ -60,13 +60,13 @@ class DiagnosticosController extends Controller
     public function store(Request $request)
     {
         request()->validate(Diagnosticos::$rules);
-        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico', [
+        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico', [
             'diagnostico' => $request->input('diagnostico'),
             'detalle' => $request->input('detalle'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Diagnosticos')
+            return redirect()->route('diagnosticos')
                 ->with('success', 'Diagnostico creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -94,7 +94,7 @@ class DiagnosticosController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico/'.$id);
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/'.$id);
         if ($response->successful() ) {
             $diagnostico = $response->json();
             return view('diagnosticos.edit', compact('diagnostico'));
@@ -115,14 +115,14 @@ class DiagnosticosController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate(Diagnosticos::$rules);
-        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico/'.$id, [
+        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/'.$id, [
             'diagnostico' => $request->input('diagnostico'),
             'detalle' => $request->input('detalle'),
 
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('Diagnosticos')
+            return redirect()->route('diagnosticos')
                 ->with('success', 'Diagnostico actualizada satisfactoriamente');
         } else {
             // Manejar error
@@ -139,9 +139,9 @@ class DiagnosticosController extends Controller
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com//diagnostico/'.$id);
+        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/'.$id);
         if ($response->successful()) {
-            return redirect()->route('Diagnosticos')
+            return redirect()->route('diagnosticos')
                 ->with('success', 'Diagnostico eliminado satisfactoriamente');
         } else {
             // Manejar error

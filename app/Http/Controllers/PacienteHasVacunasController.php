@@ -55,7 +55,7 @@ class PacienteHasVacunasController extends Controller
 
         $pacienteHasVacunas->save();
 
-        return redirect()->route('Atenciones')
+        return redirect()->route('atenciones')
             ->with('success', 'Alergias de paciente se ha añadido satisfactoriamente.');
     }
 

@@ -7,6 +7,8 @@ use App\Models\Diagnosticos;
 use App\Models\Historias;
 use App\Models\Procedimientos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 
 class HistoriasController extends Controller
 {
@@ -28,9 +30,19 @@ class HistoriasController extends Controller
     {
         $id = $_GET['id'];
         $historia = new Historias();
-        $diagnostico=Diagnosticos::pluck('v_nombre','id');
-        $procedimiento=Procedimientos::pluck('v_nombre','id');
-        return view('Historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+        $responseDiagnostico = Http::get('http://api3.v1.appomsv.com/diagnostico');
+        $responseProcedimiento = Http::get('http://api3.v1.appomsv.com/procedimiento');
+        if ($responseDiagnostico->successful() && $responseProcedimiento->successful()) {
+            $diagnostico = $responseDiagnostico->json();
+            $procedimiento = $responseProcedimiento->json();
+            $diagnostico = Arr::pluck($diagnostico,'diagnostico','id');
+            $procedimiento = Arr::pluck($procedimiento,'procedimiento','id');
+            return view('Historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+        } else {
+            // Manejar error
+            $error = $responseDiagnostico->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -43,10 +55,27 @@ class HistoriasController extends Controller
     {
         request()->validate(Historias::$rules);
 
-        Historias::create($request->all());
-
-        return redirect()->route('Atenciones')
-            ->with('success', 'Historia creada satisfactoriamente.');
+        $response = Http::post('http://api3.v1.appomsv.com/atencion', [
+            'idCita' => $request->input('n_atencion'),
+            'motivo' => $request->input('v_motivo'),
+            'peso' => $request->input('n_peso'),
+            'temperatura' => $request->input('n_temp'),
+            'frecuenciaRespiratoria' => $request->input('n_frecresp'),
+            'frecuenciaCardiaca' => $request->input('n_freccard'),
+            'idDiagnostico' => $request->input('n_diagnos'),
+            'idProcedimiento' => $request->input('n_procedimiento'),
+            'detalleDiagnostico' => $request->input('v_detdiagnos'),
+            'detalleProcedimiento' => $request->input('v_detproced'),
+            'cerrado' => false
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Atenciones');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -68,11 +97,37 @@ class HistoriasController extends Controller
      */
     public function edit(string $id)
     {
-        $historia = Historias::find($id);
-        $diagnostico=Diagnosticos::pluck('v_nombre','id');
-        $procedimiento=Procedimientos::pluck('v_nombre','id');
-        $id = $historia->n_atencion;
-        return view('Historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+        $historia = new Historias();
+        $response = Http::get('http://api3.v1.appomsv.com/atencion/'.$id);
+        if ($response->successful()) {
+            $response = $response->json();
+            $historia->v_motivo = $response['motivo'];
+            $historia->n_peso = $response['peso'];
+            $historia->n_temp = $response['temperatura'];
+            $historia->n_frecresp = $response['frecuenciaRespiratoria'];
+            $historia->n_freccard = $response['frecuenciaCardiaca'];
+            $historia->n_diagnos = $response['idDiagnostico'];
+            $historia->v_nombre = $response['idProcedimiento'];
+            $historia->v_detdiagnos = $response['detalleDiagnostico'];
+            $historia->v_detproced = $response['detalleProcedimiento'];
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
+        $responseDiagnostico = Http::get('http://api3.v1.appomsv.com/diagnostico');
+        $responseProcedimiento = Http::get('http://api3.v1.appomsv.com/procedimiento');
+        if ($responseDiagnostico->successful() && $responseProcedimiento->successful()) {
+            $diagnostico = $responseDiagnostico->json();
+            $procedimiento = $responseProcedimiento->json();
+            $diagnostico = Arr::pluck($diagnostico,'diagnostico','id');
+            $procedimiento = Arr::pluck($procedimiento,'procedimiento','id');
+            return view('Historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+        } else {
+            // Manejar error
+            $error = $responseDiagnostico->body();
+            return dd($error);
+        }
     }
 
     /**
@@ -99,7 +154,7 @@ class HistoriasController extends Controller
 
         $historia->save();
 
-        return redirect()->route('Atenciones')
+        return redirect()->route('atenciones')
             ->with('success', 'Historia creada satisfactoriamente.');
     }
 

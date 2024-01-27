@@ -17,7 +17,7 @@
                             </span>
 
                             <div class="float-right">
-                                <a href="{{ route('Pacientes.create') }}" class="btn btn-primary btn-sm float-right"
+                                <a href="{{ route('pacientes.create') }}" class="btn btn-primary btn-sm float-right"
                                    data-placement="left">
                                     {{ __('Crear Nuevo Paciente') }}
                                 </a>
@@ -60,12 +60,12 @@
                                         <td>{{ $paciente->cliente->v_nombre}} {{ $paciente->cliente->v_apellido}}</td>
 
                                         <td>
-                                            <form action="{{ route('Pacientes.destroy', $paciente->id) }}" method="POST">
+                                            <form action="{{ route('pacientes.destroy', $paciente->id) }}" method="POST">
                                                 <a class="btn btn-sm btn-primary "
-                                                   href="{{ route('Pacientes.show', $paciente->id) }}"><i
+                                                   href="{{ route('pacientes.show', $paciente->id) }}"><i
                                                         class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
                                                 <a class="btn btn-sm btn-success"
-                                                   href="{{ route('Pacientes.edit', $paciente->id) }}"><i
+                                                   href="{{ route('pacientes.edit', $paciente->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i> Editar Datos</a>
                                                 @csrf
                                             </form>
