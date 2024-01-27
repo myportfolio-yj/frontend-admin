@@ -122,7 +122,7 @@ class HistoriasController extends Controller
             $procedimiento = $responseProcedimiento->json();
             $diagnostico = Arr::pluck($diagnostico,'diagnostico','id');
             $procedimiento = Arr::pluck($procedimiento,'procedimiento','id');
-            return view('Historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+            return view('historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
         } else {
             // Manejar error
             $error = $responseDiagnostico->body();
