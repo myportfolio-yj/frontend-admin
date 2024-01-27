@@ -44,7 +44,7 @@ class RecetasController extends Controller
             // $recetas = Recetas::where('n_atencion', $atencion->id)->get();
             $recetas = [];
             $receta = new Recetas();
-            return view('Recetas.create',compact('id', 'medicamentos', 'receta', 'recetas'));
+            return view('recetas.create',compact('id', 'medicamentos', 'receta', 'recetas'));
         } else {
             // Manejar error
             $error = $response->body();
