@@ -3,68 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Models\Atenciones;
-use App\Models\Clientes;
-use App\Models\Historias;
-use App\Models\Mascotas;
-use App\Models\Vacunas;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Response;
+
+include_once('AtencionesDefinitions.php');
 
 class AtencionesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
-        $response = Http::get('http://api3.v1.appomsv.com/historial');
-        if ($response->successful()) {
-            $atenciones = $response->json();
-            return view('atenciones.index', compact('atenciones'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', API_URL);
+        return $response->successful()
+            ? renderView(VIEW_INDEX, [ATENCIONES => $response->json()])
+            : dd($response->body());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
-        $atencion=new Atenciones();
-        $cliente=Clientes::pluck('v_nombre','id');
-        $paciente=Mascotas::pluck('v_nombre','id');
-        $vacuna=Vacunas::pluck('v_nombre','id');
-        return view('atenciones.create',compact('atencion','cliente','paciente','vacuna'));
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
-        request()->validate(Atenciones::$rules);
-
-        Atenciones::create($request->all());
-
-        return redirect()->route('atenciones')
-            ->with('success', 'Atencion creada satisfactoriamente.');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Atenciones  $atenciones
-     * @return \Illuminate\Http\Response
+     * @param Atenciones $atenciones
+     * @return Response
      */
     public function show(Atenciones $atenciones)
     {
@@ -74,8 +61,8 @@ class AtencionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Atenciones  $atenciones
-     * @return \Illuminate\Http\Response
+     * @param Atenciones $atenciones
+     * @return Response
      */
     public function edit(Atenciones $atenciones)
     {
@@ -85,9 +72,9 @@ class AtencionesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Atenciones  $atenciones
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Atenciones $atenciones
+     * @return Response
      */
     public function update(Request $request, Atenciones $atenciones)
     {
@@ -97,8 +84,8 @@ class AtencionesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Atenciones  $atenciones
-     * @return \Illuminate\Http\Response
+     * @param Atenciones $atenciones
+     * @return Response
      */
     public function destroy(Atenciones $atenciones)
     {

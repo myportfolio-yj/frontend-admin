@@ -13,13 +13,6 @@
                             <span id="card_title">
                                 {{ __('Listado de Atenciones') }}
                             </span>
-
-                            <div class="float-right">
-                                <a href="{{ route('atenciones.create') }}" class="btn btn-light btn-lg float-right"
-                                   data-placement="left">
-                                    <i class="fa fa-fw fa-plus"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -57,7 +50,7 @@
                                         <td>{{ $atencion['nombreMascota'] }}</td>
                                         <td>{{ $atencion['mascota']['especie']['especie'] }} - {{ $atencion['mascota']['raza']['raza'] }}</td>
                                         <td>
-                                            @if( count($atencion['mascota']['alergias']) > 0 )
+                                            @if( isset($atencion['mascota']['alergias']) && count($atencion['mascota']['alergias']) > 0 )
                                                 Si
                                             @else
                                                 Ninguna
@@ -69,7 +62,7 @@
                                                     class="fa fa-fw fa-eye"></i></a>
                                         </td>
                                         <td>
-                                            @if( count($atencion['mascota']['vacunas']) > 0 )
+                                            @if( isset($atencion['mascota']['vacunas']) && count($atencion['mascota']['vacunas']) > 0 )
                                                 Si
                                             @else
                                                 Ninguna
