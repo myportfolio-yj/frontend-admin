@@ -25,14 +25,16 @@ class PacienteHasAlergias extends Model
 
     public function alergia()
     {
-        return $this->hasOne(Alergias::class,'id','n_alergia');
+        return $this->hasOne(Alergias::class, 'id', 'n_alergia');
     }
+
     public function paciente()
     {
-        return $this->hasOne(Mascotas::class,'id','n_paciente');
+        return $this->hasOne(Mascotas::class, 'id', 'n_paciente');
     }
+
     public function medico()
     {
-        return $this->hasOne(User::class,'id','a_n_iduser');
+        return $this->hasOne(User::class, 'id', 'a_n_iduser');
     }
 }

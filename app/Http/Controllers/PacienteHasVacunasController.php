@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alergias;
 use App\Models\Atenciones;
 use App\Models\PacienteHasAlergias;
 use App\Models\PacienteHasVacunas;
@@ -34,14 +33,14 @@ class PacienteHasVacunasController extends Controller
         $pacienteHasVacunas = PacienteHasVacunas::where('n_paciente', $atencion->n_paciente)->get();
         $cliente = $atencion->cliente;
         $paciente = $atencion->paciente;
-        $vacunas =Vacunas::pluck('v_nombre','id');
-        return view('PacienteHasVacunas.create',compact('pacienteHasVacunas','vacunas','cliente','paciente'));
+        $vacunas = Vacunas::pluck('v_nombre', 'id');
+        return view('PacienteHasVacunas.create', compact('pacienteHasVacunas', 'vacunas', 'cliente', 'paciente'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -62,7 +61,7 @@ class PacienteHasVacunasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function show(PacienteHasAlergias $pacienteHasAlergias)
@@ -73,7 +72,7 @@ class PacienteHasVacunasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function edit(PacienteHasAlergias $pacienteHasAlergias)
@@ -84,8 +83,8 @@ class PacienteHasVacunasController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, PacienteHasAlergias $pacienteHasAlergias)
@@ -96,7 +95,7 @@ class PacienteHasVacunasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function destroy(PacienteHasAlergias $pacienteHasAlergias)

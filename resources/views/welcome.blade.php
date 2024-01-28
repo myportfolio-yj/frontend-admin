@@ -165,7 +165,7 @@
             grid-template-columns: repeat(1, minmax(0, 1fr))
         }
 
-        @media (min-width:640px) {
+        @media (min-width: 640px) {
             .sm\:rounded-lg {
                 border-radius: .5rem
             }
@@ -192,20 +192,20 @@
             }
         }
 
-        @media (min-width:768px) {
+        @media (min-width: 768px) {
             .md\:grid-cols-2 {
                 grid-template-columns: repeat(2, minmax(0, 1fr))
             }
         }
 
-        @media (min-width:1024px) {
+        @media (min-width: 1024px) {
             .lg\:px-8 {
                 padding-left: 2rem;
                 padding-right: 2rem
             }
         }
 
-        @media (prefers-color-scheme:dark) {
+        @media (prefers-color-scheme: dark) {
             .dark\:bg-gray-800 {
                 --bg-opacity: 1;
                 background-color: #2d3748;
@@ -224,6 +224,7 @@
                 color: rgba(107, 114, 128, var(--tw-text-opacity))
             }
         }
+
         .login-logo {
             font-size: 2.1rem;
             font-weight: 300;
@@ -231,6 +232,7 @@
             text-align: center;
             color: #495057;
         }
+
         image {
             height: 80px;
         }
@@ -239,13 +241,15 @@
 
 <body class="antialiased">
 <div
-    class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0" style="background: #e9ecef;">
+    class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0"
+    style="background: #e9ecef;">
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
                 <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
             @else
-                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Iniciar sesión</a>
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Iniciar
+                    sesión</a>
             @endauth
         </div>
     @endif
@@ -253,7 +257,8 @@
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="login-logo">
             <a href="http://localhost/qrvet/public/home">
-                <img src="https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png" alt="" height="80">
+                <img src="https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png" alt=""
+                     height="80">
                 <!-- b>QR</b>.VET -->
             </a>
         </div>
@@ -269,7 +274,9 @@
 </div>
 </body>
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
 <script>
     function onScanSuccess(decodedText, decodedResult) {
@@ -284,16 +291,16 @@
                 url: "{{ route('validarqr') }}",
                 type: 'POST',
                 data: {
-                    _methode : "POST",
+                    _methode: "POST",
                     _token: CSRF_TOKEN,
-                    qr_code : id
+                    qr_code: id
                 },
                 success: function (response) {
                     console.log(response);
-                    if(response.status == 200){
+                    if (response.status == 200) {
                         alert('QR Valido');
                         window.location.href = response.url;
-                    }else{
+                    } else {
                         alert('QR Invalido');
                     }
 
@@ -324,14 +331,14 @@
 </script>
 
 <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/60f254e8649e0a0a5ccc9d77/1fap9nbtc';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/60f254e8649e0a0a5ccc9d77/1fap9nbtc';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
     })();
-    </script>
+</script>
 </html>

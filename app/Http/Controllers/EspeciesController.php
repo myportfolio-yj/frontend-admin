@@ -30,7 +30,7 @@ class EspeciesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +41,7 @@ class EspeciesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Especies  $especies
+     * @param \App\Models\Especies $especies
      * @return \Illuminate\Http\Response
      */
     public function show(Especies $especies)
@@ -52,7 +52,7 @@ class EspeciesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Especies  $especies
+     * @param \App\Models\Especies $especies
      * @return \Illuminate\Http\Response
      */
     public function edit(Especies $especies)
@@ -63,8 +63,8 @@ class EspeciesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Especies  $especies
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Especies $especies
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Especies $especies)
@@ -75,7 +75,7 @@ class EspeciesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Especies  $especies
+     * @param \App\Models\Especies $especies
      * @return \Illuminate\Http\Response
      */
     public function destroy(Especies $especies)

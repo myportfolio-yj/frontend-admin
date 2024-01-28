@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -24,7 +23,7 @@ class UserController extends Controller
         $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario');
         if ($response->successful()) {
             $datos = $response->json();
-            return view('user.index') ->with('users',$datos);
+            return view('user.index')->with('users', $datos);
         } else {
             // Manejar error
             $error = $response->body();
@@ -40,9 +39,9 @@ class UserController extends Controller
     public function create()
     {
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response2->successful() ) {
+        if ($response2->successful()) {
             $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
+            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
             return view('user.create', compact('tipoDoc'));
         } else {
             // Manejar error
@@ -54,7 +53,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -87,32 +86,32 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-      /*
-        $user = User::find($id);
-        return view('user.show', compact('user'));
-      */
+        /*
+          $user = User::find($id);
+          return view('user.show', compact('user'));
+        */
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/'.$id);
+        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/' . $id);
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response->successful() && $response2->successful() ) {
+        if ($response->successful() && $response2->successful()) {
             $user = $response->json();
             $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
-            return view('user.edit', compact('user','tipoDoc'));
+            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
+            return view('user.edit', compact('user', 'tipoDoc'));
         } else {
             // Manejar error
             $error = $response->body();
@@ -123,14 +122,14 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  User $user
+     * @param \Illuminate\Http\Request $request
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         request()->validate(User::$rulesEdit);
-        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/'.$id, [
+        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/' . $id, [
             'codVeterinario' => $request->input('codVeterinario'),
             'nombres' => $request->input('nombres'),
             'apellidos' => $request->input('apellidos'),
@@ -158,7 +157,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/'.$id);
+        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/' . $id);
         if ($response->successful()) {
             return redirect()->route('medicos.index')
                 ->with('success', 'Usuario eliminado satisfactoriamente');

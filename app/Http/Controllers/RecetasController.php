@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atenciones;
-use App\Models\Historias;
 use App\Models\Medicamentos;
 use App\Models\Recetas;
 use Illuminate\Http\Request;
@@ -30,22 +28,22 @@ class RecetasController extends Controller
     public function create()
     {
         $id = $_GET['id'];
-        $response = Http::get('http://api3.v1.appomsv.com/cita/'.$id);
-        $responseRecetas = Http::get('http://api3.v1.appomsv.com/cita-recetas/'.$id);
+        $response = Http::get('http://api3.v1.appomsv.com/cita/' . $id);
+        $responseRecetas = Http::get('http://api3.v1.appomsv.com/cita-recetas/' . $id);
         if ($response->successful() && $responseRecetas->successful()) {
             $response = $response->json();
             $recetas = $responseRecetas->json();
             $medicamentos = Http::get('http://api3.v1.appomsv.com/medicamento');
             if ($medicamentos->successful()) {
                 $medicamentos = $medicamentos->json();
-                $medicamentos = Arr::pluck($medicamentos,'medicamento','id');
+                $medicamentos = Arr::pluck($medicamentos, 'medicamento', 'id');
             } else {
                 // Manejar error
                 $error = $response->body();
                 return dd($error);
             }
             $receta = new Recetas();
-            return view('recetas.create',compact('id', 'medicamentos', 'receta', 'recetas'));
+            return view('recetas.create', compact('id', 'medicamentos', 'receta', 'recetas'));
         } else {
             // Manejar error
             $error = $response->body();
@@ -56,7 +54,7 @@ class RecetasController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,7 +79,7 @@ class RecetasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Recetas  $recetas
+     * @param \App\Models\Recetas $recetas
      * @return \Illuminate\Http\Response
      */
     public function show(Recetas $recetas)
@@ -92,22 +90,22 @@ class RecetasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Recetas  $recetas
+     * @param \App\Models\Recetas $recetas
      * @return \Illuminate\Http\Response
      */
     public function edit(string $id)
     {
         $receta = Recetas::find($id);
         $id = $receta->n_atencion;
-        $medicamentos = Medicamentos::pluck('v_nombre','id');
-        return view('Recetas.create',compact('id', 'medicamentos', 'receta'));
+        $medicamentos = Medicamentos::pluck('v_nombre', 'id');
+        return view('Recetas.create', compact('id', 'medicamentos', 'receta'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Recetas  $recetas
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Recetas $recetas
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Recetas $recetas)
@@ -118,7 +116,7 @@ class RecetasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Recetas  $recetas
+     * @param \App\Models\Recetas $recetas
      * @return \Illuminate\Http\Response
      */
     public function destroy(Recetas $recetas)

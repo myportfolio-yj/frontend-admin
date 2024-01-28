@@ -18,7 +18,7 @@
 
                             <div class="float-right">
                                 <a href="{{ route('detalles.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
+                                   data-placement="left">
                                     {{ __('Crear Nuevo Medico') }}
                                 </a>
                             </div>
@@ -34,40 +34,40 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
-                                    <tr>
-                                        <th>Identificador</th>
+                                <tr>
+                                    <th>Identificador</th>
 
-                                        <th>Nombre</th>
-                                        <th>Correo</th>
-                                        <th>Clinica</th>
-                                        <th>Perfil</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Clinica</th>
+                                    <th>Perfil</th>
 
-                                        <th></th>
-                                    </tr>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($detalles as $detalle)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
+                                @foreach ($detalles as $detalle)
+                                    <tr>
+                                        <td>{{ ++$i }}</td>
 
-                                            <td>{{ $detalle->medicos->name }}</td>
-                                            <td>{{ $detalle->medicos->email }}</td>
-                                            <td>{{ $detalle->clinicas->v_nomclin}}</td>
-                                            <td>{{ $detalle->perfiles->v_apuntes}}</td>
+                                        <td>{{ $detalle->medicos->name }}</td>
+                                        <td>{{ $detalle->medicos->email }}</td>
+                                        <td>{{ $detalle->clinicas->v_nomclin}}</td>
+                                        <td>{{ $detalle->perfiles->v_apuntes}}</td>
 
-                                            <td>
-                                                <form action="{{ route('detalles.destroy', $detalle->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('detalles.show', $detalle->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('detalles.edit', $detalle->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> Editar Datos</a>
-                                                    @csrf
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                        <td>
+                                            <form action="{{ route('detalles.destroy', $detalle->id) }}" method="POST">
+                                                <a class="btn btn-sm btn-primary "
+                                                   href="{{ route('detalles.show', $detalle->id) }}"><i
+                                                        class="fa fa-fw fa-eye"></i> Mostrar Datos</a>
+                                                <a class="btn btn-sm btn-success"
+                                                   href="{{ route('detalles.edit', $detalle->id) }}"><i
+                                                        class="fa fa-fw fa-edit"></i> Editar Datos</a>
+                                                @csrf
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -21,12 +21,14 @@ class Razas extends Model
     static $rules = [
         'raza' => 'required',
     ];
+
     public function medicos()
     {
-        return $this->hasOne(User::class,'id','a_n_iduser');
+        return $this->hasOne(User::class, 'id', 'a_n_iduser');
     }
+
     public function especies()
     {
-        return $this->hasOne(Especies::class,'id','n_especie');
+        return $this->hasOne(Especies::class, 'id', 'n_especie');
     }
 }

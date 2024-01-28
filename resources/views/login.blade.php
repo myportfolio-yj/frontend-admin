@@ -65,7 +65,7 @@
 <div class="card">
     <div class="form-container">
         <img src="https://res.cloudinary.com/dmaoa8dcd/image/upload/v1704759687/Appomsv/Logo1_vai81d.png" alt="Logo">
-        <form method="POST" action="{{ route('ingresar') }}"  role="form">
+        <form method="POST" action="{{ route('ingresar') }}" role="form">
             @csrf
             <input type="email" name="email" placeholder="Correo">
             <input type="password" name="password" placeholder="Contraseña">

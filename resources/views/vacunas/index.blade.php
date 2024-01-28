@@ -13,7 +13,7 @@
 
                             <div class="float-right">
                                 <a href="{{ route('vacunas.create') }}" class="btn btn-light btn-lg float-right"
-                                    data-placement="left">
+                                   data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
@@ -28,33 +28,33 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nombre de la vacuna</th>
-                                        <th>Duración</th>
-                                        <th>Acciones</th>
-                                    </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre de la vacuna</th>
+                                    <th>Duración</th>
+                                    <th>Acciones</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 1; ?>
-                                    @foreach ($vacunas as $vacuna)
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $vacuna['vacuna'] }}</td>
-                                            <td>{{ $vacuna['duracion'] }}</td>
-                                            <td>
-                                                <form action="{{ route('vacunas.destroy', $vacuna['id']) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('vacunas.edit', $vacuna['id']) }}"><i
-                                                            class="fa fa-fw fa-edit"></i></a>
-                                                    <a class="btn btn-sm btn-danger"
-                                                       href="{{ route('vacunas.edit', $vacuna['id']) }}"><i
-                                                            class="fa fa-fw fa-trash"></i></a>
-                                                    @csrf
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                @foreach ($vacunas as $vacuna)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $vacuna['vacuna'] }}</td>
+                                        <td>{{ $vacuna['duracion'] }}</td>
+                                        <td>
+                                            <form action="{{ route('vacunas.destroy', $vacuna['id']) }}" method="POST">
+                                                <a class="btn btn-sm btn-success"
+                                                   href="{{ route('vacunas.edit', $vacuna['id']) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="{{ route('vacunas.edit', $vacuna['id']) }}"><i
+                                                        class="fa fa-fw fa-trash"></i></a>
+                                                @csrf
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

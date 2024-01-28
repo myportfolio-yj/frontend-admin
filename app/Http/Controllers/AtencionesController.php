@@ -18,7 +18,7 @@ class AtencionesController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
         $response = makeRequest('GET', API_URL);
         return $response->successful()

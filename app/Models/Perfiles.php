@@ -12,7 +12,7 @@ class Perfiles extends Model
     protected $table = 'qrv_perfiles';
     public $timestamps = true;
 
-  /*  protected $fillable = [
-        'v_apuntes',
-    ];*/
+    /*  protected $fillable = [
+          'v_apuntes',
+      ];*/
 }

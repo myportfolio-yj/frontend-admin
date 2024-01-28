@@ -24,14 +24,16 @@ class PacienteHasVacunas extends Model
 
     public function vacuna()
     {
-        return $this->hasOne(Vacunas::class,'id','n_vacuna');
+        return $this->hasOne(Vacunas::class, 'id', 'n_vacuna');
     }
+
     public function paciente()
     {
-        return $this->hasOne(Mascotas::class,'id','n_paciente');
+        return $this->hasOne(Mascotas::class, 'id', 'n_paciente');
     }
+
     public function medico()
     {
-        return $this->hasOne(User::class,'id','a_n_iduser');
+        return $this->hasOne(User::class, 'id', 'a_n_iduser');
     }
 }

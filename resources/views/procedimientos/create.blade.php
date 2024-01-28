@@ -14,7 +14,8 @@
                         <span class="card-title">Crear Procedimientos</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('procedimientos.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('procedimientos.store') }}" role="form"
+                              enctype="multipart/form-data">
                             @csrf
 
                             @include('procedimientos.form')

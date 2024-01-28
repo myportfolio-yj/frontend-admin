@@ -12,7 +12,8 @@
                         <span class="card-title">Editar Peluquero</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('peluqueros.update', $peluquero['id']) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('peluqueros.update', $peluquero['id']) }}" role="form"
+                              enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

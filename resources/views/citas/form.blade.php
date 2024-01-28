@@ -12,7 +12,8 @@
                     {{ Form::label('Mascota') }}
                     <select name="" id="">
                         @foreach($mascotas as $mascota)
-                            <option value="">{{ $mascota['nombre'] }} {{ $mascota['apellido'] }} - {{ $mascota['codIdentificacion'] }}</option>
+                            <option value="">{{ $mascota['nombre'] }} {{ $mascota['apellido'] }}
+                                - {{ $mascota['codIdentificacion'] }}</option>
                         @endforeach
                     </select>
                 </div>

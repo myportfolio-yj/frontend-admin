@@ -40,7 +40,8 @@
                                         <td>{{ $geolocalizacion['mascota']['codIdentificacion'] }}</td>
                                         <td>{{ $geolocalizacion['mascota']['nombre'] }} {{ $geolocalizacion['mascota']['apellido'] }}</td>
                                         <td>{{ $geolocalizacion['mascota']['sexo']['sexo']}}</td>
-                                        <td>{{ $geolocalizacion['mascota']['especie']['especie'] }} - {{ $geolocalizacion['mascota']['raza']['raza'] }} </td>
+                                        <td>{{ $geolocalizacion['mascota']['especie']['especie'] }}
+                                            - {{ $geolocalizacion['mascota']['raza']['raza'] }} </td>
                                         <td>{{ $geolocalizacion['telefono'] }}</td>
                                         <td>{{ $geolocalizacion['fecha'] }} - {{ $geolocalizacion['hora'] }}</td>
                                         <td>

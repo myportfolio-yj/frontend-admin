@@ -18,30 +18,30 @@ class HomeController extends Controller
         return view('admin.dashboard');
     }
 
-    public function validarqr(Request $request){
-        $qr=$request->qr_code;
+    public function validarqr(Request $request)
+    {
+        $qr = $request->qr_code;
         $paciente = Mascotas::where('v_identifica', $qr)->first();
-        if( is_null($paciente) ) {
+        if (is_null($paciente)) {
             return response()->json(['status' => 400,]);
         }
         $id = Auth::id();
         $url = env('APP_URL', 'http://localhost/qrvet/public/');
-        if( is_null($id) )
-        {
-            return response()->json(['status'=>200, 'url' => $url.'Pacientes/nologin/'.$paciente->id]);
+        if (is_null($id)) {
+            return response()->json(['status' => 200, 'url' => $url . 'Pacientes/nologin/' . $paciente->id]);
         }
-        return response()->json(['status'=>200, 'url' => $url.'Pacientes/'.$paciente->id]);
+        return response()->json(['status' => 200, 'url' => $url . 'Pacientes/' . $paciente->id]);
     }
 
-    public function validarqr2(string $identificador){
+    public function validarqr2(string $identificador)
+    {
         $paciente = Mascotas::where('v_identifica', $identificador)->first();
-        if( is_null($paciente) ) {
+        if (is_null($paciente)) {
             return response()->json(['status' => 400,]);
         }
         $id = Auth::id();
         $url = env('APP_URL', 'http://localhost/qrvet/public/');
-        if( is_null($id) )
-        {
+        if (is_null($id)) {
             return redirect()->route('noLogueado', ['id' => $paciente->id]);
         }
         return redirect()->route('pacientes.show', ['Paciente' => $paciente->id]);

@@ -55,7 +55,8 @@
                                         <td>Ninguna</td>
                                         <td>No</td>
                                         <td>
-                                            <form action="{{ route('atenciones.destroy', $atencion->id) }}" method="POST">
+                                            <form action="{{ route('atenciones.destroy', $atencion->id) }}"
+                                                  method="POST">
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('atenciones.show', $atencion->id) }}"><i
                                                         class="fa fa-fw fa-edit"></i> Editar Atencion</a>

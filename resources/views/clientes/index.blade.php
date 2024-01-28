@@ -43,12 +43,14 @@
                                 @foreach ($clientes as $cliente)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $cliente['tipoDocumento']['tipoDocumento'] }} - {{ $cliente['documento']}}</td>
+                                        <td>{{ $cliente['tipoDocumento']['tipoDocumento'] }}
+                                            - {{ $cliente['documento']}}</td>
                                         <td>{{ $cliente['nombres'] }} {{ $cliente['apellidos'] }}</td>
                                         <td>{{ $cliente['celular'] }} - {{ $cliente['fijo'] }}</td>
                                         <td>{{ $cliente['email'] }}</td>
                                         <td>
-                                            <form action="{{ route('clientes.destroy', $cliente['id']) }}" method="POST">
+                                            <form action="{{ route('clientes.destroy', $cliente['id']) }}"
+                                                  method="POST">
                                                 <a class="btn btn-sm btn-primary "
                                                    href="{{ route('clientes.show', $cliente['id']) }}"><i
                                                         class="fa fa-fw fa-paw"></i></a>

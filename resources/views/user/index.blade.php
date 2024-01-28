@@ -13,7 +13,7 @@
 
                             <div class="float-right">
                                 <a href="{{ route('medicos.create') }}" class="btn btn-lg btn-light float-right"
-                                    data-placement="left">
+                                   data-placement="left">
                                     <i class="fa fa-fw fa-user-plus"></i>
                                 </a>
                             </div>
@@ -29,40 +29,41 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Cod. Veterinario</th>
-                                        <th>Nro de Documento</th>
-                                        <th>Nombres Completos</th>
-                                        <th>Telefonos</th>
-                                        <th>Correo</th>
-                                        <th></th>
-                                    </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cod. Veterinario</th>
+                                    <th>Nro de Documento</th>
+                                    <th>Nombres Completos</th>
+                                    <th>Telefonos</th>
+                                    <th>Correo</th>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 1; ?>
-                                  @foreach ($users as $user)
-                                        <tr>
-                                            <th scope="row">{{ $i++ }}</th>
-                                            <td>{{ $user['codVeterinario'] }}</td>
-                                            <td>{{ $user['tipoDocumento']['tipoDocumento'] }} - {{ $user['documento'] }}</td>
-                                            <td>{{ $user['nombres'] }} {{ $user['apellidos'] }}</td>
-                                            <td>{{ $user['celular'] }} - {{ $user['fijo'] }}</td>
-                                            <td>{{ $user['email'] }}</td>
-                                            <td>
-                                                <form action="{{ route('medicos.destroy', $user['id']) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('medicos.edit', $user['id']) }}"><i
-                                                            class="fa fa-fw fa-edit"></i></a>
-                                                    <button class="btn btn-sm btn-danger"
-                                                            type="submit"><i
-                                                            class="fa fa-fw fa-trash"></i></button>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <th scope="row">{{ $i++ }}</th>
+                                        <td>{{ $user['codVeterinario'] }}</td>
+                                        <td>{{ $user['tipoDocumento']['tipoDocumento'] }}
+                                            - {{ $user['documento'] }}</td>
+                                        <td>{{ $user['nombres'] }} {{ $user['apellidos'] }}</td>
+                                        <td>{{ $user['celular'] }} - {{ $user['fijo'] }}</td>
+                                        <td>{{ $user['email'] }}</td>
+                                        <td>
+                                            <form action="{{ route('medicos.destroy', $user['id']) }}" method="POST">
+                                                <a class="btn btn-sm btn-success"
+                                                   href="{{ route('medicos.edit', $user['id']) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <button class="btn btn-sm btn-danger"
+                                                        type="submit"><i
+                                                        class="fa fa-fw fa-trash"></i></button>
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

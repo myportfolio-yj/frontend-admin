@@ -7,23 +7,23 @@
 @section('content')
 
     <body>
-        <div id="map"></div>
+    <div id="map"></div>
     </body>
 @stop
 
 @section('css')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
-    #map {
-        width: 100%;
-        height: 100vh;
-    }
-</style>
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
 @stop
 
 @section('js')

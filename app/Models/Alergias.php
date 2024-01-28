@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Alergias extends Model
 {
     use HasFactory;
+
     protected $table = 'qrv_alergias';
     public $timestamps = true;
 
@@ -20,8 +21,9 @@ class Alergias extends Model
         'a_n_iduser',
         'n_estado',
     ];
+
     public function medicos()
     {
-        return $this->hasOne(User::class,'id','a_n_iduser');
+        return $this->hasOne(User::class, 'id', 'a_n_iduser');
     }
 }

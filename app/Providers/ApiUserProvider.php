@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\UserProvider;
+
 class ApiUserProvider implements UserProvider
 {
     public function retrieveById($identifier)

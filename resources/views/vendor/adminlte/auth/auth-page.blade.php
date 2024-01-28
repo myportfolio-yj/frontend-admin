@@ -13,7 +13,9 @@
     @yield('css')
 @stop
 
-@section('classes_body'){{ ($auth_type ?? 'login') . '-page' }}@stop
+@section('classes_body')
+    {{ ($auth_type ?? 'login') . '-page' }}
+@stop
 
 @section('body')
     <div class="{{ $auth_type ?? 'login' }}-box">
@@ -27,14 +29,14 @@
                     <img src="{{ asset(config('adminlte.auth_logo.img.path')) }}"
                          alt="{{ config('adminlte.auth_logo.img.alt') }}"
                          @if (config('adminlte.auth_logo.img.class', null))
-                            class="{{ config('adminlte.auth_logo.img.class') }}"
+                             class="{{ config('adminlte.auth_logo.img.class') }}"
                          @endif
                          @if (config('adminlte.auth_logo.img.width', null))
-                            width="{{ config('adminlte.auth_logo.img.width') }}"
+                             width="{{ config('adminlte.auth_logo.img.width') }}"
                          @endif
                          @if (config('adminlte.auth_logo.img.height', null))
-                            height="{{ config('adminlte.auth_logo.img.height') }}"
-                         @endif>
+                             height="{{ config('adminlte.auth_logo.img.height') }}"
+                        @endif>
                 @else
                     <img src="{{ asset(config('adminlte.logo_img')) }}"
                          alt="{{ config('adminlte.logo_img_alt') }}" height="50">

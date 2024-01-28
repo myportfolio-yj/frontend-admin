@@ -16,7 +16,8 @@
                         <span class="card-title">Crear Diagnostico</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('diagnosticos.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('diagnosticos.store') }}" role="form"
+                              enctype="multipart/form-data">
                             @csrf
 
                             @include('diagnosticos.form')

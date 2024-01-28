@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 @section('title', 'Editar Cliente')
 @section('template_title')
-Actualizar Cliente
+    Actualizar Cliente
 @endsection
 @section('content')
     <section class="content container-fluid">
@@ -15,7 +15,8 @@ Actualizar Cliente
                         <span class="card-title">Editar Cliente</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('historias.update', $historia->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('historias.update', $historia->id) }}" role="form"
+                              enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

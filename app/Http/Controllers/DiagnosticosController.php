@@ -2,15 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alergias;
 use App\Models\Diagnosticos;
-use App\Models\Medicamentos;
-use App\Models\Peluqueros;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class DiagnosticosController extends Controller
@@ -25,7 +18,7 @@ class DiagnosticosController extends Controller
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico');
         if ($response->successful()) {
             $datos = $response->json();
-            return view('diagnosticos.index') ->with('diagnosticos',$datos);
+            return view('diagnosticos.index')->with('diagnosticos', $datos);
         } else {
             // Manejar error
             $error = $response->body();
@@ -41,7 +34,7 @@ class DiagnosticosController extends Controller
     public function create()
     {
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico');
-        if ($response->successful() ) {
+        if ($response->successful()) {
             $diagnostico = $response->json();
             return view('diagnosticos.create', compact('diagnostico'));
         } else {
@@ -54,7 +47,7 @@ class DiagnosticosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -78,24 +71,24 @@ class DiagnosticosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Diagnosticos  $diagnosticos
+     * @param \App\Models\Diagnosticos $diagnosticos
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-       //
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Diagnosticos  $diagnosticos
+     * @param \App\Models\Diagnosticos $diagnosticos
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/'.$id);
-        if ($response->successful() ) {
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/' . $id);
+        if ($response->successful()) {
             $diagnostico = $response->json();
             return view('diagnosticos.edit', compact('diagnostico'));
         } else {
@@ -108,14 +101,14 @@ class DiagnosticosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Diagnosticos  $diagnosticos
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Diagnosticos $diagnosticos
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         request()->validate(Diagnosticos::$rules);
-        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/'.$id, [
+        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/' . $id, [
             'diagnostico' => $request->input('diagnostico'),
             'detalle' => $request->input('detalle'),
 
@@ -134,12 +127,12 @@ class DiagnosticosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Diagnosticos  $diagnosticos
+     * @param \App\Models\Diagnosticos $diagnosticos
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/'.$id);
+        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/' . $id);
         if ($response->successful()) {
             return redirect()->route('diagnosticos')
                 ->with('success', 'Diagnostico eliminado satisfactoriamente');

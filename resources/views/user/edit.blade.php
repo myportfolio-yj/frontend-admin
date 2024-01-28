@@ -15,7 +15,8 @@
                         <span class="card-title">Editar Medico</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('medicos.update', $user['id']) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('medicos.update', $user['id']) }}" role="form"
+                              enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

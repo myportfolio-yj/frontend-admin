@@ -43,12 +43,14 @@
                                 @foreach ($peluqueros as $peluquero)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $peluquero['tipoDocumento']['tipoDocumento'] }} - {{ $peluquero['documento']}}</td>
+                                        <td>{{ $peluquero['tipoDocumento']['tipoDocumento'] }}
+                                            - {{ $peluquero['documento']}}</td>
                                         <td>{{ $peluquero['nombres'] }} {{ $peluquero['apellidos'] }}</td>
                                         <td>{{ $peluquero['celular'] }} - {{ $peluquero['fijo'] }}</td>
                                         <td>{{ $peluquero['email'] }}</td>
                                         <td>
-                                            <form action="{{ route('peluqueros.destroy', $peluquero['id']) }}" method="POST">
+                                            <form action="{{ route('peluqueros.destroy', $peluquero['id']) }}"
+                                                  method="POST">
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('peluqueros.edit', $peluquero['id']) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>

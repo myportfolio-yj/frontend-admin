@@ -15,6 +15,6 @@ class UserDetalles extends Model
 
     public function clinica()
     {
-        return $this->hasOne(Clinicas::class,'id','n_clinica');
+        return $this->hasOne(Clinicas::class, 'id', 'n_clinica');
     }
 }

@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Ruta Inicial
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Rutas de Login
 include_once('routesLogin.php');

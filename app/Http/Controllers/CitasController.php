@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clientes;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -12,6 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
 include_once('CitasDefinitions.php');
+
 class CitasController extends Controller
 {
     /**
@@ -37,6 +39,7 @@ class CitasController extends Controller
     {
         return returnsRedirect(makeRequest('POST', URL_CHECKIN_VETERINARIA . $idCita), [ROUTE_INDEX, SUCCESS_CHECKIN, ERROR_CHECKIN]);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,6 +53,7 @@ class CitasController extends Controller
             ? renderView(VIEW_CREATE, [MASCOTAS => $response->json()['mascotas'], TIPOSCITA => $response->json()['tiposCita']])
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -61,6 +65,7 @@ class CitasController extends Controller
         request()->validate(Citas::$rules);
         return returnsRedirect(makeRequest('POST', URL_CITAS, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
+
     /**
      * Display the specified resource.
      *
@@ -71,13 +76,14 @@ class CitasController extends Controller
     {
         //
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Clientes  $clientes
+     * @param $id
      * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit($id): View|Factory|Application
     {
         $cita = makeRequest('GET', URL_CITAS . $id);
         $tipoDocumento = makeRequest('GET', URL_TIPODOCUMENTO);
@@ -85,6 +91,7 @@ class CitasController extends Controller
             ? renderView(VIEW_EDIT, [CITA => $cita->json(), 'tipoDoc' => Arr::pluck($tipoDocumento->json(), 'tipoDocumento', 'id')])
             : dd($cita->body());
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -92,18 +99,19 @@ class CitasController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         request()->validate(Cita::$rules);
         return returnsRedirect(makeRequest('PUT', URL_CITAS . $id, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Clientes  $clientes
-     * @return Response
+     * @param Clientes $clientes
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         return returnsRedirect(makeRequest('DELETE', URL_CITAS . $id), [ROUTE_INDEX, SUCCESS_DELETE, ERROR_DELETE]);
     }

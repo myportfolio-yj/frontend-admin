@@ -31,15 +31,17 @@ class Geolocalizaciones extends Model
 
     public function sexo()
     {
-        return $this->hasOne(Sexo::class,'id','n_sexo');
+        return $this->hasOne(Sexo::class, 'id', 'n_sexo');
     }
+
     public function raza()
     {
-        return $this->hasOne(Razas::class,'id','n_raza');
+        return $this->hasOne(Razas::class, 'id', 'n_raza');
     }
+
     public function cliente()
     {
-        return $this->hasOne(Clientes::class,'id','n_cliente');
+        return $this->hasOne(Clientes::class, 'id', 'n_cliente');
     }
 
     public function alergias()

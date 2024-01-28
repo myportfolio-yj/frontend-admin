@@ -51,9 +51,10 @@
                                         <td>{{ $mascota['fechaNacimiento'] }}</td>
                                         <td>{{ $mascota['sexo']['sexo'] }}</td>
                                         <td>{{ $mascota['especie']['especie'] }} - {{ $mascota['raza']['raza'] }} </td>
-                                        <td> - </td>
+                                        <td> -</td>
                                         <td>
-                                            <form action="{{ route('mascotas.destroy', $mascota['id']) }}" method="POST">
+                                            <form action="{{ route('mascotas.destroy', $mascota['id']) }}"
+                                                  method="POST">
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('mascotas.edit', $mascota['id']) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>

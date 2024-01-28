@@ -23,8 +23,9 @@ class Vacunas extends Model
         'n_estado',
         'n_expira',
     ];
+
     public function medicos()
     {
-        return $this->hasOne(User::class,'id','a_n_iduser');
+        return $this->hasOne(User::class, 'id', 'a_n_iduser');
     }
 }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
@@ -46,11 +45,11 @@ class LoginController extends Controller
     {
         try {
             $response = Http::post('http://api1.v1.appomsv.com/login/veterinario', [
-                    'email' => $request->input("email"),
-                    'password' => $request->input("password")
+                'email' => $request->input("email"),
+                'password' => $request->input("password")
             ]);
 
-            $data = json_decode((string) $response->getBody(), true);
+            $data = json_decode((string)$response->getBody(), true);
 
             $user = new \App\Models\User();
             $user->id = $data['id'];

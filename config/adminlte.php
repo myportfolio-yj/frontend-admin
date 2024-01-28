@@ -292,12 +292,12 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
+            'type' => 'navbar-search',
+            'text' => 'search',
             'topnav_right' => true,
         ],
         [
-            'type'         => 'fullscreen-widget',
+            'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
@@ -308,15 +308,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'Medicos',
-                    'url'  => 'medicos',
+                    'url' => 'medicos',
                 ],
                 [
                     'text' => 'Peluqueros',
-                    'url'  => 'peluqueros',
+                    'url' => 'peluqueros',
                 ],
                 [
                     'text' => 'Clientes',
-                    'url'  => 'clientes',
+                    'url' => 'clientes',
                 ],
             ],
         ],
@@ -327,15 +327,15 @@ return [
 
                 [
                     'text' => 'Mascotas',
-                    'url'  => 'mascotas',
+                    'url' => 'mascotas',
                 ],
                 [
                     'text' => 'Citas',
-                    'url'  => 'citas',
+                    'url' => 'citas',
                 ],
                 [
                     'text' => 'Atenciones',
-                    'url'  => 'atenciones',
+                    'url' => 'atenciones',
                 ],
             ],
         ],
@@ -345,53 +345,53 @@ return [
             'submenu' => [
                 [
                     'text' => 'Alergias',
-                    'url'  => 'alergias',
+                    'url' => 'alergias',
                 ],
                 [
                     'text' => 'Medicamentos',
-                    'url'  => 'medicamentos',
+                    'url' => 'medicamentos',
                 ],
                 [
                     'text' => 'Diagnosticos',
-                    'url'  => 'diagnosticos',
+                    'url' => 'diagnosticos',
                 ],
                 [
                     'text' => 'Vacunas',
-                    'url'  => 'vacunas',
+                    'url' => 'vacunas',
                 ],
                 [
                     'text' => 'Procedimientos',
-                    'url'  => 'procedimientos',
+                    'url' => 'procedimientos',
                 ],
                 [
                     'text' => 'Razas',
-                    'url'  => 'razas',
+                    'url' => 'razas',
                 ],
             ],
         ],
         [
             'text' => 'Geolocalización',
-            'url'  => 'geolocalizacion',
+            'url' => 'geolocalizacion',
             'icon' => 'fa fa-fw fa-map-marker',
         ],
-       /* [
-            'text' => 'COMUNICATE CON NOSOTROS',
-            'icon' => 'fa fa-fw fa-phone',
-            'submenu' => [
-                [
-                    'text' => 'Foros',
-                    'url'  => 'Graficos',
-                ],
-                [
-                    'text' => 'Whatsapp',
-                    'url'  => 'Mapas',
-                ],
-                [
-                    'text' => 'Telegram',
-                    'url'  => 'Mapas',
-                ]
-            ],
-        ],*/
+        /* [
+             'text' => 'COMUNICATE CON NOSOTROS',
+             'icon' => 'fa fa-fw fa-phone',
+             'submenu' => [
+                 [
+                     'text' => 'Foros',
+                     'url'  => 'Graficos',
+                 ],
+                 [
+                     'text' => 'Whatsapp',
+                     'url'  => 'Mapas',
+                 ],
+                 [
+                     'text' => 'Telegram',
+                     'url'  => 'Mapas',
+                 ]
+             ],
+         ],*/
         /*
         [
             'text'    => 'multilevel',

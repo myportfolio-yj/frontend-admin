@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atenciones;
-use App\Models\Diagnosticos;
 use App\Models\Historias;
-use App\Models\Procedimientos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -35,9 +32,9 @@ class HistoriasController extends Controller
         if ($responseDiagnostico->successful() && $responseProcedimiento->successful()) {
             $diagnostico = $responseDiagnostico->json();
             $procedimiento = $responseProcedimiento->json();
-            $diagnostico = Arr::pluck($diagnostico,'diagnostico','id');
-            $procedimiento = Arr::pluck($procedimiento,'procedimiento','id');
-            return view('historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+            $diagnostico = Arr::pluck($diagnostico, 'diagnostico', 'id');
+            $procedimiento = Arr::pluck($procedimiento, 'procedimiento', 'id');
+            return view('historias.create', compact('historia', 'diagnostico', 'procedimiento', 'id'));
         } else {
             // Manejar error
             $error = $responseDiagnostico->body();
@@ -48,7 +45,7 @@ class HistoriasController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,7 +78,7 @@ class HistoriasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Historias  $historias
+     * @param \App\Models\Historias $historias
      * @return \Illuminate\Http\Response
      */
     public function show(Historias $historias)
@@ -92,13 +89,13 @@ class HistoriasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Historias  $historias
+     * @param \App\Models\Historias $historias
      * @return \Illuminate\Http\Response
      */
     public function edit(string $id)
     {
         $historia = new Historias();
-        $response = Http::get('http://api3.v1.appomsv.com/atencion/'.$id);
+        $response = Http::get('http://api3.v1.appomsv.com/atencion/' . $id);
         if ($response->successful()) {
             $response = $response->json();
             $historia->v_motivo = $response['motivo'];
@@ -120,9 +117,9 @@ class HistoriasController extends Controller
         if ($responseDiagnostico->successful() && $responseProcedimiento->successful()) {
             $diagnostico = $responseDiagnostico->json();
             $procedimiento = $responseProcedimiento->json();
-            $diagnostico = Arr::pluck($diagnostico,'diagnostico','id');
-            $procedimiento = Arr::pluck($procedimiento,'procedimiento','id');
-            return view('historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+            $diagnostico = Arr::pluck($diagnostico, 'diagnostico', 'id');
+            $procedimiento = Arr::pluck($procedimiento, 'procedimiento', 'id');
+            return view('historias.create', compact('historia', 'diagnostico', 'procedimiento', 'id'));
         } else {
             // Manejar error
             $error = $responseDiagnostico->body();
@@ -133,15 +130,15 @@ class HistoriasController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Historias  $historias
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Historias $historias
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $id)
     {
         request()->validate(Historias::$rules);
 
-        $response = Http::put('http://api3.v1.appomsv.com/atencion/'.$id, [
+        $response = Http::put('http://api3.v1.appomsv.com/atencion/' . $id, [
             'idCita' => $request->input('n_atencion'),
             'motivo' => $request->input('v_motivo'),
             'peso' => $request->input('n_peso'),
@@ -167,7 +164,7 @@ class HistoriasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Historias  $historias
+     * @param \App\Models\Historias $historias
      * @return \Illuminate\Http\Response
      */
     public function destroy(Historias $historias)

@@ -41,7 +41,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <form method="POST" action="{{ route('pacienteHasVacunas.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('pacienteHasVacunas.store') }}" role="form"
+                              enctype="multipart/form-data">
                             @csrf
 
                             @include('pacienteHasVacunas.form')

@@ -13,7 +13,7 @@
 
                             <div class="float-right">
                                 <a href="{{ route('razas.create') }}" class="btn btn-light btn-lg float-right"
-                                    data-placement="left">
+                                   data-placement="left">
                                     <i class="fa fa-fw fa-plus"></i>
                                 </a>
                             </div>
@@ -28,34 +28,34 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Especie</th>
-                                        <th>Nombre de raza</th>
-                                        <th>Acciones</th>
-                                    </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Especie</th>
+                                    <th>Nombre de raza</th>
+                                    <th>Acciones</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 1; ?>
-                                    @foreach ($razas as $raza)
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $raza['especie']['especie'] }}</td>
-                                            <td>{{ $raza['raza'] }}</td>
-                                            <td>
-                                                <form action="{{ route('razas.destroy', $raza['id']) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('razas.edit', $raza['id']) }}"><i
-                                                            class="fa fa-fw fa-edit"></i></a>
-                                                    <button class="btn btn-sm btn-danger"
-                                                            type="submit"><i
-                                                            class="fa fa-fw fa-trash"></i></button>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                @foreach ($razas as $raza)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $raza['especie']['especie'] }}</td>
+                                        <td>{{ $raza['raza'] }}</td>
+                                        <td>
+                                            <form action="{{ route('razas.destroy', $raza['id']) }}" method="POST">
+                                                <a class="btn btn-sm btn-success"
+                                                   href="{{ route('razas.edit', $raza['id']) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <button class="btn btn-sm btn-danger"
+                                                        type="submit"><i
+                                                        class="fa fa-fw fa-trash"></i></button>
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

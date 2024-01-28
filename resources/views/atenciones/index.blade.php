@@ -30,7 +30,7 @@
                                     <th>Fecha Atención</th>
                                     <th>Cliente</th>
                                     <th>Nombre de la mascota</th>
-                                    <th>Especie / Raza </th>
+                                    <th>Especie / Raza</th>
                                     <th>Alergia</th>
                                     <th></th>
                                     <th>Vacuna</th>
@@ -48,7 +48,8 @@
                                         <td>{{ $atencion['fecha'] }} - {{ $atencion['turno']}}</td>
                                         <td>{{ $atencion['cliente']['nombres'] }} {{ $atencion['cliente']['apellidos'] }} </td>
                                         <td>{{ $atencion['nombreMascota'] }}</td>
-                                        <td>{{ $atencion['mascota']['especie']['especie'] }} - {{ $atencion['mascota']['raza']['raza'] }}</td>
+                                        <td>{{ $atencion['mascota']['especie']['especie'] }}
+                                            - {{ $atencion['mascota']['raza']['raza'] }}</td>
                                         <td>
                                             @if( isset($atencion['mascota']['alergias']) && count($atencion['mascota']['alergias']) > 0 )
                                                 Si
@@ -103,10 +104,10 @@
                                             @if( !isset($atencion['recetas']) )
                                                 <!--//Añadir Receta -->
                                                 <a class="btn btn-sm btn-success "
-                                                    href="{{ route('recetas.create', ['id' => $atencion['id']]) }}"><i
+                                                   href="{{ route('recetas.create', ['id' => $atencion['id']]) }}"><i
                                                         class="fa fa-fw fa-prescription"></i></a>
                                             @else
-                                                    <!--//Editar Receta-->
+                                                <!--//Editar Receta-->
                                                 <a class="btn btn-sm btn-info "
                                                    href="{{ route('recetas.create', ['id' => $atencion['id']]) }}"><i
                                                         class="fa fa-fw fa-prescription"></i></a>

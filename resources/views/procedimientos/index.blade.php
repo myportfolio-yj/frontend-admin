@@ -53,7 +53,8 @@
                                         <td>{{ $procedimiento['descripcion'] }}</td>
 
                                         <td>
-                                            <form action="{{ route('procedimientos.destroy', $procedimiento['id'] ) }}" method="POST">
+                                            <form action="{{ route('procedimientos.destroy', $procedimiento['id'] ) }}"
+                                                  method="POST">
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('procedimientos.edit', $procedimiento['id'] ) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>

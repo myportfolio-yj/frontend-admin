@@ -43,7 +43,8 @@
                             </table>
                         </div>
 
-                        <form method="POST" action="{{ route('recetas.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('recetas.store') }}" role="form"
+                              enctype="multipart/form-data">
                             @csrf
 
                             @include('recetas.form')
@@ -62,8 +63,8 @@
         </div>
     </section>
     <script>
-        document.querySelectorAll('.printbutton').forEach(function(element) {
-            element.addEventListener('click', function() {
+        document.querySelectorAll('.printbutton').forEach(function (element) {
+            element.addEventListener('click', function () {
                 print();
             });
         });

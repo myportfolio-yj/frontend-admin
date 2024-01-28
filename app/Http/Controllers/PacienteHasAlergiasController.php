@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atenciones;
-use App\Models\Clientes;
-use App\Models\Mascotas;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Alergias;
+use App\Models\Atenciones;
 use App\Models\PacienteHasAlergias;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PacienteHasAlergiasController extends Controller
 {
@@ -34,14 +32,14 @@ class PacienteHasAlergiasController extends Controller
         $pacienteHasAlergias = PacienteHasAlergias::where('n_paciente', $atencion->n_paciente)->get();
         $cliente = $atencion->cliente;
         $paciente = $atencion->paciente;
-        $alergia =Alergias::pluck('v_nombre','id');
-        return view('PacienteHasAlergias.create',compact('pacienteHasAlergias','alergia','cliente','paciente'));
+        $alergia = Alergias::pluck('v_nombre', 'id');
+        return view('PacienteHasAlergias.create', compact('pacienteHasAlergias', 'alergia', 'cliente', 'paciente'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -62,7 +60,7 @@ class PacienteHasAlergiasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function show(PacienteHasAlergias $pacienteHasAlergias)
@@ -73,7 +71,7 @@ class PacienteHasAlergiasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function edit(PacienteHasAlergias $pacienteHasAlergias)
@@ -84,8 +82,8 @@ class PacienteHasAlergiasController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, PacienteHasAlergias $pacienteHasAlergias)
@@ -96,7 +94,7 @@ class PacienteHasAlergiasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PacienteHasAlergias  $pacienteHasAlergias
+     * @param \App\Models\PacienteHasAlergias $pacienteHasAlergias
      * @return \Illuminate\Http\Response
      */
     public function destroy(PacienteHasAlergias $pacienteHasAlergias)

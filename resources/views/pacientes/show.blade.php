@@ -49,7 +49,7 @@
                             {{ $paciente->cliente->v_nombre }} {{ $paciente->cliente->v_apellido }}
                         </div>
                         <div class="text-right">
-                        QR de identificación del paciente<br/>
+                            QR de identificación del paciente<br/>
                             {!!QrCode::size(150)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'validarqr/'.$paciente->v_identifica) !!}
                             <br><br>
                             {!!QrCode::size(70)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'validarqr/'.$paciente->v_identifica) !!}
@@ -63,8 +63,8 @@
         </div>
     </section>
     <script>
-        document.querySelectorAll('.printbutton').forEach(function(element) {
-            element.addEventListener('click', function() {
+        document.querySelectorAll('.printbutton').forEach(function (element) {
+            element.addEventListener('click', function () {
                 print();
             });
         });

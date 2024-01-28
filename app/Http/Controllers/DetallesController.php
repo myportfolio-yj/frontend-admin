@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detalles;
-use App\Models\User;
 use App\Models\Clinicas;
+use App\Models\detalles;
 use App\Models\Perfiles;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DetallesController extends Controller
@@ -30,17 +30,17 @@ class DetallesController extends Controller
      */
     public function create()
     {
-        $detalle=new detalles();
-        $medico=User::pluck('name','id');
-        $clinica=Clinicas::pluck('v_nomclin','id');
-        $perfil=Perfiles::pluck('v_apuntes','id');
-        return view('detalles.create',compact('alergia','medico','clinica','perfil'));
+        $detalle = new detalles();
+        $medico = User::pluck('name', 'id');
+        $clinica = Clinicas::pluck('v_nomclin', 'id');
+        $perfil = Perfiles::pluck('v_apuntes', 'id');
+        return view('detalles.create', compact('alergia', 'medico', 'clinica', 'perfil'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,7 +54,7 @@ class DetallesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\detalles  $detalles
+     * @param \App\Models\detalles $detalles
      * @return \Illuminate\Http\Response
      */
     public function show(detalles $detalles)
@@ -65,25 +65,25 @@ class DetallesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\detalles  $detalles
+     * @param \App\Models\detalles $detalles
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $detalle = detalles::find($id);
 
-        $medico = User::pluck('name','id');
-        $clinica = Clinicas::pluck('v_nomclin','id');
-        $perfil = Perfiles::pluck('v_apuntes','id');
+        $medico = User::pluck('name', 'id');
+        $clinica = Clinicas::pluck('v_nomclin', 'id');
+        $perfil = Perfiles::pluck('v_apuntes', 'id');
 
-        return view('detalles.edit', compact('alergia','medico','clinica','perfil'));
+        return view('detalles.edit', compact('alergia', 'medico', 'clinica', 'perfil'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\detalles  $detalles
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\detalles $detalles
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -97,7 +97,7 @@ class DetallesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\detalles  $detalles
+     * @param \App\Models\detalles $detalles
      * @return \Illuminate\Http\Response
      */
     public function destroy(detalles $detalles)

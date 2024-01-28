@@ -36,16 +36,19 @@ class Historias extends Model
         'v_detdiagnos' => 'required',
         'n_procedimiento' => 'required',
     ];
+
     public function atencion()
     {
-        return $this->hasOne(Atenciones::class,'id','n_atencion');
+        return $this->hasOne(Atenciones::class, 'id', 'n_atencion');
     }
+
     public function diagnostico()
     {
-        return $this->hasOne(Diagnosticos::class,'id','n_diagnos');
+        return $this->hasOne(Diagnosticos::class, 'id', 'n_diagnos');
     }
+
     public function procedimiento()
     {
-        return $this->hasOne(Procedimientos::class,'id','n_procedimiento');
+        return $this->hasOne(Procedimientos::class, 'id', 'n_procedimiento');
     }
 }

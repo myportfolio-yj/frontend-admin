@@ -16,7 +16,8 @@
                         <span class="card-title">Crear Vacuna</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('vacunas.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('vacunas.store') }}" role="form"
+                              enctype="multipart/form-data">
                             @csrf
 
                             @include('vacunas.form')

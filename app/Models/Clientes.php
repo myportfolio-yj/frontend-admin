@@ -24,8 +24,9 @@ class Clientes extends Model
         'v_telfijo',
         'n_tipodoc',
     ];
+
     public function tipo()
     {
-        return $this->hasOne(TipoDoc::class,'id','n_tipodoc');
+        return $this->hasOne(TipoDoc::class, 'id', 'n_tipodoc');
     }
 }

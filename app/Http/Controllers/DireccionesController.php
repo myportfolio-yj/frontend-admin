@@ -30,7 +30,7 @@ class DireccionesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +41,7 @@ class DireccionesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Direcciones  $direcciones
+     * @param \App\Models\Direcciones $direcciones
      * @return \Illuminate\Http\Response
      */
     public function show(Direcciones $direcciones)
@@ -52,7 +52,7 @@ class DireccionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Direcciones  $direcciones
+     * @param \App\Models\Direcciones $direcciones
      * @return \Illuminate\Http\Response
      */
     public function edit(Direcciones $direcciones)
@@ -63,8 +63,8 @@ class DireccionesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Direcciones  $direcciones
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Direcciones $direcciones
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Direcciones $direcciones)
@@ -75,7 +75,7 @@ class DireccionesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Direcciones  $direcciones
+     * @param \App\Models\Direcciones $direcciones
      * @return \Illuminate\Http\Response
      */
     public function destroy(Direcciones $direcciones)

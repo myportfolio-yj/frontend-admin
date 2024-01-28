@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alergias;
 use App\Models\Clientes;
-use App\Models\Peluqueros;
-use App\Models\TipoDoc;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -23,7 +19,7 @@ class ClientesController extends Controller
         $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente');
         if ($response->successful()) {
             $datos = $response->json();
-            return view('clientes.index') ->with('clientes',$datos);
+            return view('clientes.index')->with('clientes', $datos);
         } else {
             // Manejar error
             $error = $response->body();
@@ -39,9 +35,9 @@ class ClientesController extends Controller
     public function create()
     {
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response2->successful() ) {
+        if ($response2->successful()) {
             $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
+            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
             return view('clientes.create', compact('tipoDoc'));
         } else {
             // Manejar error
@@ -53,7 +49,7 @@ class ClientesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -84,7 +80,7 @@ class ClientesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Clientes  $clientes
+     * @param \App\Models\Clientes $clientes
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -96,18 +92,18 @@ class ClientesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Clientes  $clientes
+     * @param \App\Models\Clientes $clientes
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/'.$id);
+        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/' . $id);
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response->successful() && $response2->successful() ) {
+        if ($response->successful() && $response2->successful()) {
             $cliente = $response->json();
             $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
-            return view('clientes.edit', compact('cliente','tipoDoc'));
+            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
+            return view('clientes.edit', compact('cliente', 'tipoDoc'));
         } else {
             // Manejar error
             $error = $response->body();
@@ -118,14 +114,14 @@ class ClientesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Clientes  $clientes
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Clientes $clientes
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         request()->validate(Clientes::$rules);
-        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/'.$id, [
+        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/' . $id, [
             'nombres' => $request->input('nombres'),
             'apellidos' => $request->input('apellidos'),
             'celular' => $request->input('celular'),
@@ -148,12 +144,12 @@ class ClientesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Clientes  $clientes
+     * @param \App\Models\Clientes $clientes
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
-        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/'.$id);
+        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/' . $id);
         if ($response->successful()) {
             return redirect()->route('clientes')
                 ->with('success', 'Cliente eliminado satisfactoriamente');

@@ -19,7 +19,7 @@ class PeluquerosController extends Controller
         $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero');
         if ($response->successful()) {
             $datos = $response->json();
-            return view('peluqueros.index') ->with('peluqueros',$datos);
+            return view('peluqueros.index')->with('peluqueros', $datos);
         } else {
             // Manejar error
             $error = $response->body();
@@ -35,9 +35,9 @@ class PeluquerosController extends Controller
     public function create()
     {
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response2->successful() ) {
+        if ($response2->successful()) {
             $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
+            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
             return view('peluqueros.create', compact('tipoDoc'));
         } else {
             // Manejar error
@@ -49,7 +49,7 @@ class PeluquerosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,7 +81,7 @@ class PeluquerosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Clientes  $clientes
+     * @param \App\Models\Clientes $clientes
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -92,18 +92,18 @@ class PeluquerosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Peluqueros  $peluqueros
+     * @param \App\Models\Peluqueros $peluqueros
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/'.$id);
+        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/' . $id);
         $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response->successful() && $response2->successful() ) {
+        if ($response->successful() && $response2->successful()) {
             $peluquero = $response->json();
             $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
-            return view('peluqueros.edit', compact('peluquero','tipoDoc'));
+            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
+            return view('peluqueros.edit', compact('peluquero', 'tipoDoc'));
         } else {
             // Manejar error
             $error = $response->body();
@@ -114,14 +114,14 @@ class PeluquerosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Peluqueros  $peluqueros
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Peluqueros $peluqueros
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         request()->validate(Peluqueros::$rules);
-        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/'.$id, [
+        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/' . $id, [
             'nombres' => $request->input('nombres'),
             'apellidos' => $request->input('apellidos'),
             'celular' => $request->input('celular'),
@@ -144,12 +144,12 @@ class PeluquerosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Peluqueros  $peluqueros
+     * @param \App\Models\Peluqueros $peluqueros
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/'.$id);
+        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/' . $id);
         if ($response->successful()) {
             return redirect()->route('peluqueros')
                 ->with('success', 'Peluquero eliminado satisfactoriamente');
