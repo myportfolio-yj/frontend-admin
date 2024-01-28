@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-include_once('AtencionesDefinitions.php');
+include_once 'AtencionesDefinitions.php';
 
 class AtencionesController extends Controller
 {

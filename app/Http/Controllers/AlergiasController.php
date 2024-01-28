@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-include_once('AlergiasDefinitions.php');
+include_once 'AlergiasDefinitions.php';
 
 class AlergiasController extends Controller
 {

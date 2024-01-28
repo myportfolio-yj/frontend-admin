@@ -1,5 +1,5 @@
 <?php
-include_once('DefinitionsGeneral.php');
+include_once 'DefinitionsGeneral.php';
 // Definitions
 const ALERGIA = 'alergia';
 const ALERGIAS = 'alergias';

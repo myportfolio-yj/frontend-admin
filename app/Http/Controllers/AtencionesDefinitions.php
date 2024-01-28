@@ -1,5 +1,5 @@
 <?php
-include_once('DefinitionsGeneral.php');
+include_once 'DefinitionsGeneral.php';
 // Definitions
 const ATENCION = 'atencion';
 const ATENCIONES = 'atenciones';

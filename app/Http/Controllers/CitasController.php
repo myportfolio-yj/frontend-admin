@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
-include_once('CitasDefinitions.php');
+include_once 'CitasDefinitions.php';
 
 class CitasController extends Controller
 {
