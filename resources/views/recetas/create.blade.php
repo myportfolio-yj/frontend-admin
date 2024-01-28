@@ -25,6 +25,7 @@
                                     <th>Medicamento</th>
                                     <th>Cantidad</th>
                                     <th>Dosis</th>
+                                    <th>Indicaciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -32,9 +33,10 @@
                                 @foreach ($recetas as $rs)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $rs->medicamento->v_nombre }}</td>
-                                        <td>{{ $rs->n_cantidad }}</td>
-                                        <td>{{ $rs->v_dosis }}</td>
+                                        <td>{{ $rs['medicamento']['medicamento'] }}</td>
+                                        <td>{{ $rs['cantidad'] }}</td>
+                                        <td>{{ $rs['dosis'] }}</td>
+                                        <td>{{ $rs['indicaciones'] }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

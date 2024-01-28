@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Atenciones;
+use App\Models\Historias;
 use App\Models\Medicamentos;
 use App\Models\Recetas;
 use Illuminate\Http\Request;
@@ -30,8 +31,10 @@ class RecetasController extends Controller
     {
         $id = $_GET['id'];
         $response = Http::get('http://api3.v1.appomsv.com/cita/'.$id);
-        if ($response->successful()) {
+        $responseRecetas = Http::get('http://api3.v1.appomsv.com/cita-recetas/'.$id);
+        if ($response->successful() && $responseRecetas->successful()) {
             $response = $response->json();
+            $recetas = $responseRecetas->json();
             $medicamentos = Http::get('http://api3.v1.appomsv.com/medicamento');
             if ($medicamentos->successful()) {
                 $medicamentos = $medicamentos->json();
@@ -41,8 +44,6 @@ class RecetasController extends Controller
                 $error = $response->body();
                 return dd($error);
             }
-            // $recetas = Recetas::where('n_atencion', $atencion->id)->get();
-            $recetas = [];
             $receta = new Recetas();
             return view('recetas.create',compact('id', 'medicamentos', 'receta', 'recetas'));
         } else {
@@ -60,16 +61,21 @@ class RecetasController extends Controller
      */
     public function store(Request $request)
     {
-        $receta = new Recetas();
-        $receta->n_cantidad = $request->n_cantidad;
-        $receta->v_dosis = $request->v_dosis;
-        $receta->n_medica = $request->n_medica;
-        $receta->n_atencion = $request->n_atencion;
-
-        $receta->save();
-
-        return redirect()->route('recetas.create', ['id' => $receta->n_atencion])
-            ->with('success', 'Receta de paciente se ha añadido satisfactoriamente.');
+        $response = Http::post('http://api3.v1.appomsv.com/receta', [
+            'idCita' => $request->input('n_atencion'),
+            'idMedicamento' => $request->input('n_medica'),
+            'cantidad' => $request->input('n_cantidad'),
+            'dosis' => $request->input('v_dosis'),
+            'indicaciones' => $request->input('v_indicaciones'),
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('recetas.create', ['id' => $request->input('n_atencion')]);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**

@@ -38,9 +38,9 @@
                                     <th>Cliente</th>
                                     <th>Nombre de la mascota</th>
                                     <th>Especie / Raza </th>
-                                    <th>Vacuna</th>
-                                    <th></th>
                                     <th>Alergia</th>
+                                    <th></th>
+                                    <th>Vacuna</th>
                                     <th></th>
                                     <th>Historia</th>
                                     <th>Receta</th>
@@ -55,8 +55,25 @@
                                         <td>{{ $atencion['fecha'] }} - {{ $atencion['turno']}}</td>
                                         <td>{{ $atencion['cliente']['nombres'] }} {{ $atencion['cliente']['apellidos'] }} </td>
                                         <td>{{ $atencion['nombreMascota'] }}</td>
-                                        <td> - </td>
+                                        <td>{{ $atencion['mascota']['especie']['especie'] }} - {{ $atencion['mascota']['raza']['raza'] }}</td>
                                         <td>
+                                            @if( count($atencion['mascota']['alergias']) > 0 )
+                                                Si
+                                            @else
+                                                Ninguna
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-secondary "
+                                               href="{{ route('pacienteHasAlergias.create', ['id' => $atencion['id']]) }}"><i
+                                                    class="fa fa-fw fa-eye"></i></a>
+                                        </td>
+                                        <td>
+                                            @if( count($atencion['mascota']['vacunas']) > 0 )
+                                                Si
+                                            @else
+                                                Ninguna
+                                            @endif
                                         </td>
                                         <td>
                                             <a class="btn btn-sm btn-secondary "
@@ -72,7 +89,7 @@
                                         </td>
 
                                         <td>
-                                            @if( !isset($atencion['receta']) )
+                                            @if( !isset($atencion['recetas']) )
                                                 No
                                             @else
                                                 Si

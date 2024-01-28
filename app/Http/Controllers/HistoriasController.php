@@ -37,7 +37,7 @@ class HistoriasController extends Controller
             $procedimiento = $responseProcedimiento->json();
             $diagnostico = Arr::pluck($diagnostico,'diagnostico','id');
             $procedimiento = Arr::pluck($procedimiento,'procedimiento','id');
-            return view('Historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
+            return view('historias.create',compact('historia', 'diagnostico','procedimiento', 'id'));
         } else {
             // Manejar error
             $error = $responseDiagnostico->body();
@@ -139,23 +139,29 @@ class HistoriasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $historia = Historias::find($id);
+        request()->validate(Historias::$rules);
 
-        $historia->v_motivo = $request->v_motivo;
-        $historia->n_peso = $request->n_peso;
-        $historia->n_temp = $request->n_temp;
-        $historia->n_frecresp = $request->n_frecresp;
-        $historia->n_freccard = $request->n_freccard;
-        $historia->v_detproced = $request->v_detproced;
-        $historia->n_atencion = $request->n_atencion;
-        $historia->n_diagnos = $request->n_diagnos;
-        $historia->v_detdiagnos = $request->v_detdiagnos;
-        $historia->n_procedimiento = $request->n_procedimiento;
-
-        $historia->save();
-
-        return redirect()->route('atenciones')
-            ->with('success', 'Historia creada satisfactoriamente.');
+        $response = Http::put('http://api3.v1.appomsv.com/atencion/'.$id, [
+            'idCita' => $request->input('n_atencion'),
+            'motivo' => $request->input('v_motivo'),
+            'peso' => $request->input('n_peso'),
+            'temperatura' => $request->input('n_temp'),
+            'frecuenciaRespiratoria' => $request->input('n_frecresp'),
+            'frecuenciaCardiaca' => $request->input('n_freccard'),
+            'idDiagnostico' => $request->input('n_diagnos'),
+            'idProcedimiento' => $request->input('n_procedimiento'),
+            'detalleDiagnostico' => $request->input('v_detdiagnos'),
+            'detalleProcedimiento' => $request->input('v_detproced'),
+            'cerrado' => false
+        ]);
+        if ($response->successful()) {
+            $datos = $response->json();
+            return redirect()->route('Atenciones');
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
     }
 
     /**

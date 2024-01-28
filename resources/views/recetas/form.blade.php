@@ -18,6 +18,11 @@
             {{ Form::text('v_dosis', $receta->v_dosis, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
         </div>
 
+        <div class="form-group">
+            {{ Form::label('Indicaciones') }}
+            {{ Form::text('v_indicaciones', $receta->v_indicaciones, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+        </div>
+
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Enviar</button>
