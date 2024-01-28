@@ -3,160 +3,101 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 
+include_once('ClienteDefinitions.php');
 class ClientesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente');
-        if ($response->successful()) {
-            $datos = $response->json();
-            return view('clientes.index')->with('clientes', $datos);
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', URL_CLIENTE);
+        return $response->successful()
+            ? renderView(VIEW_INDEX, [CLIENTES => $response->json()])
+            : dd($response->body());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function create()
+    public function create(): View|Factory|Application|RedirectResponse
     {
-        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response2->successful()) {
-            $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
-            return view('clientes.create', compact('tipoDoc'));
-        } else {
-            // Manejar error
-            $error = $response2->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', URL_TIPODOCUMENTO);
+        return ($response->successful())
+            ? renderView(VIEW_CREATE, [TIPODOC => Arr::pluck($response->json(), 'tipoDocumento', 'id')])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate(Clientes::$rules);
-        $response = Http::post('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente', [
-            'nombres' => $request->input('nombres'),
-            'apellidos' => $request->input('apellidos'),
-            'celular' => $request->input('celular'),
-            'fijo' => $request->input('fijo'),
-            'email' => $request->input('email'),
-            'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento'),
-            'password' => $request->input('documento'),
-            'confirmarPassword' => $request->input('documento')
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('clientes')
-                ->with('success', 'Cliente creado con exito satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('POST', URL_CLIENTE, fieldsCliente($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Clientes $clientes
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View
      */
-    public function show($id)
+    public function show($id): View|Factory|Application
     {
-        $cliente = Clientes::find($id);
-        return view('clientes.show', compact('cliente'));
+        return renderView(VIEW_SHOW, [CLIENTE => makeRequest('GET', URL_CLIENTE . $id)]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Clientes $clientes
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function edit($id)
+    public function edit($id): View|Factory|RedirectResponse|Application
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/' . $id);
-        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response->successful() && $response2->successful()) {
-            $cliente = $response->json();
-            $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
-            return view('clientes.edit', compact('cliente', 'tipoDoc'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', URL_CLIENTE . $id);
+        $response2 = makeRequest('GET', URL_TIPODOCUMENTO);
+        return ($response->successful() && $response2->successful())
+            ? renderView(VIEW_EDIT, [CLIENTE => $response->json(), TIPODOC => Arr::pluck($response2->json(), 'tipoDocumento', 'id')])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Clientes $clientes
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         request()->validate(Clientes::$rules);
-        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/' . $id, [
-            'nombres' => $request->input('nombres'),
-            'apellidos' => $request->input('apellidos'),
-            'celular' => $request->input('celular'),
-            'fijo' => $request->input('fijo'),
-            'email' => $request->input('email'),
-            'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento')
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('clientes')
-                ->with('success', 'Cliente actualizado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('PUT', URL_CLIENTE . $id, fieldsClienteUpdate($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Clientes $clientes
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
-        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/cliente/' . $id);
-        if ($response->successful()) {
-            return redirect()->route('clientes')
-                ->with('success', 'Cliente eliminado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('DELETE', URL_CLIENTE . $id), [ROUTE_INDEX, SUCCESS_DELETE, ERROR_DELETE]);
     }
 }
