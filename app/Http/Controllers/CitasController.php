@@ -2,185 +2,109 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alergias;
-use App\Models\Clientes;
-use App\Models\Diagnosticos;
-use App\Models\TipoDoc;
-use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 
+include_once('CitasDefinitions.php');
 class CitasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        $responseCitas = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita');
-        $responseCitasVigentes = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita-vigentes');
-        if ($responseCitas->successful() && $responseCitasVigentes->successful()) {
-            $citas = $responseCitas->json();
-            $citasVigentes = $responseCitasVigentes->json();
-            return view('citas.index', compact('citas','citasVigentes'));
-        } else {
-            // Manejar error
-            $error = $responseCitas->body();
-            return dd($error);
-        }
+        $responseCitas = makeRequest('GET', URL_CITAS);
+        $responseCitasVigentes = makeRequest('GET', URL_CITAS_VIGENTE);
+        return ($responseCitas->successful() && $responseCitasVigentes->successful())
+            ? renderView(VIEW_INDEX, [CITAS => $responseCitas->json(), CITAS_VIGENTES => $responseCitasVigentes->json()])
+            : dd($responseCitas->body());
     }
 
-    public function peluqueriaCheckIn($idCita) {
-        $response = Http::post('http://api3.v1.appomsv.com/peluqueria/checkin/'.$idCita,[]);
-        if ($response->successful()) {
-            return redirect()->route('citas.index');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+    public function peluqueriaCheckIn($idCita): RedirectResponse
+    {
+        return returnsRedirect(makeRequest('POST', URL_CHECKIN_PELUQUERIA . $idCita), [ROUTE_INDEX, SUCCESS_CHECKIN, ERROR_CHECKIN]);
     }
 
-    public function veterinariaCheckIn($idCita) {
-        $response = Http::post('http://api3.v1.appomsv.com/veterinaria/checkin/'.$idCita,[]);
-        if ($response->successful()) {
-            return redirect()->route('Citas');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+    public function veterinariaCheckIn($idCita): RedirectResponse
+    {
+        return returnsRedirect(makeRequest('POST', URL_CHECKIN_VETERINARIA . $idCita), [ROUTE_INDEX, SUCCESS_CHECKIN, ERROR_CHECKIN]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function create()
+    public function create(): View|Factory|RedirectResponse|Application
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita');
-        if ($response->successful() ) {
-            $cita = $response->json();
-            return view('citas.create', compact('cita'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
-    }
 
+        $response = Http::get(URL_CREAR_CITA);
+        return ($response->successful())
+            ? renderView(VIEW_CREATE, [MASCOTAS => $response->json()['mascotas'], TIPOSCITA => $response->json()['tiposCita']])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
+    }
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate(Citas::$rules);
-        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/cita', [
-            'idCliente' => $request->input('idCliente'),
-            'idMascota' => $request->input('idMascota'),
-            'idTipoCita' => $request->input('idTipoCita'),
-            'fecha' => $request->input('fecha'),
-            'turno' => $request->input('turno'),
-            'observaciones' => $request->input('observaciones'),
-            'atencionesPeluqueria' => $request->input('atencionesPeluqueria'),
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('citas')
-                ->with('success', 'Cita creado con exito satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('POST', URL_CITAS, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Clientes  $clientes
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Response
      */
     public function show($id)
     {
-
+        //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Clientes  $clientes
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/cita/'.$id);
-        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response->successful() && $response2->successful() ) {
-            $cliente = $response->json();
-            $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc,'tipoDocumento','id');
-            return view('clientes.edit', compact('cliente','tipoDoc'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $cita = makeRequest('GET', URL_CITAS . $id);
+        $tipoDocumento = makeRequest('GET', URL_TIPODOCUMENTO);
+        return ($cita->successful() && $tipoDocumento->successful())
+            ? renderView(VIEW_EDIT, [CITA => $cita->json(), 'tipoDoc' => Arr::pluck($tipoDocumento->json(), 'tipoDocumento', 'id')])
+            : dd($cita->body());
     }
-
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Clientes  $clientes
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        request()->validate(Clientes::$rules);
-        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com/cita/'.$id, [
-            'idCliente' => $request->input('idCliente'),
-            'idMascota' => $request->input('idMascota'),
-            'idTipoCita' => $request->input('idTipoCita'),
-            'fecha' => $request->input('fecha'),
-            'turno' => $request->input('turno'),
-            'observaciones' => $request->input('observaciones'),
-            'atencionesPeluqueria' => $request->input('atencionesPeluqueria')
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('citas')
-                ->with('success', 'Cita actualizado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        request()->validate(Cita::$rules);
+        return returnsRedirect(makeRequest('PUT', URL_CITAS . $id, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Clientes  $clientes
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
-        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/cita/'.$id);
-        if ($response->successful()) {
-            return redirect()->route('citas')
-                ->with('success', 'Cita eliminado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('DELETE', URL_CITAS . $id), [ROUTE_INDEX, SUCCESS_DELETE, ERROR_DELETE]);
     }
 }

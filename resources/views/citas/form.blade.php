@@ -5,18 +5,26 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Cliente') }}
-
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Mascota') }}
+                    <select name="" id="">
+                        @foreach($mascotas as $mascota)
+                            <option value="">{{ $mascota['nombre'] }} {{ $mascota['apellido'] }} - {{ $mascota['codIdentificacion'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Tipo de cita') }}
-
+                    <select name="" id="">
+                        @foreach($tiposCita as $tipoCita)
+                            <option value="">{{ $tipoCita['tipoCita'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-md-6">

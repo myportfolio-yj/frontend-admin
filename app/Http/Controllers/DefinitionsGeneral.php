@@ -15,6 +15,7 @@ const ERROR = 'error';
 
 function redireccionamiento(array $args): RedirectResponse
 {
+    if (count($args) == 1) return redirect()->route($args[0]);
     return redirect()->route($args[0])->with($args[1], $args[2]);
 }
 
