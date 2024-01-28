@@ -3,81 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alergias;
-use App\Models\Medicamentos;
-use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Response;
+
+include_once('AlergiasDefinitions.php');
 
 class AlergiasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/alergia');
-        if ($response->successful()) {
-            $datos = $response->json();
-            return view('alergias.index') ->with('alergias',$datos);
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', API_URL);
+        return $response->successful()
+            ? renderView(VIEW_INDEX, [ALERGIAS => $response->json()])
+            : dd($response->body());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(): Application|Factory|View
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/alergia');
-        if ($response->successful() ) {
-            $alergia = $response->json();
-            return view('alergias.create', compact('alergia'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return renderView(VIEW_CREATE);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate(Alergias::$rules);
-        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/alergia', [
-            'alergia' => $request->input('alergia'),
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('alergias')
-                ->with('success', 'Alergia creado con exito satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('POST', API_URL, fieldsAlergia($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Alergias  $alergias
-     * @return \Illuminate\Http\Response
+     * @param Alergias $alergias
+     * @return Response
      */
     public function show($id)
     {
@@ -87,62 +63,38 @@ class AlergiasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Alergias  $alergias
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function edit($id)
+    public function edit($id): Application|Factory|View|RedirectResponse
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/alergia/'.$id);
-        if ($response->successful() ) {
-            $alergia = $response->json();
-            return view('alergias.edit', compact('alergia'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', API_URL . $id);
+        return $response->successful()
+            ? renderView(VIEW_EDIT, [ALERGIA => $response->json()])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Alergias  $alergias
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         request()->validate(Alergias::$rules);
-        $response = Http::put('https://mascota-vet-933796c48a6c.herokuapp.com/alergia/'.$id, [
-            'alergia' => $request->input('alergia'),
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('alergias')
-                ->with('success', 'Alergia actualizada satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('PUT', API_URL . $id, fieldsAlergia($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Alergias  $alergias
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
-        $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com/alergia/'.$id);
-        if ($response->successful()) {
-            return redirect()->route('alergias')
-                ->with('success', 'Alergia eliminado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('DELETE', API_URL . $id), [ROUTE_INDEX, SUCCESS_DELETE, ERROR_DELETE]);
     }
 }
