@@ -7,6 +7,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
+const ID = 'id';
 // Success
 const SUCCESS = 'success';
 // Error
