@@ -47,7 +47,6 @@ class CitasController extends Controller
      */
     public function create(): View|Factory|RedirectResponse|Application
     {
-
         $response = Http::get(URL_CREAR_CITA);
         return ($response->successful())
             ? renderView(VIEW_CREATE, [MASCOTAS => $response->json()['mascotas'], TIPOSCITA => $response->json()['tiposCita']])

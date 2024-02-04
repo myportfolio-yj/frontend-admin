@@ -3,76 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Models\Diagnosticos;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
+
+include_once 'DiagnosticosDefinitions.php';
 
 class DiagnosticosController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico');
-        if ($response->successful()) {
-            $datos = $response->json();
-            return view('diagnosticos.index')->with('diagnosticos', $datos);
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', API_URL);
+        return $response->successful()
+            ? renderView(VIEW_INDEX, [DIAGNOSTICOS => $response->json()])
+            : dd($response->body());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function create()
+    public function create(): Application|Factory|View|RedirectResponse
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico');
-        if ($response->successful()) {
-            $diagnostico = $response->json();
-            return view('diagnosticos.create', compact('diagnostico'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = Http::get(API_URL);
+        return ($response->successful())
+            ? renderView(VIEW_CREATE, [DIAGNOSTICO => $response->json()])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate(Diagnosticos::$rules);
-        $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico', [
-            'diagnostico' => $request->input('diagnostico'),
-            'detalle' => $request->input('detalle'),
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('diagnosticos')
-                ->with('success', 'Diagnostico creado con exito satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('POST', API_URL, fieldsDiagnosticos($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param \App\Models\Diagnosticos $diagnosticos
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -82,64 +67,38 @@ class DiagnosticosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Diagnosticos $diagnosticos
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function edit($id)
+    public function edit($id): Application|Factory|View|RedirectResponse
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/' . $id);
-        if ($response->successful()) {
-            $diagnostico = $response->json();
-            return view('diagnosticos.edit', compact('diagnostico'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', API_URL . $id);
+        return $response->successful()
+            ? renderView(VIEW_EDIT, [DIAGNOSTICO => $response->json()])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Diagnosticos $diagnosticos
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         request()->validate(Diagnosticos::$rules);
-        $response = Http::put('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/' . $id, [
-            'diagnostico' => $request->input('diagnostico'),
-            'detalle' => $request->input('detalle'),
-
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('diagnosticos')
-                ->with('success', 'Diagnostico actualizada satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('PUT', API_URL . $id, fieldsDiagnosticos($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Diagnosticos $diagnosticos
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
-        $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/diagnostico/' . $id);
-        if ($response->successful()) {
-            return redirect()->route('diagnosticos')
-                ->with('success', 'Diagnostico eliminado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('DELETE', API_URL . $id), [ROUTE_INDEX, SUCCESS_DELETE, ERROR_DELETE]);
     }
 }
