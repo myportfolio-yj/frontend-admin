@@ -64,7 +64,7 @@ class LoginController extends Controller
             $request->session()->put('user', $user);
             Auth::login($user);
 
-            return redirect()->intended('Mascotas');
+            return redirect()->intended('mascotas');
 
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             if ($e->getCode() === 400) {
