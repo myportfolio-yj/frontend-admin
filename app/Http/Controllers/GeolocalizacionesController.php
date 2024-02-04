@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+
+include_once 'GeolocalizacionesDefinitions.php';
 
 class GeolocalizacionesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/geolocalizacion');
-        if ($response->successful()) {
-            $datos = $response->json();
-            return view('geolocalizaciones.index')->with('geolocalizaciones', $datos);
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', API_URL);
+        return $response->successful()
+            ? renderView(VIEW_INDEX, [GEOLOCALIZACIONES => $response->json()])
+            : dd($response->body());
     }
 
     /**
