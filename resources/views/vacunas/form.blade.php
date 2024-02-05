@@ -6,7 +6,7 @@
             {!! $errors->first('vacuna', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('Duracion') }}
+            {{ Form::label('Duración') }}
             {{ Form::text('duracion', $vacuna['duracion'] ?? '', ['class' => 'form-control' . ($errors->has('duracion') ? ' is-invalid' : ''), 'placeholder' => 'Duración']) }}
             {!! $errors->first('duracion', '<div class="invalid-feedback">:message</div>') !!}
         </div>

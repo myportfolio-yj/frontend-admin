@@ -36,11 +36,9 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
-
                                     <th>Procedimiento</th>
-                                    <th>Descripcion</th>
-
-                                    <th></th>
+                                    <th>descripción</th>
+                                    <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -50,7 +48,7 @@
                                         <td>{{ $i++ }}</td>
 
                                         <td>{{ $procedimiento['procedimiento'] }}</td>
-                                        <td>{{ $procedimiento['descripcion'] }}</td>
+                                        <td>{{ $procedimiento['descripcion'] ?? '' }}</td>
 
                                         <td>
                                             <form action="{{ route('procedimientos.destroy', $procedimiento['id'] ) }}"

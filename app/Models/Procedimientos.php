@@ -8,16 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Procedimientos extends Model
 {
     use HasFactory;
-
-    protected $table = 'qrv_procedimientos';
     public $timestamps = true;
-
     protected $fillable = [
-        'v_nombre',
-        'v_apuntes',
-        'a_n_iduser',
-        'n_estado',
-        'n_notifica',
     ];
     static $rules = [
         'procedimiento' => 'required',
