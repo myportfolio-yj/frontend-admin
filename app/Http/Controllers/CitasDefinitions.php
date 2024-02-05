@@ -6,6 +6,7 @@ const CITA = 'cita';
 const CITAS_VIGENTES = 'citasVigentes';
 const MASCOTAS = 'mascotas';
 const TIPOSCITA = 'tiposCita';
+
 // URLs
 define('URL_CITAS', env('API3') . '/cita/');
 define('URL_CITAS_VIGENTE', env('API3') . '/cita-vigentes/');
@@ -14,11 +15,11 @@ define('URL_CHECKIN_VETERINARIA', env('API3') . '/veterinaria/checkin/');
 define('URL_TIPODOCUMENTO', env('API1') . '/tipodocumento/');
 define('URL_CREAR_CITA', env('API3') . '/cita-formulario/');
 // Views
-const VIEW_INDEX = 'citas.index';
-const VIEW_CREATE = 'citas..create';
-const VIEW_EDIT = 'citas.edit';
+ const VIEW_INDEX = 'citas.index';
+ const VIEW_CREATE = 'citas..create';
+ const VIEW_EDIT = 'citas.edit';
 // Routes
-const ROUTE_INDEX = 'Citas';
+ const ROUTE_INDEX = 'Citas';
 // Success
 const SUCCESS_CHECKIN = 'El checkin fue correcto';
 const SUCCESS_CREATE = 'Cita creada satisfactoriamente.';

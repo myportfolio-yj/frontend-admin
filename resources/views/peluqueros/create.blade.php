@@ -16,7 +16,7 @@
                         <span class="card-title">Añadir Nuevo Peluquero</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('Peluqueros.store') }}" role="form"
+                        <form method="POST" action="{{ route('peluqueros.store') }}" role="form"
                               enctype="multipart/form-data">
                             @csrf
 

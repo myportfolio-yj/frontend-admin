@@ -59,7 +59,10 @@ class ClientesController extends Controller
      */
     public function show($id): View|Factory|Application
     {
-        return renderView(VIEW_SHOW, [CLIENTE => makeRequest('GET', URL_CLIENTE . $id)]);
+        $response = makeRequest('GET', URL_CLIENTE . $id);
+        return $response->successful()
+            ? renderView(VIEW_SHOW, [CLIENTE => $response->json()])
+            : dd($response->body());
     }
 
     /**

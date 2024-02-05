@@ -27,10 +27,8 @@ class HomeController extends Controller
         }
         $id = Auth::id();
         $url = env('APP_URL', 'http://localhost/qrvet/public/');
-        if (is_null($id)) {
-            return response()->json(['status' => 200, 'url' => $url . 'Pacientes/nologin/' . $paciente->id]);
-        }
-        return response()->json(['status' => 200, 'url' => $url . 'Pacientes/' . $paciente->id]);
+        return (is_null($id)) ? response()->json(['status' => 200, 'url' => $url . 'Pacientes/nologin/' . $paciente->id])
+            : response()->json(['status' => 200, 'url' => $url . 'Pacientes/' . $paciente->id]);
     }
 
     public function validarqr2(string $identificador)

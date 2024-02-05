@@ -3,79 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Peluqueros;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
+
+include_once 'PeluqueroDefinitions.php';
 
 class PeluquerosController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function index()
+    public function index(): View|Factory|Application
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero');
-        if ($response->successful()) {
-            $datos = $response->json();
-            return view('peluqueros.index')->with('peluqueros', $datos);
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', URL_PELUQUERO);
+        return $response->successful()
+            ? renderView(VIEW_INDEX, [PELUQUEROS => $response->json()])
+            : dd($response->body());
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function create()
+    public function create(): View|Factory|Application|RedirectResponse
     {
-        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response2->successful()) {
-            $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
-            return view('peluqueros.create', compact('tipoDoc'));
-        } else {
-            // Manejar error
-            $error = $response2->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', URL_TIPODOCUMENTO);
+        return ($response->successful())
+            ? renderView(VIEW_CREATE, [TIPODOC => Arr::pluck($response->json(), TIPODOCUMENTO, ID)])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate(Peluqueros::$rules);
-        $response = Http::post('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero', [
-            'nombres' => $request->input('nombres'),
-            'apellidos' => $request->input('apellidos'),
-            'celular' => $request->input('celular'),
-            'fijo' => $request->input('fijo'),
-            'email' => $request->input('email'),
-            'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento'),
-            'password' => $request->input('documento'),
-            'confirmarPassword' => $request->input('documento')
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('peluqueros')
-                ->with('success', 'Peluquero creado con exito satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
-
+        return returnsRedirect(makeRequest('POST', URL_PELUQUERO, fieldsPeluquero($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 
     /**
@@ -92,71 +66,39 @@ class PeluquerosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Peluqueros $peluqueros
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function edit($id)
+    public function edit($id): View|Factory|RedirectResponse|Application
     {
-        $response = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/' . $id);
-        $response2 = Http::get('https://usuario-vet-38fce36b3b4d.herokuapp.com/tipodocumento');
-        if ($response->successful() && $response2->successful()) {
-            $peluquero = $response->json();
-            $tipoDoc = $response2->json();
-            $tipoDoc = Arr::pluck($tipoDoc, 'tipoDocumento', 'id');
-            return view('peluqueros.edit', compact('peluquero', 'tipoDoc'));
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', URL_PELUQUERO . $id);
+        $response2 = makeRequest('GET', URL_TIPODOCUMENTO);
+        return ($response->successful() && $response2->successful())
+            ? renderView(VIEW_EDIT, [PELUQUERO => $response->json(), TIPODOC => Arr::pluck($response2->json(), TIPODOCUMENTO, ID)])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Peluqueros $peluqueros
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         request()->validate(Peluqueros::$rules);
-        $response = Http::put('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/' . $id, [
-            'nombres' => $request->input('nombres'),
-            'apellidos' => $request->input('apellidos'),
-            'celular' => $request->input('celular'),
-            'fijo' => $request->input('fijo'),
-            'email' => $request->input('email'),
-            'idTipoDocumento' => $request->input('tipoDoc'),
-            'documento' => $request->input('documento')
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('peluqueros')
-                ->with('success', 'Peluquero actualizado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('PUT', URL_PELUQUERO . $id, fieldsPeluqueroUpdate($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Peluqueros $peluqueros
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
-        $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/peluquero/' . $id);
-        if ($response->successful()) {
-            return redirect()->route('peluqueros')
-                ->with('success', 'Peluquero eliminado satisfactoriamente');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('DELETE', URL_PELUQUERO . $id), [ROUTE_INDEX, SUCCESS_DELETE, ERROR_DELETE]);
     }
 }

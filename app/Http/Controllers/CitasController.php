@@ -49,7 +49,7 @@ class CitasController extends Controller
     {
         $response = Http::get(URL_CREAR_CITA);
         return ($response->successful())
-            ? renderView(VIEW_CREATE, [MASCOTAS => $response->json()['mascotas'], TIPOSCITA => $response->json()['tiposCita']])
+            ? renderView(VIEW_CREATE, [MASCOTAS => $response->json()[MASCOTAS], TIPOSCITA => $response->json()[TIPOSCITA]])
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
     }
 
@@ -87,7 +87,7 @@ class CitasController extends Controller
         $cita = makeRequest('GET', URL_CITAS . $id);
         $tipoDocumento = makeRequest('GET', URL_TIPODOCUMENTO);
         return ($cita->successful() && $tipoDocumento->successful())
-            ? renderView(VIEW_EDIT, [CITA => $cita->json(), 'tipoDoc' => Arr::pluck($tipoDocumento->json(), 'tipoDocumento', 'id')])
+            ? renderView(VIEW_EDIT, [CITA => $cita->json(), 'tipoDoc' => Arr::pluck($tipoDocumento->json(), 'tipoDocumento', ID)])
             : dd($cita->body());
     }
 

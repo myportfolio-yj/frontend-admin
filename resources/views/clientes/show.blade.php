@@ -14,41 +14,40 @@
                             <span class="card-title">Mostrar Cliente</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('clientes') }}"> Volver atras</a>
+                            <a class="btn btn-primary" href="{{ route('Clientes') }}"> Volver atras</a>
                         </div>
                     </div>
 
                     <div class="card-body">
-
                         <div class="form-group">
                             <strong>Tipo de Documento:</strong>
-                            {{ $cliente->n_tipodoc }}
+                            {{ $cliente['tipoDocumento']['tipoDocumento'] }}
                         </div>
                         <div class="form-group">
                             <strong>Documento de identidad:</strong>
-                            {{ $cliente->n_documento }}
+                            {{ $cliente['documento'] }}
                         </div>
                         <div class="form-group">
                             <strong>Nombres:</strong>
-                            {{ $cliente->v_nombre }}
+                            {{ $cliente['nombres'] }}
                         </div>
                         <div class="form-group">
                             <strong>Apellidos:</strong>
-                            {{ $cliente->v_apellido }}
+                            {{ $cliente['apellidos'] }}
                         </div>
                         <div class="form-group">
                             <strong>Correo electronico:</strong>
-                            {{ $cliente->v_correo }}
+                            {{ $cliente['email'] }}
                         </div>
                         <div class="form-group">
                             <strong>Telefono Celular:</strong>
-                            {{ $cliente->v_telefono }}
+                            {{ $cliente['celular'] }}
                         </div>
                         <div class="form-group">
                             <strong>Telefono Fijo:</strong>
-                            {{ $cliente->v_telfijo }}
+                            {{ $cliente['fijo'] }}
                         </div>
-
+                        {{{ print_r($cliente['mascotas']) }}}
                     </div>
                 </div>
             </div>

@@ -31,7 +31,6 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
-
                                     <th>Nro. Identificación</th>
                                     <th>Nombre de la mascota</th>
                                     <th>Fecha de Nacimiento</th>
