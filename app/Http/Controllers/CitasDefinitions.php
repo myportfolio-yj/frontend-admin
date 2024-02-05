@@ -6,6 +6,7 @@ const CITA = 'cita';
 const CITAS_VIGENTES = 'citasVigentes';
 const MASCOTAS = 'mascotas';
 const TIPOSCITA = 'tiposCita';
+
 // URLs
 define('URL_CITAS', env('API3') . '/cita/');
 define('URL_CITAS_VIGENTE', env('API3') . '/cita-vigentes/');
