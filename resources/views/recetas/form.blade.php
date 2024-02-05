@@ -10,17 +10,17 @@
 
         <div class="form-group">
             {{ Form::label('Cantidad') }}
-            {{ Form::text('n_cantidad', $receta->n_cantidad, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+            {{ Form::text('n_cantidad', $receta->n_cantidad, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Cantidad']) }}
         </div>
 
         <div class="form-group">
             {{ Form::label('Dosis') }}
-            {{ Form::text('v_dosis', $receta->v_dosis, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+            {{ Form::text('v_dosis', $receta->v_dosis, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Dosis. Ej: 10mg']) }}
         </div>
 
         <div class="form-group">
             {{ Form::label('Indicaciones') }}
-            {{ Form::text('v_indicaciones', $receta->v_indicaciones, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+            {{ Form::textarea('v_indicaciones', $receta->v_indicaciones, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Indicaciones']) }}
         </div>
 
     </div>

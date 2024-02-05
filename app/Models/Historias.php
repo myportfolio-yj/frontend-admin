@@ -13,16 +13,6 @@ class Historias extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'v_motivo',
-        'n_peso',
-        'n_temp',
-        'n_frecresp',
-        'n_freccard',
-        'v_detproced',
-        'v_detdiagnos',
-        'n_atencion',
-        'n_diagnos',
-        'n_procedimiento',
     ];
     static $rules = [
         'v_motivo' => 'required',

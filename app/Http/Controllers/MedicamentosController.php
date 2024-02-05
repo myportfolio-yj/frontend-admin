@@ -56,11 +56,11 @@ class MedicamentosController extends Controller
         request()->validate(Medicamentos::$rules);
         $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento', [
             'medicamento' => $request->input('medicamento'),
-            'descripcion ' => $request->input('descripcion'),
+            'descripcion' => $request->input('descripcion'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('medicamentos')
+            return redirect()->route('Medicamentos')
                 ->with('success', 'Medicamento creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -116,7 +116,7 @@ class MedicamentosController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('medicamentos')
+            return redirect()->route('Medicamentos')
                 ->with('success', 'Medicamento actualizada satisfactoriamente');
         } else {
             // Manejar error
@@ -135,7 +135,7 @@ class MedicamentosController extends Controller
     {
         $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento/' . $id);
         if ($response->successful()) {
-            return redirect()->route('medicamentos')
+            return redirect()->route('Medicamentos')
                 ->with('success', 'Medicamento eliminado satisfactoriamente');
         } else {
             // Manejar error

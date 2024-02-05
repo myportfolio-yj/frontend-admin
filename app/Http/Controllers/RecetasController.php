@@ -95,10 +95,7 @@ class RecetasController extends Controller
      */
     public function edit(string $id)
     {
-        $receta = Recetas::find($id);
-        $id = $receta->n_atencion;
-        $medicamentos = Medicamentos::pluck('v_nombre', 'id');
-        return view('Recetas.create', compact('id', 'medicamentos', 'receta'));
+       //
     }
 
     /**

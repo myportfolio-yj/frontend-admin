@@ -53,9 +53,9 @@ class VacunasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Vacunas::$rules);
-        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna', [
+        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna', [
             'vacuna' => $request->input('vacuna'),
-            'duracion ' => $request->input('duracion'),
+            'duracion' => $request->input('duracion'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
