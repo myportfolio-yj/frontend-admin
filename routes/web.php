@@ -12,20 +12,21 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Ruta Inicial
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Rutas de Login
-include_once('routesLogin.php');
+// Formulario de inicio de sesión
+Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+// Iniciar sesión
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+// Cerrar sesión
+Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 // Validar URL
-Route::post('/validarqr', [App\Http\Controllers\HomeController::class, 'validarqr'])->name('validarqr');
-Route::get('/validarqr/{identificador}', [App\Http\Controllers\HomeController::class, 'validarqr2'])->name('validarqr2');
+//Route::post('/validarqr', [App\Http\Controllers\HomeController::class, 'validarqr'])->name('validarqr');
+//Route::get('/validarqr/{identificador}', [App\Http\Controllers\HomeController::class, 'validarqr2'])->name('validarqr2');
 
 // Resultado de Scanneo sin login
+Route::resource('identificacion', 'App\Http\Controllers\IdentificacionController');
+Route::get('/identificacion', [App\Http\Controllers\IdentificacionController::class, 'index'])->name('Identificacion');
+
 //Route::get('/Pacientes/nologin/{id}', [App\Http\Controllers\PacientesController::class, 'noLogueado'] )->name('noLogueado');
 //Route::post('/Alerta/send', [App\Http\Controllers\PacientesController::class, 'sendAlert'])->name('sendAlert');
 
@@ -57,9 +58,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('razas', 'App\Http\Controllers\RazasController');
     //GEOLOCALIZACIION
     Route::resource('geolocalizacion', 'App\Http\Controllers\GeolocalizacionesController');
-
-    //Ruta para los mapas
-    // Route::resource('Mapas', 'App\Http\Controllers\Mapas'); <--------------------
 
     //USUARIOS
     //Rutas para Acciones de la opcion Peluqueros
