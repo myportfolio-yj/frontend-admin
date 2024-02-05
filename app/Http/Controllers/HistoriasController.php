@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Historias;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
+
+include_once 'HistoriasDefinitions.php';
 
 class HistoriasController extends Controller
 {
@@ -21,58 +26,32 @@ class HistoriasController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return \Illuminate\Http\Response
+     *
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function create()
+    public function create(): View|Factory|Application|RedirectResponse
     {
-        $id = $_GET['id'];
-        $historia = new Historias();
-        $responseDiagnostico = Http::get('http://api3.v1.appomsv.com/diagnostico');
-        $responseProcedimiento = Http::get('http://api3.v1.appomsv.com/procedimiento');
-        if ($responseDiagnostico->successful() && $responseProcedimiento->successful()) {
-            $diagnostico = $responseDiagnostico->json();
-            $procedimiento = $responseProcedimiento->json();
-            $diagnostico = Arr::pluck($diagnostico, 'diagnostico', 'id');
-            $procedimiento = Arr::pluck($procedimiento, 'procedimiento', 'id');
-            return view('historias.create', compact('historia', 'diagnostico', 'procedimiento', 'id'));
-        } else {
-            // Manejar error
-            $error = $responseDiagnostico->body();
-            return dd($error);
-        }
+        $responseDiagnostico = makeRequest('GET', API_URL_DIAGNOSTICO);
+        $responseProcedimiento = makeRequest('GET', API_URL_PROCEDIMIENTO);
+        return ($responseDiagnostico->successful() && $responseProcedimiento->successful())
+            ? renderView(VIEW_INDEX, [
+                HISTORIA => new Historias(),
+                DIAGNOSTICO => Arr::pluck($responseDiagnostico->json(), DIAGNOSTICO, ID),
+                PROCEDIMIENTO => Arr::pluck($responseProcedimiento->json(), PROCEDIMIENTO, ID)
+            ])
+            : dd($responseDiagnostico->body());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate(Historias::$rules);
-
-        $response = Http::post('http://api3.v1.appomsv.com/atencion', [
-            'idCita' => $request->input('n_atencion'),
-            'motivo' => $request->input('v_motivo'),
-            'peso' => $request->input('n_peso'),
-            'temperatura' => $request->input('n_temp'),
-            'frecuenciaRespiratoria' => $request->input('n_frecresp'),
-            'frecuenciaCardiaca' => $request->input('n_freccard'),
-            'idDiagnostico' => $request->input('n_diagnos'),
-            'idProcedimiento' => $request->input('n_procedimiento'),
-            'detalleDiagnostico' => $request->input('v_detdiagnos'),
-            'detalleProcedimiento' => $request->input('v_detproced'),
-            'cerrado' => false
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('Atenciones');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('POST', API_URL_ATENCION, fieldsHistorias($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 
     /**
@@ -89,76 +68,41 @@ class HistoriasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Historias $historias
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function edit(string $id)
+    public function edit(string $id): View|Factory|RedirectResponse|Application
     {
-        $historia = new Historias();
-        $response = Http::get('http://api3.v1.appomsv.com/atencion/' . $id);
+        $response = makeRequest('GET', API_URL_ATENCION . $id);
         if ($response->successful()) {
-            $response = $response->json();
-            $historia->v_motivo = $response['motivo'];
-            $historia->n_peso = $response['peso'];
-            $historia->n_temp = $response['temperatura'];
-            $historia->n_frecresp = $response['frecuenciaRespiratoria'];
-            $historia->n_freccard = $response['frecuenciaCardiaca'];
-            $historia->n_diagnos = $response['idDiagnostico'];
-            $historia->v_nombre = $response['idProcedimiento'];
-            $historia->v_detdiagnos = $response['detalleDiagnostico'];
-            $historia->v_detproced = $response['detalleProcedimiento'];
+            $historia = setHistoria($response->json());
         } else {
-            // Manejar error
             $error = $response->body();
             return dd($error);
         }
-        $responseDiagnostico = Http::get('http://api3.v1.appomsv.com/diagnostico');
-        $responseProcedimiento = Http::get('http://api3.v1.appomsv.com/procedimiento');
-        if ($responseDiagnostico->successful() && $responseProcedimiento->successful()) {
-            $diagnostico = $responseDiagnostico->json();
-            $procedimiento = $responseProcedimiento->json();
-            $diagnostico = Arr::pluck($diagnostico, 'diagnostico', 'id');
-            $procedimiento = Arr::pluck($procedimiento, 'procedimiento', 'id');
-            return view('historias.create', compact('historia', 'diagnostico', 'procedimiento', 'id'));
-        } else {
-            // Manejar error
-            $error = $responseDiagnostico->body();
-            return dd($error);
-        }
+        $responseDiagnostico = makeRequest('GET', API_URL_DIAGNOSTICO);
+        $responseProcedimiento = makeRequest('GET', API_URL_PROCEDIMIENTO);
+        return ($responseDiagnostico->successful() && $responseProcedimiento->successful())
+            ? renderView(VIEW_EDIT, [
+                HISTORIA => $historia,
+                DIAGNOSTICO => Arr::pluck($responseDiagnostico->json(), DIAGNOSTICO, ID),
+                PROCEDIMIENTO => Arr::pluck($responseProcedimiento->json(), PROCEDIMIENTO, ID),
+                ID => $id
+            ])
+            : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Historias $historias
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param string $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
         request()->validate(Historias::$rules);
-
-        $response = Http::put('http://api3.v1.appomsv.com/atencion/' . $id, [
-            'idCita' => $request->input('n_atencion'),
-            'motivo' => $request->input('v_motivo'),
-            'peso' => $request->input('n_peso'),
-            'temperatura' => $request->input('n_temp'),
-            'frecuenciaRespiratoria' => $request->input('n_frecresp'),
-            'frecuenciaCardiaca' => $request->input('n_freccard'),
-            'idDiagnostico' => $request->input('n_diagnos'),
-            'idProcedimiento' => $request->input('n_procedimiento'),
-            'detalleDiagnostico' => $request->input('v_detdiagnos'),
-            'detalleProcedimiento' => $request->input('v_detproced'),
-            'cerrado' => false
-        ]);
-        if ($response->successful()) {
-            $datos = $response->json();
-            return redirect()->route('Atenciones');
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        return returnsRedirect(makeRequest('PUT', API_URL_ATENCION . $id, fieldsHistorias($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 
     /**
