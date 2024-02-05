@@ -4,7 +4,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    {{ Form::label('Dueño de la mascota') }}
+                    {{ Form::label('Dueño de la mascota') }}<br>
+                    {{ Form::select('clientes', $clientes, ['class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Clientes']) }}
+                    {!! $errors->first('clientes', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <hr>
