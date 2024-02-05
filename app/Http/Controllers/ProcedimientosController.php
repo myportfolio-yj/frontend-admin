@@ -55,11 +55,11 @@ class ProcedimientosController extends Controller
         request()->validate(Procedimientos::$rules);
         $response = Http::post('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento', [
             'procedimiento' => $request->input('procedimiento'),
-            'descripcion ' => $request->input('descripcion'),
+            'descripcion' => $request->input('descripcion'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('procedimientos')
+            return redirect()->route('Procedimientos')
                 ->with('success', 'Procedimiento creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -87,7 +87,7 @@ class ProcedimientosController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento/' . $id);
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento/'.$id);
         if ($response->successful()) {
             $procedimiento = $response->json();
             return view('procedimientos.edit', compact('procedimiento'));
@@ -116,7 +116,7 @@ class ProcedimientosController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('procedimientos')
+            return redirect()->route('Procedimientos')
                 ->with('success', 'Procedimiento actualizada satisfactoriamente');
         } else {
             // Manejar error

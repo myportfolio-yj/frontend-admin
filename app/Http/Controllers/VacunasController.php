@@ -42,7 +42,6 @@ class VacunasController extends Controller
             $error = $response->body();
             return dd($error);
         }
-
     }
 
     /**
@@ -54,13 +53,13 @@ class VacunasController extends Controller
     public function store(Request $request)
     {
         request()->validate(Vacunas::$rules);
-        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna', [
+        $response = Http::post('https://mascota-vet-933796c48a6c.herokuapp.com//vacuna', [
             'vacuna' => $request->input('vacuna'),
             'duracion ' => $request->input('duracion'),
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('vacunas')
+            return redirect()->route('Vacunas')
                 ->with('success', 'Vacuna creado con exito satisfactoriamente');
         } else {
             // Manejar error
@@ -88,7 +87,7 @@ class VacunasController extends Controller
      */
     public function edit($id)
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna/' . $id);
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna/'.$id);
         if ($response->successful()) {
             $vacuna = $response->json();
             return view('vacunas.edit', compact('vacuna'));
@@ -115,7 +114,7 @@ class VacunasController extends Controller
         ]);
         if ($response->successful()) {
             $datos = $response->json();
-            return redirect()->route('vacunas')
+            return redirect()->route('Vacunas')
                 ->with('success', 'Vacuna actualizada satisfactoriamente');
         } else {
             // Manejar error
@@ -134,7 +133,7 @@ class VacunasController extends Controller
     {
         $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna/' . $id);
         if ($response->successful()) {
-            return redirect()->route('vacunas')
+            return redirect()->route('Vacunas')
                 ->with('success', 'Vacuna eliminado satisfactoriamente');
         } else {
             // Manejar error
