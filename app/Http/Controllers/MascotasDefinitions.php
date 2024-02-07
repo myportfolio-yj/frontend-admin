@@ -7,9 +7,13 @@ const MASCOTA = 'mascota';
 const TIPOSEX = 'tipoSex';
 const SEXO = 'sexo';
 const CLIENTES = 'clientes';
-
+const ESPECIES = 'especies';
+const ESPECIE = 'especie';
+const RAZAS = 'razas';
+const RAZA = 'raza';
 // URLs
 define('API_URL_MASCOTA', env('API2') . '/mascota/');
+define('API_URL_ESPECIE', env('API2') . '/especie/');
 define('API_URL_SEXO', env('API2') . '/sexo/');
 define('API_URL_CLIENTE', env('API1') . '/cliente/');
 
@@ -34,10 +38,16 @@ const ERROR_DELETE = 'No se pudo eliminar la mascota.';
 
 function fieldsMascotas($request){
     return [
-        'codIdentificacion' => $request->input('codIdentificacion'),
         'nombre' => $request->input('nombre'),
         'apellido' => $request->input('apellido'),
         'fechaNacimiento' => $request->input('fechaNacimiento'),
-        'esterilizado' => $request->input('esterilizado'),
+        'idSexo' => $request->input('tipoSex'),
+        'idEspecie' => $request->input('especies'),
+        'idRaza' => $request->input('razas'),
+        'clientes' => [$request->input('clientes')],
+        'esterilizado' => true,
+        // 'esterilizado' => $request->input('esterilizado')
+        'alergias' => [],
+        'vacunas' => []
     ];
 }

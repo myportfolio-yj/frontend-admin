@@ -6,6 +6,9 @@ const CITA = 'cita';
 const CITAS_VIGENTES = 'citasVigentes';
 const MASCOTAS = 'mascotas';
 const TIPOSCITA = 'tiposCita';
+const TIPODOC = 'tipoDoc';
+const TIPODOCUMENTO = 'tipoDocumento';
+const TIPOCITA = 'tipoCita';
 
 // URLs
 define('URL_CITAS', env('API3') . '/cita/');
@@ -14,6 +17,7 @@ define('URL_CHECKIN_PELUQUERIA', env('API3') . '/peluqueria/checkin/');
 define('URL_CHECKIN_VETERINARIA', env('API3') . '/veterinaria/checkin/');
 define('URL_TIPODOCUMENTO', env('API1') . '/tipodocumento/');
 define('URL_CREAR_CITA', env('API3') . '/cita-formulario/');
+define('URL_TIPOCITA', env('API3') . '/tipocita/');
 // Views
  const VIEW_INDEX = 'citas.index';
  const VIEW_CREATE = 'citas..create';

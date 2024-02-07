@@ -12,7 +12,6 @@ class Mascotas extends Model
     protected $table = 'qrv_pacientes';
     public $timestamps = true;
     static $rules = [
-        'codIdentificacion' => 'required',
         'nombre' => 'required',
         'apellido' => 'required',
         'fechaNacimiento' => 'required',

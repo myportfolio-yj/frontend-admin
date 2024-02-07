@@ -5,18 +5,11 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Dueño de la mascota') }}<br>
-                    {{ Form::select('clientes', $clientes, ['class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Clientes']) }}
+                    {{ Form::select('clientes', $clientes, null, ['class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Clientes']) }}
                     {!! $errors->first('clientes', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <hr>
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ Form::label('Nro. Identificacion') }}
-                    {{ Form::text('codIdentificacion', $mascota['codIdentificacion'] ?? '', ['class' => 'form-control' . ($errors->has('codIdentificacion') ? ' is-invalid' : ''), 'placeholder' => 'Documento']) }}
-                    {!! $errors->first('codIdentificacion', '<div class="invalid-feedback">:message</div>') !!}
-                </div>
-            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Nombre de la mascota') }}
@@ -41,21 +34,21 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Sexo') }}<br>
-                    {{ Form::select('tipoSex', $tipoSex, ['class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de documento']) }}
+                    {{ Form::select('tipoSex', $tipoSex, null, ['class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Sexo']) }}
                     {!! $errors->first('tipoSex', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Especie') }}<br>
-                    {{ Form::select('tipoSex', $tipoSex, ['class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de documento']) }}
+                    {{ Form::select('especies', $especies, null, ['id' => 'especies' , 'class' => 'form-control' . ($errors->has('especies') ? ' is-invalid' : ''), 'placeholder' => 'Especie']) }}
                     {!! $errors->first('tipoSex', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Raza') }}<br>
-                    {{ Form::select('tipoSex', $tipoSex, ['class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de documento']) }}
+                    {{ Form::select('razas', [], null, ['id' => 'razas' , 'class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Raza']) }}
                     {!! $errors->first('tipoSex', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -73,3 +66,30 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
 </div>
+
+<script>
+    var razas = new Array();
+    @foreach($razas as $key => $value)
+    var aux = new Array();
+    var i =0;
+        @foreach($value as $id => $dato)
+    var aux2 = new Array();
+    aux2['id'] = '{{ $id }}';
+    aux2['dato'] = '{{ $dato }}';
+    aux[i++] = aux2;
+        @endforeach
+    razas['{{ $key }}'] = aux;
+    @endforeach
+    document.getElementById('especies').addEventListener('change', function() {
+        var especieId = this.value;
+        console.log(especieId);
+        var selectRaza = document.getElementById('razas');
+        selectRaza.innerHTML = '<option value="">Razas!!!!</option>';
+        console.log(razas[especieId]);
+        razas[especieId].forEach((value, key) => {
+            console.log(value, key);
+            var option = new Option(value['dato'], value['id']);
+            selectRaza.add(option);
+        });
+    });
+</script>
