@@ -23,8 +23,8 @@ class CitasController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $responseCitas = makeRequest('GET', URL_CITAS);
-        $responseCitasVigentes = makeRequest('GET', URL_CITAS_VIGENTE);
+        $responseCitas = makeRequest(GET, URL_CITAS);
+        $responseCitasVigentes = makeRequest(GET, URL_CITAS_VIGENTE);
         return ($responseCitas->successful() && $responseCitasVigentes->successful())
             ? renderView(VIEW_INDEX, [CITAS => $responseCitas->json(), CITAS_VIGENTES => $responseCitasVigentes->json()])
             : dd($responseCitas->body());
@@ -84,10 +84,15 @@ class CitasController extends Controller
      */
     public function edit($id): View|Factory|Application
     {
-        $cita = makeRequest('GET', URL_CITAS . $id);
-        $tipoDocumento = makeRequest('GET', URL_TIPODOCUMENTO);
-        return ($cita->successful() && $tipoDocumento->successful())
-            ? renderView(VIEW_EDIT, [CITA => $cita->json(), 'tipoDoc' => Arr::pluck($tipoDocumento->json(), 'tipoDocumento', ID)])
+        $cita = makeRequest(GET, URL_CITAS . $id);
+        $tipoDocumento = makeRequest(GET, URL_TIPODOCUMENTO);
+        $tipocita = makeRequest(GET, URL_TIPOCITA);
+        return ($cita->successful() && $tipoDocumento->successful() && $tipocita->successful())
+            ? renderView(VIEW_EDIT, [
+                CITA => $cita->json(),
+                TIPODOC => Arr::pluck($tipoDocumento->json(), TIPODOCUMENTO, ID),
+                TIPOSCITA => Arr::pluck($tipocita->json(), TIPOCITA, ID),
+            ])
             : dd($cita->body());
     }
 

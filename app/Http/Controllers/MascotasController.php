@@ -37,8 +37,8 @@ class MascotasController extends Controller
         $response1 = makeRequest('GET', API_URL_CLIENTE);
         $response = makeRequest('GET', API_URL_MASCOTA);
         $response2 = makeRequest('GET', API_URL_SEXO);
-        // CLIENTES => Arr::pluck($response1->json(), SEXO, ID),
-        return ($response->successful() && $response2->successful() && $response1->successful())
+        $response3 = makeRequest('GET', API_URL_ESPECIE);
+        return ($response->successful() && $response2->successful() && $response1->successful() && $response3->successful())
             ? renderView(VIEW_CREATE, [
                 CLIENTES => array_combine(
                     array_column($response1->json(), ID),
@@ -47,6 +47,13 @@ class MascotasController extends Controller
                     }, $response1->json())
                 ),
                 MASCOTA => $response->json(),
+                ESPECIES => Arr::pluck($response3->json(), ESPECIE, ID),
+                RAZAS =>  array_combine(
+                    array_column($response3->json(), ID),
+                    array_map(function ($item) {
+                        return Arr::pluck($item[RAZAS], RAZA, ID);
+                    }, $response3->json())
+                ),
                 TIPOSEX => Arr::pluck($response2->json(), SEXO, ID)
             ])
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
@@ -61,7 +68,8 @@ class MascotasController extends Controller
     public function store(Request $request): RedirectResponse
     {
         request()->validate(Mascotas::$rules);
-        return returnsRedirect(makeRequest('POST', API_URL_MASCOTA, fieldsMascotas($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
+        $response = makeRequest('POST', API_URL_MASCOTA, fieldsMascotas($request));
+        return returnsRedirect($response, [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 
     /**
@@ -106,11 +114,11 @@ class MascotasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Alergias $alergias
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return RedirectResponse
      */
-    public function destroy(Alergias $alergias)
+    public function destroy($id): RedirectResponse
     {
-        //
+        return returnsRedirect(makeRequest('DELETE', API_URL_MASCOTA . $id), [ROUTE_INDEX, SUCCESS_DELETE, ERROR_DELETE]);
     }
 }
