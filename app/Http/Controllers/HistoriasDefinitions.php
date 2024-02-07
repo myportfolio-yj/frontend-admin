@@ -73,6 +73,7 @@ function fieldsHistorias($request)
 function setHistoria($response)
 {
     $historia = new Historias();
+    $historia->id = $response[ID];
     $historia->v_motivo = $response[MOTIVO];
     $historia->n_peso = $response[PESO];
     $historia->n_temp = $response[TEMPERATURA];

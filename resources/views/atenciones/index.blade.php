@@ -72,11 +72,11 @@
                                             </a>
                                         </td>
                                         <td>
-                                            @if( !isset($atencion['checkIn']) )
+                                            @if( isset($atencion['idAtencion']) )
                                                 Si
                                                 <br>
                                                 <a class="btn btn-sm btn-info "
-                                                   href="{{ route('historias.edit', ['id' => $atencion['id']]) }}">
+                                                   href="{{ route('historias.edit', ['historia' => $atencion['idAtencion']]) }}">
                                                     <i class="fa fa-fw fa-edit"></i>
                                                 </a>
                                             @else

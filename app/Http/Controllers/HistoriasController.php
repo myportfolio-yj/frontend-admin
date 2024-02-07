@@ -31,13 +31,14 @@ class HistoriasController extends Controller
      */
     public function create(): View|Factory|Application|RedirectResponse
     {
-        $responseDiagnostico = makeRequest('GET', API_URL_DIAGNOSTICO);
-        $responseProcedimiento = makeRequest('GET', API_URL_PROCEDIMIENTO);
+        $responseDiagnostico = makeRequest(GET, API_URL_DIAGNOSTICO);
+        $responseProcedimiento = makeRequest(GET, API_URL_PROCEDIMIENTO);
         return ($responseDiagnostico->successful() && $responseProcedimiento->successful())
-            ? renderView(VIEW_INDEX, [
+            ? renderView(VIEW_CREATE, [
                 HISTORIA => new Historias(),
                 DIAGNOSTICO => Arr::pluck($responseDiagnostico->json(), DIAGNOSTICO, ID),
-                PROCEDIMIENTO => Arr::pluck($responseProcedimiento->json(), PROCEDIMIENTO, ID)
+                PROCEDIMIENTO => Arr::pluck($responseProcedimiento->json(), PROCEDIMIENTO, ID),
+                ID => $_GET[ID]
             ])
             : dd($responseDiagnostico->body());
     }

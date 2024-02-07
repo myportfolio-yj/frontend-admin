@@ -9,6 +9,9 @@ class Historias extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+    public $keyType = 'string';
+
     protected $table = 'qrv_historias';
     public $timestamps = true;
 

@@ -13,7 +13,7 @@
                         <span class="card-title">Editar Historia</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('historias.update', $historia['id']) }}" role="form"
+                        <form method="POST" action="{{ route('historias.update', ['historia' => $historia['id']]) }}" role="form"
                               enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
