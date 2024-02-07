@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Editar Cliente')
+@section('title', 'Editar Cita')
 @section('content')
     <section class="content container-fluid">
         <div class="">
@@ -9,15 +9,15 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Editar Cliente</span>
+                        <span class="card-title">Editar Cita</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('clientes.update', $cliente['id']) }}" role="form"
+                        <form method="POST" action="{{ route('citas.update', $cita['id']) }}" role="form"
                               enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('clientes.form')
+                            @include('citas.form')
 
                         </form>
                     </div>

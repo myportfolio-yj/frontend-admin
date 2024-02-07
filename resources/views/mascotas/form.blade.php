@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Dueño de la mascota') }}<br>
-                    {{ Form::select('clientes', $clientes, null, ['class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Clientes']) }}
+                    {{ Form::select('clientes', $clientes, null, ['class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione el cliente']) }}
                     {!! $errors->first('clientes', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Fecha de nacimiento') }}
-                    {{ Form::text('fechaNacimiento', $mascota['fechaNacimiento'] ?? '', ['class' => 'form-control' . ($errors->has('fechaNacimiento') ? ' is-invalid' : ''), 'placeholder' => 'Celular']) }}
+                    {{ Form::text('fechaNacimiento', $mascota['fechaNacimiento'] ?? '', ['class' => 'form-control' . ($errors->has('fechaNacimiento') ? ' is-invalid' : ''), 'placeholder' => 'Fecha de nacimiento']) }}
                     {!! $errors->first('fechaNacimiento', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Esterilizado') }}<br>
-                    {{ Form::text('esterilizado', $mascota['esterilizado'] ?? '', ['class' => 'form-control' . ($errors->has('apellido') ? ' is-invalid' : ''), 'placeholder' => 'Apellidos Completos']) }}
+                    {{ Form::text('esterilizado', $mascota['esterilizado'] ?? '', ['class' => 'form-control' . ($errors->has('apellido') ? ' is-invalid' : ''), 'placeholder' => 'Esterilizado']) }}
                     {!! $errors->first('esterilizado', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
