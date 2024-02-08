@@ -1,5 +1,44 @@
 @extends('adminlte::page')
 @section('content')
+    <style>
+        .custom-pagination {
+            /* Agrega aquí tus estilos personalizados */
+            text-align: center;
+        }
+
+        .custom-pagination ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .custom-pagination ul li {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .custom-pagination ul li a,
+        .custom-pagination ul li span {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .custom-pagination ul li.active a {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        .custom-pagination ul li.disabled span {
+            color: #aaa;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -57,9 +96,40 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            <div class="float-right">
+                            @if ($alergias->links())
+                                <nav>
+                                    <ul class="pagination">
+                                        {{-- Previous Page Link --}}
+                                        @if ($alergias->onFirstPage())
+                                            <li class="page-item disabled" aria-disabled="true">
+                                                <span class="page-link">@lang('pagination.previous')</span>
+                                            </li>
+                                        @else
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $alergias->previousPageUrl() }}"
+                                                   rel="prev">@lang('pagination.previous')</a>
+                                            </li>
+                                        @endif
+
+                                        {{-- Next Page Link --}}
+                                        @if ($alergias->hasMorePages())
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $alergias->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
+                                            </li>
+                                        @else
+                                            <li class="page-item disabled" aria-disabled="true">
+                                                <span class="page-link">@lang('pagination.next')</span>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </nav>
+                            @endif
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>

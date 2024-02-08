@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 include_once 'AlergiasDefinitions.php';
 
@@ -19,12 +20,44 @@ class AlergiasController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index(): View|Factory|Application
+    /*ORIGINAL
+     * public function index(): View|Factory|Application
     {
         $response = makeRequest('GET', API_URL);
         return $response->successful()
             ? renderView(VIEW_INDEX, [ALERGIAS => $response->json()])
             : dd($response->body());
+    }*/
+    public function index(Request $request): View|Factory|Application
+    {
+        $response = makeRequest('GET', API_URL);
+
+        if ($response->successful()) {
+            $data = $response->json();
+            $currentPage = $request->query('page', 1);
+            $perPage = 10; // Número de elementos por página
+
+            // Calcula el desplazamiento para la paginación
+            $offset = ($currentPage - 1) * $perPage;
+
+            // Obtén los elementos de la página actual
+            $currentPageData = array_slice($data, $offset, $perPage);
+
+            // Crea una instancia de LengthAwarePaginator
+            $paginator = new LengthAwarePaginator(
+                $currentPageData,
+                count($data),
+                $perPage,
+                $currentPage,
+                ['path' => $request->url()]
+            );
+
+            return renderView(VIEW_INDEX, [
+                ALERGIAS => $paginator,
+            ]);
+        } else {
+            return dd($response->body());
+        }
     }
 
     /**
