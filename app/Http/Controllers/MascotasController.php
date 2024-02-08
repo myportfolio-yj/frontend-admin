@@ -92,9 +92,26 @@ class MascotasController extends Controller
     public function edit($id): Application|Factory|View|RedirectResponse
     {
         $response = makeRequest('GET', API_URL_MASCOTA . $id);
+        $response1 = makeRequest('GET', API_URL_CLIENTE);
         $response2 = makeRequest('GET', API_URL_SEXO);
-        return $response->successful()
-            ? renderView(VIEW_EDIT, [MASCOTA => $response->json(), TIPOSEX => Arr::pluck($response2->json(), SEXO, ID)])
+        $response3 = makeRequest('GET', API_URL_ESPECIE);
+        return ($response->successful() && $response2->successful() && $response1->successful() && $response3->successful())
+            ? renderView(VIEW_EDIT, [
+                CLIENTES => array_combine(
+                    array_column($response1->json(), ID),
+                    array_map(function ($item) {
+                        return $item['nombres'] . ' ' . $item['apellidos'];
+                    }, $response1->json())
+                ),
+                MASCOTA => $response->json(),
+                ESPECIES => Arr::pluck($response3->json(), ESPECIE, ID),
+                RAZAS =>  array_combine(
+                    array_column($response3->json(), ID),
+                    array_map(function ($item) {
+                        return Arr::pluck($item[RAZAS], RAZA, ID);
+                    }, $response3->json())
+                ),
+                TIPOSEX => Arr::pluck($response2->json(), SEXO, ID)])
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 

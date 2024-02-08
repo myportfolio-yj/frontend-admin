@@ -1,19 +1,28 @@
 <div class="box box-info padding-1">
     <div class="box-body">
-
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Cliente') }}
+                    <select class="selectpicker form-control" data-live-search="true">
+                        <option data-tokens="">Seleccione un cliente</option>
+                        @foreach($clientes as $cliente)
+                            <option value="{{ $cliente['nombres'] }}">{{ $cliente['nombres'] }} {{ $cliente['apellidos'] }}
+                                - {{ $cliente['tipoDocumento']['tipoDocumento'] }} {{ $cliente['documento'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Mascota') }}
-                    <select name="" id="">
-                        @foreach($mascotas as $mascota)
-                            <option value="">{{ $mascota['nombre'] }} {{ $mascota['apellido'] }}
-                                - {{ $mascota['codIdentificacion'] }}</option>
+                    <select class="selectpicker form-control" data-live-search="true">
+                        <option data-tokens="">Seleccione un cliente</option>
+                        @foreach($clientes as $cliente)
+                            @foreach($cliente['mascotas'] as $mascota)
+                                <option value="">{{ $mascota['nombre'] }} {{ $mascota['apellido'] }}
+                                    - {{ $mascota['codIdentificacion'] }}</option>
+                            @endforeach
                         @endforeach
                     </select>
                 </div>
@@ -21,11 +30,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Tipo de cita') }}
-                    <select name="" id="">
-                        @foreach($tiposCita as $tipoCita)
-                            <option value="">{{ $tipoCita['tipoCita'] }}</option>
-                        @endforeach
-                    </select>
+
                 </div>
             </div>
             <div class="col-md-6">
