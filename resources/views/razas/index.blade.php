@@ -40,7 +40,7 @@
                                 @foreach ($razas as $raza)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $raza['especie']['especie'] }}</td>
+                                        <td>{{ $raza['especie']['especie']}}</td>
                                         <td>{{ $raza['raza'] }}</td>
                                         <td>
                                             <form action="{{ route('razas.destroy', $raza['id']) }}" method="POST">
