@@ -6,6 +6,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
+use const App\Http\Controllers\ERROR_UPDATE;
+use const App\Http\Controllers\ROUTE_INDEX;
 
 const ID = 'id';
 const GET = 'GET';
@@ -47,4 +49,18 @@ function returnsRedirect($input, array $args): RedirectResponse
 function makeRequest(string $method, string $url, array $data = []): Response
 {
     return Http::{$method}($url, $data);
+}
+
+// Función para manejar errores en las respuestas
+function handleError($response)
+{
+    if ($response->failed()) {
+        return redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
+    }
+}
+
+// Usando programación funcional para transformar las respuestas
+function transformResponse($response, $key)
+{
+    return $response->json()[$key] ?? [];
 }

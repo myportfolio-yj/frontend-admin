@@ -2,12 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atenciones;
 use App\Models\PacienteHasAlergias;
 use App\Models\PacienteHasVacunas;
-use App\Models\Vacunas;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+
+include_once 'DefinitionsGeneral.php';
+
+define('API_URL_MASCOTA', env('API2') . '/mascota/');
+define('API_URL_VACUNA', env('API2') . '/vacuna/');
+const VACUNA_CREATE = 'PacienteHasVacunas.create';
+const PACIENTEHASVACUNA = 'pacienteHasVacunas';
+CONST VACUNA = 'vacuna';
+const VACUNAS = 'vacunas';
+const CLIENTES = 'clientes';
+const PACIENTE = 'paciente';
+const ALERGIAS = 'alergias';
+const SUCCESS_UPDATE = 'Mascota actualizada satisfactoriamente.';
+const ERROR_UPDATE = 'No se pudo actualizar la mascota.';
+// Routes
+const ROUTE_INDEX = 'Atenciones';
 
 class PacienteHasVacunasController extends Controller
 {
@@ -24,38 +43,54 @@ class PacienteHasVacunasController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function create()
+    public function create(): Application|Factory|View|RedirectResponse
     {
-        $id = $_GET['id'];
-        $atencion = Atenciones::find($id);
-        $pacienteHasVacunas = PacienteHasVacunas::where('n_paciente', $atencion->n_paciente)->get();
-        $cliente = $atencion->cliente;
-        $paciente = $atencion->paciente;
-        $vacunas = Vacunas::pluck('v_nombre', 'id');
-        return view('PacienteHasVacunas.create', compact('pacienteHasVacunas', 'vacunas', 'cliente', 'paciente'));
+        $responseMascota = makeRequest(GET, API_URL_MASCOTA . $_GET[ID]);
+        if ($error = handleError($responseMascota)) return $error;
+        $responseVacunas = makeRequest(GET, API_URL_VACUNA);
+        if ($error = handleError($responseVacunas)) return $error;
+
+        return renderView(VACUNA_CREATE, [
+            PACIENTEHASVACUNA => transformResponse($responseMascota, VACUNAS),
+            VACUNAS => Arr::pluck($responseVacunas->json(), VACUNA, ID),
+            CLIENTES => $responseMascota->json()[CLIENTES],
+            PACIENTE => $responseMascota->json()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate(PacienteHasVacunas::$rules);
-        $id = Auth::id();
-        $pacienteHasVacunas = new PacienteHasVacunas();
-        $pacienteHasVacunas['n_vacuna'] = $request->n_vacuna;
-        $pacienteHasVacunas['n_paciente'] = $request->paciente_id;
-        $pacienteHasVacunas['a_n_iduser'] = $id;
+        $responseMascota = makeRequest(GET, API_URL_MASCOTA . $request->input('paciente_id'));
+        if ($error = handleError($responseMascota)) return $error;
+        date_default_timezone_set('America/Lima');
+        $mascotaActual = $responseMascota->json();
+        $mascotaNueva = [
+            'clientes' => array_column($mascotaActual['clientes'], ID),
+            'nombre' => $mascotaActual['nombre'],
+            'apellido' => $mascotaActual['apellido'],
+            'fechaNacimiento' => $mascotaActual['fechaNacimiento'],
+            'idSexo' => $mascotaActual['sexo'][ID],
+            'idEspecie' => $mascotaActual['especie'][ID],
+            'idRaza' => $mascotaActual['raza'][ID],
+            'esterilizado' => $mascotaActual['esterilizado'],
+            'alergias' => array_unique(array_column(transformResponse($responseMascota, ALERGIAS), ID)),
+            'vacunas' => transformResponse($responseMascota, VACUNAS),
+            'foto' => $mascotaActual['foto'],
+        ];
+        $mascotaNueva[VACUNAS][] = ['idVacuna' => $request->input(VACUNA), 'fecha' => date('d/m/Y')];
+        $mascotaNueva[VACUNAS] = array_map('unserialize', array_values(array_unique(array_map('serialize', $mascotaNueva[VACUNAS]))));
 
-        $pacienteHasVacunas->save();
-
-        return redirect()->route('atenciones')
-            ->with('success', 'Alergias de paciente se ha añadido satisfactoriamente.');
+        return returnsRedirect(makeRequest('PUT', API_URL_MASCOTA . $request->input('paciente_id'),
+            $mascotaNueva), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 
     /**

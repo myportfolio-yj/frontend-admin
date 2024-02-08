@@ -23,7 +23,7 @@
                                     <th>#</th>
                                     <th>Fecha Atención</th>
                                     <th>Vacuna</th>
-                                    <th>Medico</th>
+                                    <th>Fecha</th>
                                     <th>Paciente</th>
                                 </tr>
                                 </thead>
@@ -32,10 +32,10 @@
                                 @foreach ($pacienteHasVacunas as $pacienteHasVacuna)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $pacienteHasVacuna->created_at }}</td>
-                                        <td>{{ $pacienteHasVacuna->vacuna->v_nombre }}</td>
-                                        <td>{{ $pacienteHasVacuna->medico->name}}</td>
-                                        <td>{{ $pacienteHasVacuna->paciente->v_nombre}}</td>
+                                        <td> -- </td>
+                                        <td>{{ $pacienteHasVacuna['vacuna'] }}</td>
+                                        <td>{{ $pacienteHasVacuna['fecha'] }}</td>
+                                        <td> -- </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

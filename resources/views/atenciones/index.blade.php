@@ -55,7 +55,7 @@
                                             @endif
                                                 <br>
                                                 <a class="btn btn-sm btn-secondary "
-                                               href="{{ route('pacienteHasAlergias.create', ['id' => $atencion['id']]) }}">
+                                               href="{{ route('pacienteHasAlergias.create', ['id' => $atencion['mascota']['id']]) }}">
                                                 <i class="fa fa-fw fa-eye"></i>
                                             </a>
                                         </td>
@@ -67,7 +67,7 @@
                                             @endif
                                             <br>
                                             <a class="btn btn-sm btn-secondary "
-                                               href="{{ route('pacienteHasVacunas.create', ['id' => $atencion['id']]) }}">
+                                               href="{{ route('pacienteHasVacunas.create', ['id' => $atencion['mascota']['id']]) }}">
                                                 <i class="fa fa-fw fa-eye"></i>
                                             </a>
                                         </td>

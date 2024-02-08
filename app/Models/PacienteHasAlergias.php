@@ -19,8 +19,8 @@ class PacienteHasAlergias extends Model
         'a_n_iduser',
     ];
     static $rules = [
-        'n_alergia' => 'required',
-        'n_paciente' => 'required',
+        'alergia' => 'required',
+        'paciente_id' => 'required',
     ];
 
     public function alergia()

@@ -32,10 +32,10 @@
                                 @foreach ($pacienteHasAlergias as $pacienteHasAlergia)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $pacienteHasAlergia->created_at }}</td>
-                                        <td>{{ $pacienteHasAlergia->alergia->v_nombre }}</td>
-                                        <td>{{ $pacienteHasAlergia->medico->name}}</td>
-                                        <td>{{ $pacienteHasAlergia->paciente->v_nombre}}</td>
+                                        <td> - </td>
+                                        <td>{{ $pacienteHasAlergia['alergia'] }}</td>
+                                        <td> - </td>
+                                        <td> - </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -18,7 +18,7 @@ class PacienteHasVacunas extends Model
         'a_n_iduser',
     ];
     static $rules = [
-        'n_vacuna' => 'required',
+        'vacuna' => 'required',
         'n_paciente' => 'required',
     ];
 
