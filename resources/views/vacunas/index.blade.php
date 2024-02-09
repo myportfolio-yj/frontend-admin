@@ -59,25 +59,25 @@
                                 </tbody>
                             </table>
                             <div class="float-right">
-                                @if ($vacuna->links())
+                                @if ($vacunas->links())
                                     <nav>
                                         <ul class="pagination">
                                             {{-- Previous Page Link --}}
-                                            @if ($vacuna->onFirstPage())
+                                            @if ($vacunas->onFirstPage())
                                                 <li class="page-item disabled" aria-disabled="true">
                                                     <span class="page-link">@lang('pagination.previous')</span>
                                                 </li>
                                             @else
                                                 <li class="page-item">
-                                                    <a class="page-link" href="{{ $vacuna->previousPageUrl() }}"
+                                                    <a class="page-link" href="{{ $vacunas->previousPageUrl() }}"
                                                        rel="prev">@lang('pagination.previous')</a>
                                                 </li>
                                             @endif
 
                                             {{-- Next Page Link --}}
-                                            @if ($vacuna->hasMorePages())
+                                            @if ($vacunas->hasMorePages())
                                                 <li class="page-item">
-                                                    <a class="page-link" href="{{ $vacuna->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
+                                                    <a class="page-link" href="{{ $vacunas->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
                                                 </li>
                                             @else
                                                 <li class="page-item disabled" aria-disabled="true">

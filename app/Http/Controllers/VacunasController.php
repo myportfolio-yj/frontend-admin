@@ -6,6 +6,7 @@ use App\Models\Vacunas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 
 class VacunasController extends Controller
@@ -15,7 +16,7 @@ class VacunasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /*public function index()
     {
         $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna');
         if ($response->successful()) {
@@ -26,8 +27,32 @@ class VacunasController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }
+    }*/
+    public function index()
+    {
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna');
 
+        if ($response->successful()) {
+            $vacunas = $response->json();
+
+            // Crear una instancia de Paginator manualmente
+            $page = Paginator::resolveCurrentPage() ?: 1;
+            $perPage = 10; // El número de elementos por página
+            $items = collect($vacunas);
+            $total = $items->count();
+            $slice = $items->slice(($page - 1) * $perPage, $perPage);
+            $vacunasPaginadas = new LengthAwarePaginator($slice, $total, $perPage, $page, [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => 'page',
+            ]);
+
+            return view('vacunas.index')->with('vacunas', $vacunasPaginadas);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
