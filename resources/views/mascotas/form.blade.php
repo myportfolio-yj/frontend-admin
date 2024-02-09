@@ -54,8 +54,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {{ Form::label('Esterilizado') }}<br>
-                    {{ Form::text('esterilizado', $mascota['esterilizado'] ?? '', ['class' => 'form-control' . ($errors->has('apellido') ? ' is-invalid' : ''), 'placeholder' => 'Esterilizado']) }}
+                    {{ Form::label('esterilizado', 'Esterilizado') }}<br>
+                    {{ Form::select('esterilizado', ['true' => 'Si', 'false' => 'No'], $mascota['esterilizado'] ?? '', ['class' => 'form-control' . ($errors->has('esterilizado') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona una opción']) }}
                     {!! $errors->first('esterilizado', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
