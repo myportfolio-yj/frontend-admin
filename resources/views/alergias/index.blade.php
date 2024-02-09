@@ -1,44 +1,5 @@
 @extends('adminlte::page')
 @section('content')
-    <style>
-        .custom-pagination {
-            /* Agrega aquí tus estilos personalizados */
-            text-align: center;
-        }
-
-        .custom-pagination ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .custom-pagination ul li {
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        .custom-pagination ul li a,
-        .custom-pagination ul li span {
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
-            color: #333;
-            text-decoration: none;
-        }
-
-        .custom-pagination ul li.active a {
-            background-color: #007bff;
-            color: #fff;
-            border-color: #007bff;
-        }
-
-        .custom-pagination ul li.disabled span {
-            color: #aaa;
-            pointer-events: none;
-            cursor: not-allowed;
-        }
-
-    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
