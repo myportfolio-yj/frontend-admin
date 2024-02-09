@@ -15,6 +15,9 @@ const ROUTE_INDEX = 'Razas';
 const SUCCESS_CREATE = 'Alergia creada satisfactoriamente.';
 // Error
 const ERROR_CREATE = 'No se puedo crear la alergia.';
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+
 class RazasController extends Controller
 {
     /**
@@ -22,7 +25,8 @@ class RazasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /*ORIGINAL
+     * public function index()
     {
         $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza');
         if ($response->successful()) {
@@ -34,8 +38,32 @@ class RazasController extends Controller
             return dd($error);
         }
 
-    }
+    }*/
+    public function index()
+    {
+        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza');
 
+        if ($response->successful()) {
+            $razas = $response->json();
+
+            // Crear una instancia de Paginator manualmente
+            $page = Paginator::resolveCurrentPage() ?: 1;
+            $perPage = 10; // El número de elementos por página
+            $items = collect($razas);
+            $total = $items->count();
+            $slice = $items->slice(($page - 1) * $perPage, $perPage);
+            $razasPaginadas = new LengthAwarePaginator($slice, $total, $perPage, $page, [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => 'page',
+            ]);
+
+            return view('razas.index')->with('razas', $razasPaginadas);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
