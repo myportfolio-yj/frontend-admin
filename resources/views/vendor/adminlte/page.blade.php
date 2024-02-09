@@ -8,13 +8,8 @@
 @stop
 
 @section('classes_body', $layoutHelper->makeBodyClasses())
-
 @section('body_data', $layoutHelper->makeBodyData())
-
 @section('body')
-
-    <link rel="stylesheet" href="css/admin_custom.css">
-
     <div class="wrapper">
 
         {{-- Preloader Animation --}}

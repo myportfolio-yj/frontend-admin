@@ -67,6 +67,36 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            <div class="float-right">
+                                @if ($procedimiento->links())
+                                    <nav>
+                                        <ul class="pagination">
+                                            {{-- Previous Page Link --}}
+                                            @if ($procedimiento->onFirstPage())
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">@lang('pagination.previous')</span>
+                                                </li>
+                                            @else
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $procedimiento->previousPageUrl() }}"
+                                                       rel="prev">@lang('pagination.previous')</a>
+                                                </li>
+                                            @endif
+
+                                            {{-- Next Page Link --}}
+                                            @if ($alergias->hasMorePages())
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $procedimiento->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
+                                                </li>
+                                            @else
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">@lang('pagination.next')</span>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </nav>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

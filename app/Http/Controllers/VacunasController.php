@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Vacunas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class VacunasController extends Controller
 {
