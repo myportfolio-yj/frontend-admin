@@ -11,6 +11,9 @@ use const App\Http\Controllers\ROUTE_INDEX;
 
 const ID = 'id';
 const GET = 'GET';
+const POST = 'POST';
+const PUT = 'PUT';
+const DELETE = 'DELETE';
 // Success
 const SUCCESS = 'success';
 // Error

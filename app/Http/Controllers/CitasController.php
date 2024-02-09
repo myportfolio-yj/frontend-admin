@@ -32,12 +32,12 @@ class CitasController extends Controller
 
     public function peluqueriaCheckIn($idCita): RedirectResponse
     {
-        return returnsRedirect(makeRequest('POST', URL_CHECKIN_PELUQUERIA . $idCita), [ROUTE_INDEX, SUCCESS_CHECKIN, ERROR_CHECKIN]);
+        return returnsRedirect(makeRequest(POST, URL_CHECKIN_PELUQUERIA . $idCita), [ROUTE_INDEX, SUCCESS_CHECKIN, ERROR_CHECKIN]);
     }
 
     public function veterinariaCheckIn($idCita): RedirectResponse
     {
-        return returnsRedirect(makeRequest('POST', URL_CHECKIN_VETERINARIA . $idCita), [ROUTE_INDEX, SUCCESS_CHECKIN, ERROR_CHECKIN]);
+        return returnsRedirect(makeRequest(POST, URL_CHECKIN_VETERINARIA . $idCita), [ROUTE_INDEX, SUCCESS_CHECKIN, ERROR_CHECKIN]);
     }
 
     /**
@@ -47,13 +47,42 @@ class CitasController extends Controller
      */
     public function create(): View|Factory|RedirectResponse|Application
     {
-        //$response = Http::get(URL_CREAR_CITA);
-        $response = Http::get(URL_CLIENTES);
-        return ($response->successful())
+        $responseFormulario = Http::get(URL_CREAR_CITA);
+        $responseCliente = Http::get(URL_CLIENTES);
+        return ($responseFormulario->successful() && $responseCliente->successful())
             ? renderView(VIEW_CREATE, [
-                CLIENTES => $response->json(),
-                //MASCOTAS => $response->json()[MASCOTAS],
-                //TIPOSCITA => $response->json()[TIPOSCITA]
+                CLIENTES => $responseCliente->json(),
+                TIPOSCITA => Arr::pluck($responseFormulario->json()[TIPOSCITA], TIPOCITA, ID),
+                'veterinarios' =>  array_combine(
+                    array_column($responseFormulario->json()[TIPOSCITA], ID),
+                    array_map(function ($item) {
+                        if(key_exists('reservasVeterinario', $item)){
+                            return array_map(function ($item2) {
+                                return Arr::pluck([$item2['veterinario']], 'codVeterinario', ID);
+                            }, $item['reservasVeterinario']);
+                        }
+                        if(key_exists('reservasPeluquero', $item)){
+                            return array_map(function ($item2) {
+                                return Arr::pluck([$item2['peluquero']], 'nombres', ID);
+                            }, $item['reservasPeluquero']);
+                        }
+                    }, $responseFormulario->json()[TIPOSCITA])
+                ),
+                'turnos' =>  array_combine(
+                    array_column($responseFormulario->json()[TIPOSCITA], ID),
+                    array_map(function ($item) {
+                        if(key_exists('reservasVeterinario', $item)){
+                            return array_map(function ($item2) {
+                                return $item2['turnos'];
+                            }, $item['reservasVeterinario']);
+                        }
+                        if(key_exists('reservasPeluquero', $item)){
+                            return array_map(function ($item2) {
+                                return $item2['turnos'];
+                            }, $item['reservasPeluquero']);
+                        }
+                    }, $responseFormulario->json()[TIPOSCITA])
+                ),
             ])
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
     }

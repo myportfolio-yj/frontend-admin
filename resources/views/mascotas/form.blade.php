@@ -48,7 +48,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Raza') }}<br>
-                    {{ Form::select('razas', [], null, ['id' => 'razas' , 'class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar la raza']) }}
+                    {{ Form::select('razas', [], null, ['id' => 'razas' , 'class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar primero una especie.']) }}
                     {!! $errors->first('razas', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -66,3 +66,30 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
 </div>
+
+<script>
+    var razas = new Array();
+    @foreach($razas as $key => $value)
+    var aux = new Array();
+    var i =0;
+    @foreach($value as $id => $dato)
+    var aux2 = new Array();
+    aux2['id'] = '{{ $id }}';
+    aux2['dato'] = '{{ $dato }}';
+    aux[i++] = aux2;
+    @endforeach
+        razas['{{ $key }}'] = aux;
+    @endforeach
+    document.getElementById('especies').addEventListener('change', function() {
+        var especieId = this.value;
+        console.log(especieId);
+        var selectRaza = document.getElementById('razas');
+        selectRaza.innerHTML = '<option value="">Seleccionar la raza.</option>';
+        console.log(razas[especieId]);
+        razas[especieId].forEach((value, key) => {
+            console.log(value, key);
+            var option = new Option(value['dato'], value['id']);
+            selectRaza.add(option);
+        });
+    });
+</script>
