@@ -6,7 +6,7 @@ use App\Models\Procedimientos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Illuminate\Pagination\Paginator;
 
 class ProcedimientosController extends Controller
 {
@@ -15,12 +15,38 @@ class ProcedimientosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /*ORIGINAL
     public function index()
     {
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento');
         if ($response->successful()) {
             $datos = $response->json();
             return view('procedimientos.index')->with('procedimientos', $datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
+    }*/
+    public function index()
+    {
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento');
+
+        if ($response->successful()) {
+            $procedimientos = $response->json();
+
+            // Crear una instancia de Paginator manualmente
+            $page = Paginator::resolveCurrentPage() ?: 1;
+            $perPage = 10; // El número de elementos por página
+            $items = collect($procedimientos);
+            $total = $items->count();
+            $slice = $items->slice(($page - 1) * $perPage, $perPage);
+            $procedimientosPaginados = new LengthAwarePaginator($slice, $total, $perPage, $page, [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => 'page',
+            ]);
+
+            return view('procedimientos.index')->with('procedimientos', $procedimientosPaginados);
         } else {
             // Manejar error
             $error = $response->body();

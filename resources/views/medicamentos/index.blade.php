@@ -60,25 +60,25 @@
                                 </tbody>
                             </table>
                             <div class="float-right">
-                                @if ($medicamento->links())
+                                @if ($medicamentos->links())
                                     <nav>
                                         <ul class="pagination">
                                             {{-- Previous Page Link --}}
-                                            @if ($medicamento->onFirstPage())
+                                            @if ($medicamentos->onFirstPage())
                                                 <li class="page-item disabled" aria-disabled="true">
                                                     <span class="page-link">@lang('pagination.previous')</span>
                                                 </li>
                                             @else
                                                 <li class="page-item">
-                                                    <a class="page-link" href="{{ $medicamento->previousPageUrl() }}"
+                                                    <a class="page-link" href="{{ $medicamentos->previousPageUrl() }}"
                                                        rel="prev">@lang('pagination.previous')</a>
                                                 </li>
                                             @endif
 
                                             {{-- Next Page Link --}}
-                                            @if ($medicamento->hasMorePages())
+                                            @if ($medicamentos->hasMorePages())
                                                 <li class="page-item">
-                                                    <a class="page-link" href="{{ $medicamento->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
+                                                    <a class="page-link" href="{{ $medicamentos->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
                                                 </li>
                                             @else
                                                 <li class="page-item disabled" aria-disabled="true">

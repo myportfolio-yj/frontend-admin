@@ -22,14 +22,45 @@ class DiagnosticosController extends Controller
      *
      * @return Application|Factory|View
      */
+    /*ORIGINAL
     public function index(): View|Factory|Application
     {
         $response = makeRequest('GET', API_URL);
         return $response->successful()
             ? renderView(VIEW_INDEX, [DIAGNOSTICOS => $response->json()])
             : dd($response->body());
-    }
+    }*/
+    public function index(Request $request): View|Factory|Application
+    {
+        $response = makeRequest('GET', API_URL);
 
+        if ($response->successful()) {
+            $data = $response->json();
+            $currentPage = $request->query('page', 1);
+            $perPage = 10; // Número de elementos por página
+
+            // Calcula el desplazamiento para la paginación
+            $offset = ($currentPage - 1) * $perPage;
+
+            // Obtén los elementos de la página actual
+            $currentPageData = array_slice($data, $offset, $perPage);
+
+            // Crea una instancia de LengthAwarePaginator
+            $paginator = new LengthAwarePaginator(
+                $currentPageData,
+                count($data),
+                $perPage,
+                $currentPage,
+                ['path' => $request->url()]
+            );
+
+            return renderView(VIEW_INDEX, [
+                DIAGNOSTICOS => $paginator,
+            ]);
+        } else {
+            return dd($response->body());
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
