@@ -1,5 +1,10 @@
 @extends('adminlte::page')
 @section('content')
+    <style>
+        .table-responsive {
+            height: 200px;       /* Just for the demo          */
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -27,7 +32,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-sm table-striped table-hover">
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
@@ -35,7 +40,6 @@
                                     <th>Nombre de la mascota</th>
                                     <th>Especie / Raza</th>
                                     <th>Tipo de cita</th>
-                                    <th>Tipo atención</th>
                                     <th>Dueño de la mascota</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -47,9 +51,8 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
                                         <td>{{ $cita['nombreMascota'] }}</td>
-                                        <td> -</td>
+                                        <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
                                         <td>{{ $cita['tipoCita'] }} </td>
-                                        <td> -</td>
                                         <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
                                             <form action=@if($cita['tipoCita'] == 'Cita Veterinaria')
@@ -90,7 +93,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-sm table-striped table-hover">
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
@@ -98,7 +101,6 @@
                                     <th>Nombre de la mascota</th>
                                     <th>Especie / Raza</th>
                                     <th>Tipo de cita</th>
-                                    <th>Tipo atención</th>
                                     <th>Dueño de la mascota</th>
                                 </tr>
                                 </thead>
@@ -109,9 +111,8 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
                                         <td>{{ $cita['nombreMascota'] }}</td>
-                                        <td> -</td>
+                                        <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
                                         <td>{{ $cita['tipoCita'] }} </td>
-                                        <td> -</td>
                                         <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
                                         </td>
