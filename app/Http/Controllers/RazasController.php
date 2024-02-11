@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 include_once 'DefinitionsGeneral.php';
 define('API_URL', env('API2') . '/raza/');
 // Routes
@@ -15,8 +17,6 @@ const ROUTE_INDEX = 'Razas';
 const SUCCESS_CREATE = 'Alergia creada satisfactoriamente.';
 // Error
 const ERROR_CREATE = 'No se puedo crear la alergia.';
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 
 class RazasController extends Controller
 {

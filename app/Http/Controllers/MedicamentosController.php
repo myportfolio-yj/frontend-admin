@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Medicamentos;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -15,12 +16,37 @@ class MedicamentosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /*ORIGINAL
     public function index()
     {
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento');
         if ($response->successful()) {
             $datos = $response->json();
             return view('medicamentos.index')->with('medicamentos', $datos);
+        } else {
+            // Manejar error
+            $error = $response->body();
+            return dd($error);
+        }
+    }*/
+    public function index()
+    {
+        $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento');
+        if ($response->successful()) {
+            $medicamentos = $response->json();
+
+            // Crear una instancia de Paginator manualmente
+            $page = Paginator::resolveCurrentPage() ?: 1;
+            $perPage = 10; // El número de elementos por página
+            $items = collect($medicamentos);
+            $total = $items->count();
+            $slice = $items->slice(($page - 1) * $perPage, $perPage);
+            $medicamentosPaginados = new LengthAwarePaginator($slice, $total, $perPage, $page, [
+                'path' => Paginator::resolveCurrentPath(),
+                'pageName' => 'page',
+            ]);
+
+            return view('medicamentos.index')->with('medicamentos', $medicamentosPaginados);
         } else {
             // Manejar error
             $error = $response->body();

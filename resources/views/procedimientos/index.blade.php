@@ -68,25 +68,25 @@
                                 </tbody>
                             </table>
                             <div class="float-right">
-                                @if ($procedimiento->links())
+                                @if ($procedimientos->links())
                                     <nav>
                                         <ul class="pagination">
                                             {{-- Previous Page Link --}}
-                                            @if ($procedimiento->onFirstPage())
+                                            @if ($procedimientos->onFirstPage())
                                                 <li class="page-item disabled" aria-disabled="true">
                                                     <span class="page-link">@lang('pagination.previous')</span>
                                                 </li>
                                             @else
                                                 <li class="page-item">
-                                                    <a class="page-link" href="{{ $procedimiento->previousPageUrl() }}"
+                                                    <a class="page-link" href="{{ $procedimientos->previousPageUrl() }}"
                                                        rel="prev">@lang('pagination.previous')</a>
                                                 </li>
                                             @endif
 
                                             {{-- Next Page Link --}}
-                                            @if ($alergias->hasMorePages())
+                                            @if ($procedimientos->hasMorePages())
                                                 <li class="page-item">
-                                                    <a class="page-link" href="{{ $procedimiento->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
+                                                    <a class="page-link" href="{{ $procedimientos->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
                                                 </li>
                                             @else
                                                 <li class="page-item disabled" aria-disabled="true">
