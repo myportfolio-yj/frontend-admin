@@ -1,5 +1,10 @@
 @extends('adminlte::page')
 @section('content')
+    <style>
+        .table-responsive {
+            height: 500px;       /* Just for the demo          */
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -27,7 +32,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-sm table-striped table-hover">
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
@@ -36,6 +41,7 @@
                                     <th>Fecha de Nacimiento</th>
                                     <th>Sexo</th>
                                     <th>Especie - Raza</th>
+                                    <th>Esterilizado</th>
                                     <th>Dueño de mascota</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -50,6 +56,7 @@
                                         <td>{{ $mascota['fechaNacimiento'] }}</td>
                                         <td>{{ $mascota['sexo']['sexo'] }}</td>
                                         <td>{{ $mascota['especie']['especie'] }} - {{ $mascota['raza']['raza'] }} </td>
+                                        <td>{{ $mascota['esterilizado'] }}</td>
                                         <td>{{ $mascota['clientes'][0]['nombres']}} {{ $mascota['clientes'][0]['apellidos']}}</td>
                                         <td>
                                             <form action="{{ route('mascotas.destroy', $mascota['id']) }}"
@@ -57,11 +64,7 @@
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('mascotas.edit', $mascota['id']) }}"><i
                                                         class="fa fa-fw fa-edit"></i></a>
-                                                <button class="btn btn-sm btn-danger"
-                                                        type="submit"><i
-                                                        class="fa fa-fw fa-trash"></i></button>
                                                 @csrf
-                                                @method('DELETE')
                                             </form>
                                         </td>
                                     </tr>

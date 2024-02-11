@@ -3,31 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mascotas;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
+include_once 'IdentificacionDefinitions.php';
 class IdentificacionController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Display the specified resource.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param $id
+     * @return Application|Factory|View
      */
-    public function index()
+    public function show($id): View|Factory|Application
     {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/mascota');
-        if ($response->successful()) {
-            $datos = $response->json();
-            return view('identificacion.index')->with('identificacion', $datos);
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
+        $response = makeRequest('GET', URL_MASCOTA . $id);
+        return $response->successful()
+            ? renderView(VIEW_SHOW, [MASCOTA => $response->json()])
+            : dd($response->body());
     }
-
-
 
     /*public function validarqr(Request $request)
     {
