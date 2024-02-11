@@ -7,7 +7,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Descripcion del diagnostico') }}
-            {{ Form::text('detalle', $diagnostico['detalle'] ?? '', ['class' => 'form-control' . ($errors->has('detalle') ? ' is-invalid' : ''), 'placeholder' => 'Nombre de la Alergia']) }}
+            {{ Form::text('detalle', $diagnostico['detalle'] ?? '', ['class' => 'form-control' . ($errors->has('detalle') ? ' is-invalid' : ''), 'placeholder' => 'Descripción del diagnostico']) }}
             {!! $errors->first('detalle', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     </div>

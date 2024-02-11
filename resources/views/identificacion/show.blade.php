@@ -1,3 +1,4 @@
+@extends('adminlte::master')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -7,6 +8,7 @@
     <title>Identificaciòn de la mascota</title>
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/identificacion.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="antialiased">
 <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0"
@@ -35,33 +37,44 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <strong>Nro de Identificación:</strong>
+                                {{ $mascota['codIdentificacion'] }}
 
                             </div>
                             <div class="form-group">
-                                <strong>Nombre de la mascota:</strong>
-
-                            </div>
-                            <div class="form-group">
-                                <strong>Apellido de la mascota:</strong>
+                                <strong>Nombre completo de la mascota:</strong>
+                                {{ $mascota['nombre'] }} {{ $mascota['apellido'] }}
 
                             </div>
                             <div class="form-group">
                                 <strong>Fecha de nacimiento de la mascota:</strong>
+                                {{ $mascota['fechaNacimiento'] }}
 
                             </div>
                             <div class="form-group">
                                 <strong>Sexo:</strong>
+                                {{ $mascota['sexo']['sexo'] }}
 
                             </div>
                             <div class="form-group">
-                                <strong>Raza:</strong>
+                                <strong>Especie - Raza:</strong>
+                                {{ $mascota['especie']['especie'] }} - {{ $mascota['raza']['raza'] }}
+
+                            </div>
+                            <div class="form-group">
+                                <strong>Esterilizado:</strong>
+                                {{ $mascota['esterilizado'] }}
 
                             </div>
                             <div class="form-group">
                                 <strong>Dueño de la mascota:</strong>
+                                {{ $mascota['clientes'][0]['nombres'] }} {{ $mascota['clientes'][0]['apellidos'] }}
+
                             </div>
-                            <div class="text-right">
-                                QR de identificación del paciente<br/>
+                            <div class="form-group">
+                                    <button class="btn btn-lg btn-danger">REPORTAR MASCOTA PERDIDA</button>
+                            </div>
+                            <div class="text-left">
+                                <strong>QR de identificación del paciente</strong> <br/>
                                 {!!QrCode::size(150)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'validarqr/'.'Codigo') !!}
                             </div>
                         </div>

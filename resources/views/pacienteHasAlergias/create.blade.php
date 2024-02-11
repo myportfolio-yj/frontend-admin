@@ -21,10 +21,7 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
-                                    <th>Fecha Atención</th>
                                     <th>Alergia</th>
-                                    <th>Medico</th>
-                                    <th>Paciente</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -32,10 +29,7 @@
                                 @foreach ($pacienteHasAlergias as $pacienteHasAlergia)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td> - </td>
                                         <td>{{ $pacienteHasAlergia['alergia'] }}</td>
-                                        <td> - </td>
-                                        <td> - </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

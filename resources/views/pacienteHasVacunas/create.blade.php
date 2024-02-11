@@ -21,21 +21,20 @@
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
-                                    <th>Fecha Atención</th>
+                                    <th>Fecha de aplicación</th>
                                     <th>Vacuna</th>
-                                    <th>Fecha</th>
-                                    <th>Paciente</th>
+                                    <th>Proxima aplicación</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i = 0; ?>
                                 @foreach ($pacienteHasVacunas as $pacienteHasVacuna)
+                                        <?php $nueva_fecha = date('d-m-Y', strtotime($pacienteHasVacuna['fecha']  . ' +365 days')); ?>
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td> -- </td>
-                                        <td>{{ $pacienteHasVacuna['vacuna'] }}</td>
                                         <td>{{ $pacienteHasVacuna['fecha'] }}</td>
-                                        <td> -- </td>
+                                        <td>{{ $pacienteHasVacuna['vacuna'] }}</td>
+                                        <td>{{ $nueva_fecha }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -44,9 +43,7 @@
                         <form method="POST" action="{{ route('pacienteHasVacunas.store') }}" role="form"
                               enctype="multipart/form-data">
                             @csrf
-
                             @include('pacienteHasVacunas.form')
-
                         </form>
                     </div>
                 </div>
