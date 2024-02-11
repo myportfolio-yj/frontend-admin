@@ -50,41 +50,119 @@ class CitasController extends Controller
         $responseFormulario = Http::get(URL_CREAR_CITA);
         $responseCliente = Http::get(URL_CLIENTES);
         return ($responseFormulario->successful() && $responseCliente->successful())
-            ? renderView(VIEW_CREATE, [
-                CLIENTES => $responseCliente->json(),
-                TIPOSCITA => Arr::pluck($responseFormulario->json()[TIPOSCITA], TIPOCITA, ID),
-                'veterinarios' =>  array_combine(
-                    array_column($responseFormulario->json()[TIPOSCITA], ID),
-                    array_map(function ($item) {
-                        if(key_exists('reservasVeterinario', $item)){
-                            return array_map(function ($item2) {
-                                return Arr::pluck([$item2['veterinario']], 'codVeterinario', ID);
-                            }, $item['reservasVeterinario']);
-                        }
-                        if(key_exists('reservasPeluquero', $item)){
-                            return array_map(function ($item2) {
-                                return Arr::pluck([$item2['peluquero']], 'nombres', ID);
-                            }, $item['reservasPeluquero']);
-                        }
-                    }, $responseFormulario->json()[TIPOSCITA])
-                ),
-                'turnos' =>  array_combine(
-                    array_column($responseFormulario->json()[TIPOSCITA], ID),
-                    array_map(function ($item) {
-                        if(key_exists('reservasVeterinario', $item)){
-                            return array_map(function ($item2) {
-                                return $item2['turnos'];
-                            }, $item['reservasVeterinario']);
-                        }
-                        if(key_exists('reservasPeluquero', $item)){
-                            return array_map(function ($item2) {
-                                return $item2['turnos'];
-                            }, $item['reservasPeluquero']);
-                        }
-                    }, $responseFormulario->json()[TIPOSCITA])
-                ),
-            ])
+            ? renderView(VIEW_CREATE, $this->contruirArray($responseCliente, $responseFormulario))
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_CREATE]);
+    }
+
+    function obtenerClientesyMascotas($responseCliente)
+    {
+        $clientes = [];
+        $mascotas = [];
+        foreach($responseCliente->json() as $valueCliente)
+        {
+            $idCliente = $valueCliente[ID];
+            $nombresClientes = "{$valueCliente[NOMBRES]} {$valueCliente[APELLIDOS]} - {$valueCliente[TIPODOCUMENTO][TIPODOCUMENTO]}: {$valueCliente[DOCUMENTO]}";
+            $aux = [];
+            foreach($valueCliente[MASCOTAS] as $valueMascotas){
+                $idMascota = $valueMascotas[ID];
+                $nombresMascotas = "{$valueMascotas[NOMBRE]} {$valueMascotas[APELLIDO]}";
+                $aux[$idMascota] = $nombresMascotas;
+            }
+            $clientes[$idCliente] = $nombresClientes;
+            $mascotas[$idCliente] = $aux;
+        }
+        return array_values([$clientes, $mascotas]);
+    }
+    function obtenerCitaEmpleadosyTurnos($responseFormulario)
+    {
+        $tiposCita = [];
+        $empleados = [];
+        $fechas = [];
+        $turnos = [];
+        $atencionPeluqueria = [];
+        foreach ($responseFormulario->json()[TIPOSCITA] as $valueTipoCita){
+            $idTipoCita = $valueTipoCita[ID];
+            $nombreTipoCita = $valueTipoCita[TIPOCITA];
+
+            if(key_exists(RESERVASVETERINARIO, $valueTipoCita))
+            {
+                $auxEmpleado = [];
+                $auxEmpleadoTurnos = [];
+                foreach($valueTipoCita[RESERVASVETERINARIO] as $reservasVeterinario)
+                {
+                    $idVeterinaria = $reservasVeterinario[VETERINARIO][ID];
+                    $auxTurnoHorario = [];
+                    foreach($reservasVeterinario[TURNOS] as $valueTurno)
+                    {
+                        foreach($valueTurno[TURNOS] as $valueHorario)
+                        {
+                            $fechas[$reservasVeterinario[VETERINARIO][ID]][] = $valueTurno[FECHA];
+                            $fechas[$reservasVeterinario[VETERINARIO][ID]] = array_unique($fechas[$reservasVeterinario[VETERINARIO][ID]]);
+                            $auxTurnoHorario[$valueTurno[FECHA]][] = $valueHorario;
+                        }
+                    }
+                    $auxEmpleadoTurnos[$idVeterinaria] = $auxTurnoHorario;
+                    $nombresVeterinario = "{$reservasVeterinario[VETERINARIO][NOMBRES]} {$reservasVeterinario[VETERINARIO][APELLIDOS]} - {$reservasVeterinario[VETERINARIO][CODVETERINARIO]}";
+                    $auxEmpleado[$idVeterinaria] = $nombresVeterinario;
+                }
+                $turnos = array_merge($turnos, $auxEmpleadoTurnos);
+                $empleados[$idTipoCita] = $auxEmpleado;
+            }
+            if(key_exists(RESERVASPELUQUERO, $valueTipoCita))
+            {
+                foreach($valueTipoCita[ATENCIONESPELUQUERIA] as $atencionesPeluqueria)
+                {
+                    $atencionPeluqueria[$idTipoCita][$atencionesPeluqueria[ID]] = $atencionesPeluqueria[ATENCIONPELUQUERO];
+                }
+                $auxEmpleado = [];
+                $auxEmpleadoTurnos = [];
+                foreach($valueTipoCita[RESERVASPELUQUERO] as $reservasPeluquero)
+                {
+                    $idPeluquero = $reservasPeluquero[PELUQUERO][ID];
+                    $auxTurnoHorario = [];
+                    foreach($reservasPeluquero[TURNOS] as $valueTurno)
+                    {
+                        foreach($valueTurno[TURNOS] as $valueHorario)
+                        {
+                            $fechas[$reservasPeluquero[PELUQUERO][ID]][] = $valueTurno[FECHA];
+                            $fechas[$reservasPeluquero[PELUQUERO][ID]] = array_unique($fechas[$reservasPeluquero[PELUQUERO][ID]]);
+                            $auxTurnoHorario[$valueTurno[FECHA]][] = $valueHorario;
+                        }
+                    }
+                    $auxEmpleadoTurnos[$idPeluquero] = $auxTurnoHorario;
+                    $nombresPeluquero = "{$reservasPeluquero[PELUQUERO][NOMBRES]} {$reservasPeluquero[PELUQUERO][APELLIDOS]}";
+                    $auxEmpleado[$idPeluquero] = $nombresPeluquero;
+                }
+                $turnos = array_merge($turnos, $auxEmpleadoTurnos);
+                $empleados[$idTipoCita] = $auxEmpleado;
+            }
+            $tiposCita[$idTipoCita] = $nombreTipoCita;
+        }
+        return array_values([$tiposCita, $empleados, $fechas, $turnos, $atencionPeluqueria]);
+    }
+
+    function contruirArray($responseCliente, $responseFormulario)
+    {
+        $clientes = [];
+        $mascotas = [];
+        list($clientes, $mascotas) = $this->obtenerClientesyMascotas($responseCliente);
+
+        $tiposCita = [];
+        $empleados = [];
+        $fechas = [];
+        $turnos = [];
+        $atencionPeluqueria = [];
+        list($tiposCita, $empleados, $fechas, $turnos, $atencionPeluqueria) = $this->obtenerCitaEmpleadosyTurnos($responseFormulario);
+
+        return [
+            CLIENTES => $clientes,
+            MASCOTAS => $mascotas,
+            TIPOSCITA => $tiposCita,
+            EMPLEADOS => $empleados,
+            FECHAS => $fechas,
+            TURNOS => $turnos,
+            ATENCIONPELUQUERIA => $atencionPeluqueria
+        ];
     }
 
     /**
@@ -95,7 +173,6 @@ class CitasController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        request()->validate(Citas::$rules);
         return returnsRedirect(makeRequest('POST', URL_CITAS, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 

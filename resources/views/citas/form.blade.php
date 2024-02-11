@@ -4,94 +4,49 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Cliente') }}
-                    <select class="selectpicker form-control" data-live-search="true">
-                        <option data-tokens="">Seleccione un cliente</option>
-                        @foreach($clientes as $cliente)
-                            <option value="{{ $cliente['nombres'] }}">{{ $cliente['nombres'] }} {{ $cliente['apellidos'] }}
-                                - {{ $cliente['tipoDocumento']['tipoDocumento'] }} {{ $cliente['documento'] }}</option>
-                        @endforeach
-                    </select>
+                    {{ Form::select('cliente', $clientes, null, ['id' => 'clientes' , 'class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un cliente.']) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Mascota') }}
-                    <select class="selectpicker form-control" data-live-search="true">
-                        <option data-tokens="">Seleccione un cliente</option>
-                        @foreach($clientes as $cliente)
-                            @foreach($cliente['mascotas'] as $mascota)
-                                <option value="">{{ $mascota['nombre'] }} {{ $mascota['apellido'] }}
-                                    - {{ $mascota['codIdentificacion'] }}</option>
-                            @endforeach
-                        @endforeach
-                    </select>
+                    {{ Form::select('mascotas', [], null, ['id' => 'mascotas' , 'class' => 'form-control' . ($errors->has('mascotas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un cliente.']) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Tipo de cita') }}
-                    {{ Form::select('tipocita', $tiposCita, null, ['id' => 'tipocita' , 'class' => 'form-control' . ($errors->has('tipocita') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el tipo de cita.']) }}
+                    {{ Form::select('tiposCita', $tiposCita, null, ['id' => 'tiposCita' , 'class' => 'form-control' . ($errors->has('tiposCita') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el tipo de cita.']) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    {{ Form::label('Tipo de atencion') }}
-
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    {{ Form::label('Veterinario') }}<br>
-                    {{ Form::select('veterinarios', [], null, ['id' => 'veterinario' , 'class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar primero un tipo de cita.']) }}
+                    {{ Form::label('Empleado') }}<br>
+                    {{ Form::select('empleados', [], null, ['id' => 'empleados' , 'class' => 'form-control' . ($errors->has('empleados') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el tipo de cita.']) }}
                     {!! $errors->first('razas', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
-
-            <script>
-                var veterinarios = new Array();
-                @foreach($veterinarios as $key => $value)
-                var aux = new Array();
-                var i =0;
-                @foreach($value as $dato)
-                @foreach($dato as $id => $info)
-                var aux2 = new Array();
-                aux2['id'] = '{{ $id }}';
-                aux2['dato'] = '{{ $info }}';
-                aux[i++] = aux2;
-                @endforeach
-                @endforeach
-                    veterinarios['{{ $key }}'] = aux;
-                @endforeach
-                document.getElementById('tipocita').addEventListener('change', function() {
-                    var especieId = this.value;
-                    console.log(especieId);
-                    var selectRaza = document.getElementById('veterinario');
-                    selectRaza.innerHTML = '<option value="">Seleccionar la raza.</option>';
-                    console.log(veterinarios[especieId]);
-                    veterinarios[especieId].forEach((value, key) => {
-                        console.log(value, key);
-                        var option = new Option(value['dato'], value['id']);
-                        selectRaza.add(option);
-                    });
-                });
-            </script>
-
-            {{ dd($tiposCita, $veterinarios, $turnos) }}
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Fechas disponibles') }}
+                    {{ Form::select('fechas', [], null, ['id' => 'fechas' , 'class' => 'form-control' . ($errors->has('fechas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el empleado.']) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Turnos disponibles') }}
+                    {{ Form::select('turnos', [], null, ['id' => 'turnos' , 'class' => 'form-control' . ($errors->has('turnos') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar la fecha.']) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Observaciones') }}
-                    {{ Form::text('observaciones', $cliente['observaciones'] ?? '', ['class' => 'form-control' . ($errors->has('observaciones') ? ' is-invalid' : ''), 'placeholder' => 'Fijo']) }}
+                    {{ Form::textarea('observaciones', $cliente['observaciones'] ?? '', ['class' => 'form-control' . ($errors->has('observaciones') ? ' is-invalid' : ''), 'placeholder' => 'Observaciones']) }}
                     {!! $errors->first('observaciones', '<div class="invalid-feedback">:message</div>') !!}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" id="atencionPeluqueriaDiv">
                 </div>
             </div>
         </div>
@@ -100,3 +55,79 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
 </div>
+
+<script>
+    var mascotasData = @json($mascotas);
+    var empleadosData = @json($empleados);
+    var fechasData = @json($fechas);
+    var turnosData = @json($turnos);
+    var atencionPeluqueriaData = @json($atencionPeluqueria);
+    document.getElementById('clientes').addEventListener('change', function() {
+        var clienteId = this.value;
+        var selectMascotas = document.getElementById('mascotas');
+        selectMascotas.innerHTML = '<option value="">Seleccionar una mascota.</option>';
+
+        // Usar Object.entries para iterar sobre las propiedades del objeto
+        Object.entries(mascotasData[clienteId]).forEach(([key, value]) => {
+            var option = new Option(value, key); // Aquí asumo que quieres usar el nombre de la mascota como texto visible en el option, y el ID de la mascota como el valor del option.
+            selectMascotas.add(option);
+        });
+    });
+    document.getElementById('tiposCita').addEventListener('change', function() {
+        var tipoCitaId = this.value;
+        var selectEmpleados = document.getElementById('empleados');
+        selectEmpleados.innerHTML = '<option value="">Seleccionar un empleado.</option>';
+
+        // Usar Object.entries para iterar sobre las propiedades del objeto
+        Object.entries(empleadosData[tipoCitaId]).forEach(([key, value]) => {
+            var option = new Option(value, key); // Aquí asumo que quieres usar el nombre de la mascota como texto visible en el option, y el ID de la mascota como el valor del option.
+            selectEmpleados.add(option);
+        });
+
+        if(tipoCitaId in atencionPeluqueriaData)
+        {
+            var cadena = "";
+            Object.entries(atencionPeluqueriaData[tipoCitaId]).forEach(([key, value]) => {
+                cadena += '<input type="checkbox" id="' + key + '" name="atencionPeluqueria[]" value="' + key + '">';
+                cadena += '<label for="' + key + '">' + value + '</label><br>'
+            });
+            document.getElementById('atencionPeluqueriaDiv').innerHTML = cadena;
+        }
+        else {
+            document.getElementById('atencionPeluqueriaDiv').innerHTML = "";
+        }
+    });
+
+    document.getElementById('empleados').addEventListener('change', function() {
+        var empleadoId = this.value;
+        var selectFechas = document.getElementById('fechas');
+        selectFechas.innerHTML = '<option value="">Seleccionar una fecha.</option>';
+
+        // Usar Object.entries para iterar sobre las propiedades del objeto
+        Object.entries(fechasData[empleadoId]).forEach(([key, value]) => {
+            var option = new Option(value, value); // Aquí asumo que quieres usar el nombre de la mascota como texto visible en el option, y el ID de la mascota como el valor del option.
+            selectFechas.add(option);
+        });
+    });
+
+    document.getElementById('fechas').addEventListener('change', function() {
+        var fechasInfo = this.value;
+        var empleadoId = document.getElementById('empleados').value;
+        var selectTurnos = document.getElementById('turnos');
+        console.log(fechasInfo);
+        console.log(empleadoId);
+        console.log(selectTurnos);
+        console.log(turnosData);
+        console.log(turnosData[empleadoId][fechasInfo]);
+        selectTurnos.innerHTML = '<option value="">Seleccionar un turno.</option>';
+
+        // Usar Object.entries para iterar sobre las propiedades del objeto
+        Object.entries(turnosData[empleadoId][fechasInfo]).forEach(([key, value]) => {
+            console.log(key, value);
+            var option = new Option(value, value); // Aquí asumo que quieres usar el nombre de la mascota como texto visible en el option, y el ID de la mascota como el valor del option.
+            console.log(option);
+            selectTurnos.add(option);
+            console.log(selectTurnos);
+        });
+    });
+</script>

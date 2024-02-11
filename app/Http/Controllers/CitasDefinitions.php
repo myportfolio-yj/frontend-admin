@@ -11,7 +11,23 @@ const TIPODOC = 'tipoDoc';
 const TIPODOCUMENTO = 'tipoDocumento';
 const CLIENTES = 'clientes';
 const CLIENTE = 'cliente';
-
+const NOMBRE = 'nombre';
+const NOMBRES = 'nombres';
+const APELLIDO = 'apellido';
+const APELLIDOS = 'apellidos';
+const DOCUMENTO = 'documento';
+const VETERINARIO = 'veterinario';
+const RESERVASVETERINARIO = 'reservasVeterinario';
+const CODVETERINARIO = 'codVeterinario';
+const PELUQUERO = 'peluquero';
+const EMPLEADOS = 'empleados';
+const FECHAS = 'fechas';
+const FECHA = 'fecha';
+const TURNOS = 'turnos';
+const RESERVASPELUQUERO = 'reservasPeluquero';
+const ATENCIONESPELUQUERIA= 'atencionesPeluqueria';
+const ATENCIONPELUQUERO= 'atencionPeluquero';
+const ATENCIONPELUQUERIA= 'atencionPeluqueria';
 
 // URLs
 define('URL_CITAS', env('API3') . '/cita/');
@@ -41,12 +57,12 @@ const ERROR_DELETE = 'No se puedo eliminar la cita.';
 function fieldsCita($request): array
 {
     return [
-        'idCliente' => $request->input('idCliente'),
-        'idMascota' => $request->input('idMascota'),
-        'idTipoCita' => $request->input('idTipoCita'),
-        'fecha' => $request->input('fecha'),
-        'turno' => $request->input('turno'),
+        'idCliente' => $request->input('cliente'),
+        'idMascota' => $request->input('mascotas'),
+        'idTipoCita' => $request->input('tiposCita'),
+        'fecha' => $request->input('fechas'),
+        'turno' => $request->input('turnos'),
         'observaciones' => $request->input('observaciones'),
-        'atencionesPeluqueria' => $request->input('atencionesPeluqueria'),
+        'atencionesPeluqueria' => $request->input('atencionPeluqueria'),
     ];
 }
