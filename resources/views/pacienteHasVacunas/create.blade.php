@@ -29,7 +29,11 @@
                                 <tbody>
                                 <?php $i = 0; ?>
                                 @foreach ($pacienteHasVacunas as $pacienteHasVacuna)
-                                        <?php $nueva_fecha = date('d-m-Y', strtotime($pacienteHasVacuna['fecha']  . ' +365 days')); ?>
+                                        <?php
+                                        // $nueva_fecha = date('d-m-Y', strtotime($pacienteHasVacuna['fecha']  . ' +'.$pacienteHasVacuna['duracion'].' days'));
+                                        $fechaFormatoCorrecto = DateTime::createFromFormat('d/m/Y', $pacienteHasVacuna['fecha'])->format('Y-m-d');
+                                        $nueva_fecha = date('d-m-Y', strtotime($fechaFormatoCorrecto . ' +' . $pacienteHasVacuna['duracion'] . ' days'));
+                                        ?>
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $pacienteHasVacuna['fecha'] }}</td>
