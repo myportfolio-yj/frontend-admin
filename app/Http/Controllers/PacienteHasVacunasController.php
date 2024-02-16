@@ -16,7 +16,7 @@ include_once 'DefinitionsGeneral.php';
 
 define('API_URL_MASCOTA', env('API2') . '/mascota/');
 define('API_URL_VACUNA', env('API2') . '/vacuna/');
-const VACUNA_CREATE = 'PacienteHasVacunas.create';
+const VACUNA_CREATE = 'pacienteHasVacunas.create';
 const PACIENTEHASVACUNA = 'pacienteHasVacunas';
 CONST VACUNA = 'vacuna';
 const VACUNAS = 'vacunas';
