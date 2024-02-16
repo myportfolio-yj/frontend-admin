@@ -104,8 +104,8 @@
                 var longitudInput = document.getElementById("longitud");
 
                 // Obtener las coordenadas con al menos 6 decimales
-                var latitud = position.coords.latitude.toFixed(6);
-                var longitud = position.coords.longitude.toFixed(6);
+                var latitud = position.coords.latitude.toFixed(8);
+                var longitud = position.coords.longitude.toFixed(8);
 
                 // Establecer las coordenadas en los inputs hidden
                 latitudInput.value = latitud;
