@@ -55,7 +55,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('esterilizado', 'Esterilizado') }}<br>
-                    {{ Form::select('esterilizado', ['true' => 'Si', 'false' => 'No'], ($mascota['esterilizado'] == true) ? 'true' : 'false', ['class' => 'form-control' . ($errors->has('esterilizado') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona una opción']) }}
+                    {{ Form::select('esterilizado', ['true' => 'Si', 'false' => 'No'], (array_key_exists('esterilizado', $mascota) && $mascota['esterilizado'] == true) ? 'true' : 'false', ['class' => 'form-control' . ($errors->has('esterilizado') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona una opción']) }}
                     {!! $errors->first('esterilizado', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -82,9 +82,7 @@
     @endforeach
 
     document.addEventListener("DOMContentLoaded", function() {
-        console.log("Hola mundo!!!");
         if(document.getElementById("especies").value){
-            console.log("Adios mundo");
             var especieId = document.getElementById("especies").value;
             var selectRaza = document.getElementById('razas');
             selectRaza.innerHTML = '<option value="">Seleccionar la raza.</option>';

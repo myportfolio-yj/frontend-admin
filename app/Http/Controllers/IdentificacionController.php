@@ -6,6 +6,7 @@ use App\Models\Mascotas;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -25,6 +26,18 @@ class IdentificacionController extends Controller
         return $response->successful()
             ? renderView(VIEW_SHOW, [MASCOTA => $response->json()])
             : dd($response->body());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        dd($request->all());die();
+        return returnsRedirect(makeRequest('POST', URL_CITAS, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
     }
 
     /*public function validarqr(Request $request)

@@ -62,7 +62,7 @@
                             </div>
                             <div class="form-group">
                                 <strong>Esterilizado:</strong>
-                                {{ $mascota['esterilizado'] }}
+                                {{ $mascota['esterilizado'] ? "Si" : "No" }}
 
                             </div>
                             <div class="form-group">
@@ -70,9 +70,22 @@
                                 {{ $mascota['clientes'][0]['nombres'] }} {{ $mascota['clientes'][0]['apellidos'] }}
 
                             </div>
+
+                            <form method="POST" action="{{ route('mascotas.update', $mascota['id']) }}" role="form"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    {{ Form::label('Dejanos tu número de teléfono') }}
+                                    {{ Form::text('telefono', '', ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Teléfono']) }}
+
+                                    <input type="hidden" id="latitud" name="latitud">
+                                    <input type="hidden" id="longitud" name="longitud">
+                                    <input type="hidden" id="mascotaId" name="mascotaId" value="{{$mascota['id']}}">
+                                </div>
                             <div class="form-group">
-                                    <button class="btn btn-lg btn-danger">REPORTAR MASCOTA PERDIDA</button>
+                                <button type="submit" class="btn btn-lg btn-danger">REPORTAR MASCOTA PERDIDA</button>
                             </div>
+                            </form>
                             <div class="text-left">
                                 <strong>QR de identificación del paciente</strong> <br/>
                                 {!!QrCode::size(150)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'validarqr/'.'Codigo') !!}
@@ -84,5 +97,27 @@
             </section>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitudInput = document.getElementById("latitud");
+                var longitudInput = document.getElementById("longitud");
+
+                // Obtener las coordenadas con al menos 6 decimales
+                var latitud = position.coords.latitude.toFixed(6);
+                var longitud = position.coords.longitude.toFixed(6);
+
+                // Establecer las coordenadas en los inputs hidden
+                latitudInput.value = latitud;
+                longitudInput.value = longitud;
+            }, function(error) {
+                console.error("Error al obtener la posición:", error);
+            });
+        } else {
+            console.error("Geolocalización no soportada por el navegador.");
+        }
+    });
+</script>
 </body>
 </html>
