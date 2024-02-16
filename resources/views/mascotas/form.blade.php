@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Dueño de la mascota') }}<br>
-                    {{ Form::select('clientes', $clientes, null, ['class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione el cliente']) }}
+                    {{ Form::select('clientes', $clientes, $mascota['clientes'][0]['id'] ?? null, ['class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione el cliente']) }}
                     {!! $errors->first('clientes', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -34,14 +34,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Sexo') }}<br>
-                    {{ Form::select('tipoSex', $tipoSex, null, ['class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el sexo']) }}
+                    {{ Form::select('tipoSex', $tipoSex, $mascota['sexo']['id'] ?? null, ['class' => 'form-control' . ($errors->has('tipoSex') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el sexo']) }}
                     {!! $errors->first('tipoSex', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Especie') }}<br>
-                    {{ Form::select('especies', $especies, null, ['id' => 'especies' , 'class' => 'form-control' . ($errors->has('especies') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar la especie']) }}
+                    {{ Form::select('especies', $especies, $mascota['especie']['id'] ?? null, ['id' => 'especies' , 'class' => 'form-control' . ($errors->has('especies') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar la especie']) }}
                     {!! $errors->first('especies', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('esterilizado', 'Esterilizado') }}<br>
-                    {{ Form::select('esterilizado', ['true' => 'Si', 'false' => 'No'], $mascota['esterilizado'] ?? '', ['class' => 'form-control' . ($errors->has('esterilizado') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona una opción']) }}
+                    {{ Form::select('esterilizado', ['true' => 'Si', 'false' => 'No'], ($mascota['esterilizado'] == true) ? 'true' : 'false', ['class' => 'form-control' . ($errors->has('esterilizado') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona una opción']) }}
                     {!! $errors->first('esterilizado', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -80,14 +80,32 @@
     @endforeach
         razas['{{ $key }}'] = aux;
     @endforeach
+
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("Hola mundo!!!");
+        if(document.getElementById("especies").value){
+            console.log("Adios mundo");
+            var especieId = document.getElementById("especies").value;
+            var selectRaza = document.getElementById('razas');
+            selectRaza.innerHTML = '<option value="">Seleccionar la raza.</option>';
+            razas[especieId].forEach((value, key) => {
+                var option = new Option(value['dato'], value['id']);
+                selectRaza.add(option);
+            });
+            for (var i = 0; i < selectRaza.options.length; i++) {
+                var option = selectRaza.options[i];
+                if (option.value === "{{ $mascota['raza']['id'] ?? null }}") {
+                    option.selected = true;
+                    break;
+                }
+            }
+        }
+    });
     document.getElementById('especies').addEventListener('change', function() {
         var especieId = this.value;
-        console.log(especieId);
         var selectRaza = document.getElementById('razas');
         selectRaza.innerHTML = '<option value="">Seleccionar la raza.</option>';
-        console.log(razas[especieId]);
         razas[especieId].forEach((value, key) => {
-            console.log(value, key);
             var option = new Option(value['dato'], value['id']);
             selectRaza.add(option);
         });
