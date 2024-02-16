@@ -56,7 +56,7 @@
                                         <td>{{ $mascota['fechaNacimiento'] }}</td>
                                         <td>{{ $mascota['sexo']['sexo'] }}</td>
                                         <td>{{ $mascota['especie']['especie'] }} - {{ $mascota['raza']['raza'] }} </td>
-                                        <td>{{ $mascota['esterilizado'] }}</td>
+                                        <td>{{ ($mascota['esterilizado'])?"Si":"No" }}</td>
                                         <td>{{ $mascota['clientes'][0]['nombres']}} {{ $mascota['clientes'][0]['apellidos']}}</td>
                                         <td>
                                             <form action="{{ route('mascotas.destroy', $mascota['id']) }}"
