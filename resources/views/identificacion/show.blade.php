@@ -71,13 +71,12 @@
 
                             </div>
 
-                            <form method="POST" action="{{ route('mascotas.update', $mascota['id']) }}" role="form"
+                            <form method="POST" action="{{ route('identificacion.store',['id' => $mascota['id']]) }}" role="form"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     {{ Form::label('Dejanos tu número de teléfono') }}
                                     {{ Form::text('telefono', '', ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Teléfono']) }}
-
                                     <input type="hidden" id="latitud" name="latitud">
                                     <input type="hidden" id="longitud" name="longitud">
                                     <input type="hidden" id="mascotaId" name="mascotaId" value="{{$mascota['id']}}">
