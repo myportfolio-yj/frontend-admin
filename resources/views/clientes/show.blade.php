@@ -73,7 +73,7 @@
                                             Sexo: {{ $cli['sexo']['sexo'] }}<br>
                                             Especie: {{ $cli['especie']['especie'] }}<br>
                                             Raza: {{ $cli['raza']['raza'] }}<br>
-                                            <?php ( $cli['esterilizado'] == 1 ? "Esterilizado" : "No esterilizado")?><br>
+                                            <?php echo ( $cli['esterilizado'] == 1 ? "Esterilizado" : "No esterilizado")?><br>
                                             {!!QrCode::size(120)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'/identificacion/'.$cli['id']) !!}
                                         </p>
                                     </div>
