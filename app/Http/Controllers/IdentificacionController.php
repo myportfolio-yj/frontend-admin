@@ -36,8 +36,13 @@ class IdentificacionController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        dd($request->all());die();
-        return returnsRedirect(makeRequest('POST', URL_CITAS, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_CREATE, ERROR_CREATE]);
+        makeRequest('POST', 'http://api3.v1.appomsv.com/geolocalizacion', [
+            'idMascota' => $request->input('mascotaId'),
+            'latitud' => $request->input('latitud'),
+            'longitud' => $request->input('longitud'),
+            'telefono' => $request->input('telefono')
+        ]);
+        return redirect()->back();
     }
 
     /*public function validarqr(Request $request)
