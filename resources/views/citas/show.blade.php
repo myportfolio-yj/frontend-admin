@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('template_title')
-    {{ $cliente->name ?? 'Ver Clientes' }}
+    {{ $cita->name ?? 'Ver Cita' }}
 @endsection
 
 @section('content')
@@ -11,44 +11,39 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">Mostrar Cliente</span>
+                            <span class="card-title">Mostrar Cita</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('Clientes') }}"> Volver atras</a>
+                            <a class="btn btn-primary" href="{{ route('Citas') }}"> Volver atras</a>
                         </div>
                     </div>
 
                     <div class="card-body">
 
                         <div class="form-group">
-                            <strong>Tipo de Documento:</strong>
-                            {{ $cliente->n_tipodoc }}
+                            <strong>Fecha de cita / Turno:</strong>
+                            {{ $cita['fecha'] }} - {{ $cita['turno']}}
                         </div>
                         <div class="form-group">
-                            <strong>Documento de identidad:</strong>
-                            {{ $cliente->n_documento }}
+                            <strong>Nombre de la mascota:</strong>
+                            {{ $cita['nombreMascota'] }}
                         </div>
                         <div class="form-group">
-                            <strong>Nombres:</strong>
-                            {{ $cliente->v_nombre }}
+                            <strong>Especie / Raza:</strong>
+                            {{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}
                         </div>
                         <div class="form-group">
-                            <strong>Apellidos:</strong>
-                            {{ $cliente->v_apellido }}
+                            <strong>Tipo de cita:</strong>
+                            {{ $cita['tipoCita'] }}
                         </div>
                         <div class="form-group">
-                            <strong>Correo electronico:</strong>
-                            {{ $cliente->v_correo }}
+                            <strong>Dueño de la mascota:</strong>
+                            {{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }}
                         </div>
                         <div class="form-group">
-                            <strong>Telefono Celular:</strong>
-                            {{ $cliente->v_telefono }}
+                            <strong>Observaciones:</strong>
+                            {{ $cita['observaciones'] }}
                         </div>
-                        <div class="form-group">
-                            <strong>Telefono Fijo:</strong>
-                            {{ $cliente->v_telfijo }}
-                        </div>
-
                     </div>
                 </div>
             </div>

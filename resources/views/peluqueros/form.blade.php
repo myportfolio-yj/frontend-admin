@@ -45,6 +45,7 @@
                     {!! $errors->first('fijo', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
+            <?php if(!isset($peluquero['email'])){ ?>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('email') }}
@@ -52,7 +53,7 @@
                     {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
-
+            <?php } ?>
         </div>
     </div>
     <div class="box-footer mt20">

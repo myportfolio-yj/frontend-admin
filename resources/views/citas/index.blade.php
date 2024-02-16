@@ -67,9 +67,9 @@
                                             @csrf
                                             </form>
                                             <form action="{{ route('citas.destroy', $cita['id']) }}" method="POST">
-                                                <a class="btn btn-sm btn-success"
-                                                   href="{{ route('citas.edit', $cita['id']) }}"><i
-                                                        class="fa fa-fw fa-edit"></i></a>
+                                                <a class="btn btn-sm btn-info"
+                                                   href="{{ route('citas.show', $cita['id']) }}"><i
+                                                        class="fa fa-fw fa-eye"></i></a>
                                                 <button class="btn btn-sm btn-danger"
                                                         type="submit"><i
                                                         class="fa fa-fw fa-trash"></i></button>
