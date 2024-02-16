@@ -33,7 +33,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Celular') }}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fa fa-mobile-alt" aria-hidden="true"></i>
+                            </span>
+                        </div>
                     {{ Form::text('celular', $cliente['celular'] ?? '', ['class' => 'form-control' . ($errors->has('celular') ? ' is-invalid' : ''), 'placeholder' => 'Celular']) }}
+                    </div>
                     {!! $errors->first('celular', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -41,7 +48,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Fijo') }}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fa fa-phone-alt" aria-hidden="true"></i>
+                            </span>
+                        </div>
                     {{ Form::text('fijo', $cliente['fijo'] ?? '', ['class' => 'form-control' . ($errors->has('fijo') ? ' is-invalid' : ''), 'placeholder' => 'Fijo']) }}
+                    </div>
                     {!! $errors->first('fijo', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
