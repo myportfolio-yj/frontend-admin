@@ -45,6 +45,7 @@
                     {!! $errors->first('fijo', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
+            <?php if(!$user['email']){ ?>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Email') }}
@@ -52,6 +53,7 @@
                     {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
+            <?php } ?>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Cod. Veterinario') }}
