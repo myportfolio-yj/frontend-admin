@@ -183,9 +183,12 @@ class CitasController extends Controller
      * @param $id
      * @return Response
      */
-    public function show($id)
+    public function show($id): View|Factory|Application
     {
-        //
+        $response = makeRequest('GET', URL_CITAS . $id);
+        return $response->successful()
+            ? renderView(VIEW_SHOW, [CITA => $response->json()])
+            : dd($response->body());
     }
 
     /**

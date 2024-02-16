@@ -42,6 +42,7 @@ define('URL_TIPOCITA', env('API3') . '/tipocita/');
  const VIEW_INDEX = 'citas.index';
  const VIEW_CREATE = 'citas.create';
  const VIEW_EDIT = 'citas.edit';
+ const VIEW_SHOW = 'citas.show';
 // Routes
  const ROUTE_INDEX = 'Citas';
 // Success
