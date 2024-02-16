@@ -100,7 +100,7 @@ class RazasController extends Controller
     function fieldsRaza($request){
         return [
             'raza' => $request->input('raza'),
-            'idEspecie ' => $request->input('tipoEsp'),
+            'idEspecie' => $request->input('tipoEsp'),
         ];
     }
 
