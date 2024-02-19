@@ -47,7 +47,7 @@
                                             - {{ $peluquero['documento']}}</td>
                                         <td>{{ $peluquero['nombres'] }} {{ $peluquero['apellidos'] }}</td>
                                         <td>{{ $peluquero['celular'] }} - {{ $peluquero['fijo'] }}</td>
-                                        <td>{{ $peluquero['email'] }}</td>
+                                        <td>{{ $peluquero['email'] ?? ''}}</td>
                                         <td>
                                             <form action="{{ route('peluqueros.destroy', $peluquero['id']) }}"
                                                   method="POST">

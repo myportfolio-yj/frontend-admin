@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Tipo de documento') }}<br>
-                    {{ Form::select('tipoDoc', $tipoDoc, null, ['class' => 'form-control custom-select' . ($errors->has('tipoDoc') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de documento']) }}
+                    {{ Form::select('tipoDoc', $tipoDoc, $peluquero['tipoDocumento']['id'] ?? null, ['class' => 'form-control custom-select' . ($errors->has('tipoDoc') ? ' is-invalid' : ''), 'placeholder' => 'Tipo de documento']) }}
                     {!! $errors->first('tipoDoc', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
@@ -67,6 +67,8 @@
                     {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
+            <?php }else{ ?>
+            <input type="hidden" name="email" value="{{$peluquero['email']}}">
             <?php } ?>
         </div>
     </div>

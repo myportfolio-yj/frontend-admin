@@ -13,7 +13,12 @@ class Clientes extends Model
     public $timestamps = true;
     static $rules = [
         'nombres' => 'required',
+        'apellidos' => 'required',
         'email' => 'required',
+    ];
+    static $rulesEdit = [
+        'nombres' => 'required',
+        'apellidos' => 'required',
     ];
     protected $fillable = [
         'n_documento',

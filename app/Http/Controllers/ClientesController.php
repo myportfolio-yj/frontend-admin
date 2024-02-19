@@ -76,7 +76,10 @@ class ClientesController extends Controller
         $response = makeRequest('GET', URL_CLIENTE . $id);
         $response2 = makeRequest('GET', URL_TIPODOCUMENTO);
         return ($response->successful() && $response2->successful())
-            ? renderView(VIEW_EDIT, [CLIENTE => $response->json(), TIPODOC => Arr::pluck($response2->json(), 'tipoDocumento', 'id')])
+            ? renderView(VIEW_EDIT, [
+                CLIENTE => $response->json(),
+                TIPODOC => Arr::pluck($response2->json(), 'tipoDocumento', 'id')
+            ])
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 
@@ -89,7 +92,7 @@ class ClientesController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        request()->validate(Clientes::$rules);
+        request()->validate(Clientes::$rulesEdit);
         return returnsRedirect(makeRequest('PUT', URL_CLIENTE . $id, fieldsClienteUpdate($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 

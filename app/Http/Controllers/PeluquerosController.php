@@ -74,7 +74,10 @@ class PeluquerosController extends Controller
         $response = makeRequest('GET', URL_PELUQUERO . $id);
         $response2 = makeRequest('GET', URL_TIPODOCUMENTO);
         return ($response->successful() && $response2->successful())
-            ? renderView(VIEW_EDIT, [PELUQUERO => $response->json(), TIPODOC => Arr::pluck($response2->json(), TIPODOCUMENTO, ID)])
+            ? renderView(VIEW_EDIT, [
+                PELUQUERO => $response->json(),
+                TIPODOC => Arr::pluck($response2->json(), TIPODOCUMENTO, ID)
+            ])
             : redireccionamiento([ROUTE_INDEX, ERROR, ERROR_UPDATE]);
     }
 
@@ -87,7 +90,7 @@ class PeluquerosController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        request()->validate(Peluqueros::$rules);
+        request()->validate(Peluqueros::$rulesEdit);
         return returnsRedirect(makeRequest('PUT', URL_PELUQUERO . $id, fieldsPeluqueroUpdate($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 
