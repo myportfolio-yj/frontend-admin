@@ -15,7 +15,6 @@ class ProcedimientosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*ORIGINAL
     public function index()
     {
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento');
@@ -27,8 +26,8 @@ class ProcedimientosController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }*/
-    public function index()
+    }
+    /*public function index()
     {
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento');
 
@@ -52,7 +51,7 @@ class ProcedimientosController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }
+    }*/
 
     /**
      * Show the form for creating a new resource.

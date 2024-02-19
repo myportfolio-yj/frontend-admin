@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-
-@section('template_title')
-    Procedimientos
-@endsection
-
 @section('content')
+    <style>
+        .table-responsive {
+            height: 550px;       /* Just for the demo          */
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -32,7 +32,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-sm table-striped table-hover">
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
@@ -49,8 +49,7 @@
 
                                         <td>{{ $procedimiento['procedimiento'] }}</td>
                                         <td>{{ $procedimiento['descripcion'] ?? '' }}</td>
-
-                                        <td>
+                                        <td width="100px">
                                             <form action="{{ route('procedimientos.destroy', $procedimiento['id'] ) }}"
                                                   method="POST">
                                                 <a class="btn btn-sm btn-success"
@@ -67,36 +66,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="float-right">
-                                @if ($procedimientos->links())
-                                    <nav>
-                                        <ul class="pagination">
-                                            {{-- Previous Page Link --}}
-                                            @if ($procedimientos->onFirstPage())
-                                                <li class="page-item disabled" aria-disabled="true">
-                                                    <span class="page-link">@lang('pagination.previous')</span>
-                                                </li>
-                                            @else
-                                                <li class="page-item">
-                                                    <a class="page-link" href="{{ $procedimientos->previousPageUrl() }}"
-                                                       rel="prev">@lang('pagination.previous')</a>
-                                                </li>
-                                            @endif
-
-                                            {{-- Next Page Link --}}
-                                            @if ($procedimientos->hasMorePages())
-                                                <li class="page-item">
-                                                    <a class="page-link" href="{{ $procedimientos->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
-                                                </li>
-                                            @else
-                                                <li class="page-item disabled" aria-disabled="true">
-                                                    <span class="page-link">@lang('pagination.next')</span>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </nav>
-                                @endif
-                            </div>
                         </div>
                     </div>
                 </div>

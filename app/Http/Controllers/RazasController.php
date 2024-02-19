@@ -25,8 +25,7 @@ class RazasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*ORIGINAL
-     * public function index()
+    public function index()
     {
         $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza');
         if ($response->successful()) {
@@ -38,8 +37,8 @@ class RazasController extends Controller
             return dd($error);
         }
 
-    }*/
-    public function index()
+    }
+    /*public function index()
     {
         $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza');
 
@@ -63,7 +62,7 @@ class RazasController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }
+    }*/
     /**
      * Show the form for creating a new resource.
      *

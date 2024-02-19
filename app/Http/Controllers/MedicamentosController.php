@@ -16,7 +16,6 @@ class MedicamentosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*ORIGINAL
     public function index()
     {
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento');
@@ -28,8 +27,8 @@ class MedicamentosController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }*/
-    public function index()
+    }
+    /*public function index()
     {
         $response = Http::get('https://clinicas-vet-fefebe4de883.herokuapp.com/medicamento');
         if ($response->successful()) {
@@ -52,7 +51,7 @@ class MedicamentosController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }
+    }*/
 
     /**
      * Show the form for creating a new resource.

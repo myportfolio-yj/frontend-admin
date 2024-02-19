@@ -16,7 +16,7 @@ class VacunasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*public function index()
+    public function index()
     {
         $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna');
         if ($response->successful()) {
@@ -27,8 +27,8 @@ class VacunasController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }*/
-    public function index()
+    }
+    /*public function index()
     {
         $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna');
 
@@ -52,7 +52,7 @@ class VacunasController extends Controller
             $error = $response->body();
             return dd($error);
         }
-    }
+    }*/
     /**
      * Show the form for creating a new resource.
      *

@@ -22,15 +22,14 @@ class DiagnosticosController extends Controller
      *
      * @return Application|Factory|View
      */
-    /*ORIGINAL
     public function index(): View|Factory|Application
     {
         $response = makeRequest('GET', API_URL);
         return $response->successful()
             ? renderView(VIEW_INDEX, [DIAGNOSTICOS => $response->json()])
             : dd($response->body());
-    }*/
-    public function index(Request $request): View|Factory|Application
+    }
+    /*public function index(Request $request): View|Factory|Application
     {
         $response = makeRequest('GET', API_URL);
 
@@ -60,7 +59,7 @@ class DiagnosticosController extends Controller
         } else {
             return dd($response->body());
         }
-    }
+    }*/
     /**
      * Show the form for creating a new resource.
      *

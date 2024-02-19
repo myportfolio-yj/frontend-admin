@@ -1,5 +1,10 @@
 @extends('adminlte::page')
 @section('content')
+    <style>
+        .table-responsive {
+            height: 550px;       /* Just for the demo          */
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -26,7 +31,7 @@
                     @endif
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table class="table table-sm table-striped table-hover">
                                 <thead class="thead">
                                 <tr>
                                     <th>#</th>
@@ -42,7 +47,7 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $raza['especie']['especie']}}</td>
                                         <td>{{ $raza['raza'] }}</td>
-                                        <td>
+                                        <td width="100px">
                                             <form action="{{ route('razas.destroy', $raza['id']) }}" method="POST">
                                                 <a class="btn btn-sm btn-success"
                                                    href="{{ route('razas.edit', $raza['id']) }}"><i
@@ -58,36 +63,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="float-right">
-                                @if ($razas->links())
-                                    <nav>
-                                        <ul class="pagination">
-                                            {{-- Previous Page Link --}}
-                                            @if ($razas->onFirstPage())
-                                                <li class="page-item disabled" aria-disabled="true">
-                                                    <span class="page-link">@lang('pagination.previous')</span>
-                                                </li>
-                                            @else
-                                                <li class="page-item">
-                                                    <a class="page-link" href="{{ $razas->previousPageUrl() }}"
-                                                       rel="prev">@lang('pagination.previous')</a>
-                                                </li>
-                                            @endif
-
-                                            {{-- Next Page Link --}}
-                                            @if ($razas->hasMorePages())
-                                                <li class="page-item">
-                                                    <a class="page-link" href="{{ $razas->nextPageUrl() }}" rel="next">@lang('pagination.next')</a>
-                                                </li>
-                                            @else
-                                                <li class="page-item disabled" aria-disabled="true">
-                                                    <span class="page-link">@lang('pagination.next')</span>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </nav>
-                                @endif
-                            </div>
                         </div>
                     </div>
                 </div>
