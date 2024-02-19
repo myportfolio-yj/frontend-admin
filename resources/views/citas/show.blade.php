@@ -19,31 +19,59 @@
                     </div>
 
                     <div class="card-body">
-
+                        <h5>Datos de la cita:</h5>
+                        <div class="form-group">
+                            <strong>Tipo de cita:</strong>
+                            {{ $cita['tipoCita'] }}
+                        </div>
+                        <div class="form-group">
+                            <?php if( $cita['idTipoCita'] == '6587bd8a28e28300c3fd3f55'){?>
+                            <strong>Atenciones:</strong>
+                            <?php $atencionesPeluqueria = $cita['atencionesPeluqueria'];
+                            foreach ( $atencionesPeluqueria as $atenciones ) {?>
+                            <span class="badge badge-info">{{ $atenciones }}</span>
+                            <?php } } ?>
+                        </div>
                         <div class="form-group">
                             <strong>Fecha de cita / Turno:</strong>
                             {{ $cita['fecha'] }} - {{ $cita['turno']}}
                         </div>
                         <div class="form-group">
+                            <strong>Observaciones:</strong>
+                            {{ $cita['observaciones'] ?? 'Sin observaciones'}}
+                        </div><br>
+                        <h5>Datos de la mascota:</h5>
+                        <div class="form-group">
                             <strong>Nombre de la mascota:</strong>
-                            {{ $cita['nombreMascota'] }}
+                            {{ $cita['mascota']['nombre'] }} {{ $cita['mascota']['apellido']  }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha de nacimiento:</strong>
+                            {{ $cita['mascota']['fechaNacimiento'] }}
                         </div>
                         <div class="form-group">
                             <strong>Especie / Raza:</strong>
                             {{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}
                         </div>
                         <div class="form-group">
-                            <strong>Tipo de cita:</strong>
-                            {{ $cita['tipoCita'] }}
+                            <strong>Esterilizado:</strong>
+                            {{ ($cita['mascota']['esterilizado'])?"Si":"No"}}
                         </div>
+                        <br>
+                        <h5>Datos del dueño:</h5>
                         <div class="form-group">
                             <strong>Dueño de la mascota:</strong>
-                            {{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }}
+                            {{ $cita['cliente']['tipoDocumento']['tipoDocumento'] }} {{ $cita['cliente']['documento'] }} - {{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }}
                         </div>
                         <div class="form-group">
-                            <strong>Observaciones:</strong>
-                            {{ $cita['observaciones'] }}
+                            <strong>Numero de telefono:</strong>
+                            {{ $cita['cliente']['celular'] }} {{ $cita['cliente']['fijo'] }}
                         </div>
+                        <div class="form-group">
+                            <strong>Correo electronico:</strong>
+                            {{ $cita['cliente']['email'] }}
+                        </div>
+
                     </div>
                 </div>
             </div>
