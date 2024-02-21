@@ -41,58 +41,61 @@
                         <div class="card">
                         <div class="card-body">
                             <div class="form-group">
+                                <div align="center">
+                                    {!!QrCode::size(50)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'/identificacion/'.$mascota['id']) !!}
+                                </div>
                                 <strong>Nro de Identificación:</strong>
                                 {{ $mascota['codIdentificacion'] }}
-
                             </div>
                             <div class="form-group">
                                 <strong>Nombre completo de la mascota:</strong>
                                 {{ $mascota['nombre'] }} {{ $mascota['apellido'] }}
-
                             </div>
                             <div class="form-group">
                                 <strong>Fecha de nacimiento de la mascota:</strong>
                                 {{ $mascota['fechaNacimiento'] }}
-
                             </div>
                             <div class="form-group">
                                 <strong>Sexo:</strong>
                                 {{ $mascota['sexo']['sexo'] }}
-
                             </div>
                             <div class="form-group">
                                 <strong>Especie - Raza:</strong>
                                 {{ $mascota['especie']['especie'] }} - {{ $mascota['raza']['raza'] }}
-
                             </div>
                             <div class="form-group">
                                 <strong>Esterilizado:</strong>
                                 {{ $mascota['esterilizado'] ? "Si" : "No" }}
-
                             </div>
                             <div class="form-group">
                                 <strong>Dueño de la mascota:</strong>
                                 {{ $mascota['clientes'][0]['nombres'] }} {{ $mascota['clientes'][0]['apellidos'] }}
-
                             </div>
-
                             <form method="POST" action="{{ route('identificacion.store',['id' => $mascota['id']]) }}" role="form"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     {{ Form::label('Dejanos tu número de teléfono') }}
-                                    {{ Form::text('telefono', '', ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Teléfono']) }}
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="fa fa-mobile-alt" aria-hidden="true"></i>
+                                        </span>
+                                        </div>
+                                    {{ Form::text('telefono', '', ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Teléfono', 'maxlength' => '9', 'pattern' => '[0-9]{9}']) }}
+                                    </div>
+                                    {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
+
                                     <input type="hidden" id="latitud" name="latitud">
                                     <input type="hidden" id="longitud" name="longitud">
                                     <input type="hidden" id="mascotaId" name="mascotaId" value="{{$mascota['id']}}">
                                 </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-danger">REPORTAR MASCOTA PERDIDA</button>
+                            <div align="center" class="form-group">
+                                <button  type="submit" class="btn btn-lg btn-danger">REPORTAR MASCOTA PERDIDA</button>
                             </div>
                             </form>
-                            <div class="text-left">
-                                <strong>QR de identificación del paciente</strong> <br/>
-                                {!!QrCode::size(150)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'/identificacion/'.$mascota['id']) !!}
+                            <div class="alert alert-warning">
+                                <strong>Atención!</strong> Por favor habilitar la ubicación.
                             </div>
                         </div>
                         </div>

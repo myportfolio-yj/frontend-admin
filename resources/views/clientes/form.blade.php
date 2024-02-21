@@ -39,7 +39,7 @@
                                 <i class="fa fa-mobile-alt" aria-hidden="true"></i>
                             </span>
                         </div>
-                    {{ Form::text('celular', $cliente['celular'] ?? '', ['class' => 'form-control' . ($errors->has('celular') ? ' is-invalid' : ''), 'placeholder' => 'Celular']) }}
+                    {{ Form::text('celular', $cliente['celular'] ?? '', ['class' => 'form-control' . ($errors->has('celular') ? ' is-invalid' : ''), 'placeholder' => 'Celular', 'maxlength' => '9', 'pattern' => '[0-9]{9}']) }}
                     </div>
                     {!! $errors->first('celular', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
@@ -54,7 +54,7 @@
                                 <i class="fa fa-phone-alt" aria-hidden="true"></i>
                             </span>
                         </div>
-                    {{ Form::text('fijo', $cliente['fijo'] ?? '', ['class' => 'form-control' . ($errors->has('fijo') ? ' is-invalid' : ''), 'placeholder' => 'Fijo']) }}
+                    {{ Form::text('fijo', $cliente['fijo'] ?? '', ['class' => 'form-control' . ($errors->has('fijo') ? ' is-invalid' : ''), 'placeholder' => 'Fijo', 'maxlength' => '9', 'pattern' => '[0-9]{9}']) }}
                     </div>
                     {!! $errors->first('fijo', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
