@@ -1,5 +1,10 @@
 @extends('adminlte::page')
 @section('content')
+    <style>
+        .card-img-top{
+            width:60px;
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -44,14 +49,23 @@
                                             - {{ $geolocalizacion['mascota']['raza']['raza'] }} </td>
                                         <td>{{ $geolocalizacion['telefono'] }}</td>
                                         <td>{{ $geolocalizacion['fecha'] }} - {{ $geolocalizacion['hora'] }}</td>
+                                        <?php if( $geolocalizacion['url'] == 'https://maps.google.com/?q=null,null'){?>
+                                        <td>
+                                                <button class="btn btn-sm btn-light" disabled>
+                                                    Sin ubicación
+                                                </button>
+                                        </td>
+                                        <?php } else {?>
                                         <td>
                                             <form action="" method="POST">
-                                                <a class="btn btn-sm btn-primary" target="_blank"
-                                                   href="{{ $geolocalizacion['url'] }}"><i
-                                                        class="fa fa-fw fa-map-marker"></i></a>
+                                                <a class="btn btn-sm btn-light" target="_blank"
+                                                   href="{{ $geolocalizacion['url'] }}">
+                                                    <img src="{{URL::asset('/image/maps.jpg')}}" class="card-img-top" alt="Ubicación">
+                                                </a>
                                                 @csrf
                                             </form>
                                         </td>
+                                        <?php }?>
                                     </tr>
                                 @endforeach
                                 </tbody>
