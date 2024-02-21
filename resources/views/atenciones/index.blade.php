@@ -7,6 +7,12 @@
         .table-responsive {
             height: 550px;       /* Just for the demo          */
         }
+        .btn-purple{
+            color: #fff;
+            background-color: #AC3B93;
+            border-color: #AC3B93;
+            box-shadow: none;
+        }
     </style>
     <div class="container-fluid">
         <div class="row">
@@ -45,6 +51,7 @@
                                 <tbody>
                                 <?php $i = 0; ?>
                                 @foreach ($atenciones as $atencion)
+                                    <?php if($atencion['idTipoCita'] == '6587bd5b28e28300c3fd3f54') {?>
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $atencion['fecha'] }} - {{ $atencion['turno']}}</td>
@@ -55,39 +62,49 @@
                                         <td>
                                             @if( isset($atencion['mascota']['alergias']) && count($atencion['mascota']['alergias']) > 0 )
                                                 Si
+                                                <br>
+                                                <a class="btn btn-sm btn-purple"
+                                                   href="{{ route('pacienteHasAlergias.create', ['id' => $atencion['mascota']['id']]) }}">
+                                                    <i class="fa fa-fw fa-eye"></i>
+                                                </a>
                                             @else
                                                 No
-                                            @endif
                                                 <br>
                                                 <a class="btn btn-sm btn-secondary "
-                                               href="{{ route('pacienteHasAlergias.create', ['id' => $atencion['mascota']['id']]) }}">
-                                                <i class="fa fa-fw fa-eye"></i>
-                                            </a>
+                                                   href="{{ route('pacienteHasAlergias.create', ['id' => $atencion['mascota']['id']]) }}">
+                                                    <i class="fa fa-fw fa-eye"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @if( isset($atencion['mascota']['vacunas']) && count($atencion['mascota']['vacunas']) > 0 )
                                                 Si
+                                                <br>
+                                                <a class="btn btn-sm btn-purple "
+                                                   href="{{ route('pacienteHasVacunas.create', ['id' => $atencion['mascota']['id']]) }}">
+                                                    <i class="fa fa-fw fa-eye"></i>
+                                                </a>
                                             @else
                                                 No
+                                                <br>
+                                                <a class="btn btn-sm btn-secondary "
+                                                   href="{{ route('pacienteHasVacunas.create', ['id' => $atencion['mascota']['id']]) }}">
+                                                    <i class="fa fa-fw fa-eye"></i>
+                                                </a>
                                             @endif
-                                            <br>
-                                            <a class="btn btn-sm btn-secondary "
-                                               href="{{ route('pacienteHasVacunas.create', ['id' => $atencion['mascota']['id']]) }}">
-                                                <i class="fa fa-fw fa-eye"></i>
-                                            </a>
                                         </td>
                                         <td>
                                             @if( isset($atencion['idAtencion']) )
                                                 Si
                                                 <br>
-                                                <a class="btn btn-sm btn-info "
+                                                <a class="btn btn-sm btn-purple "
                                                    href="{{ route('historias.edit', ['historia' => $atencion['idAtencion']]) }}">
                                                     <i class="fa fa-fw fa-edit"></i>
                                                 </a>
                                             @else
                                                 No
                                                 <br>
-                                                <a class="btn btn-sm btn-success "
+                                                <a class="btn btn-sm btn-secondary "
                                                    href="{{ route('historias.create', ['id' => $atencion['id']]) }}">
                                                     <i class="fa fa-fw fa-book-medical"></i>
                                                 </a>
@@ -98,16 +115,22 @@
                                         <td>
                                             @if( !isset($atencion['recetas']) )
                                                 No
-                                            @else
-                                                Si
-                                            @endif
                                                 <br>
-                                                <a class="btn btn-sm btn-info "
+                                                <a class="btn btn-sm btn-secondary "
                                                    href="{{ route('recetas.create', ['id' => $atencion['id']]) }}">
                                                     <i class="fa fa-fw fa-prescription"></i>
                                                 </a>
+                                            @else
+                                                Si
+                                                <br>
+                                                <a class="btn btn-sm btn-purple "
+                                                   href="{{ route('recetas.create', ['id' => $atencion['id']]) }}">
+                                                    <i class="fa fa-fw fa-prescription"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
+                                    <?php } ?>
                                 @endforeach
                                 </tbody>
                             </table>

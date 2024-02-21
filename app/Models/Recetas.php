@@ -11,7 +11,12 @@ class Recetas extends Model
 
     protected $table = 'qrv_recetas';
     public $timestamps = true;
-
+    static $rules = [
+        'n_medica' => 'required',
+        'v_dosis' => 'required',
+        'n_cantidad' => 'required',
+        'v_indicaciones' => 'required',
+    ];
     public function atencion()
     {
         return $this->belongsTo(Atenciones::class, 'n_atencion', 'id');

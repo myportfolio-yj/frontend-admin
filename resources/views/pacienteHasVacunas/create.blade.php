@@ -23,6 +23,7 @@
                                     <th>#</th>
                                     <th>Fecha de aplicación</th>
                                     <th>Vacuna</th>
+                                    <th>Duración</th>
                                     <th>Proxima aplicación</th>
                                 </tr>
                                 </thead>
@@ -30,7 +31,6 @@
                                 <?php $i = 0; ?>
                                 @foreach ($pacienteHasVacunas as $pacienteHasVacuna)
                                         <?php
-                                        // $nueva_fecha = date('d-m-Y', strtotime($pacienteHasVacuna['fecha']  . ' +'.$pacienteHasVacuna['duracion'].' days'));
                                         $fechaFormatoCorrecto = DateTime::createFromFormat('d/m/Y', $pacienteHasVacuna['fecha'])->format('Y-m-d');
                                         $nueva_fecha = date('d-m-Y', strtotime($fechaFormatoCorrecto . ' +' . $pacienteHasVacuna['duracion'] . ' days'));
                                         ?>
@@ -38,6 +38,7 @@
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $pacienteHasVacuna['fecha'] }}</td>
                                         <td>{{ $pacienteHasVacuna['vacuna'] }}</td>
+                                        <td>{{ $pacienteHasVacuna['duracion'] }} dias</td>
                                         <td>{{ $nueva_fecha }}</td>
                                     </tr>
                                 @endforeach

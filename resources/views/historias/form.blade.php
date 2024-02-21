@@ -12,28 +12,56 @@
             <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('Peso del paciente') }}
-                    {{ Form::text('n_peso', $historia->n_peso, ['class' => 'form-control' . ($errors->has('n_peso') ? ' is-invalid' : ''), 'placeholder' => 'Peso del paciente']) }}
+                    <div class="input-group mb-3">
+                        {{ Form::text('n_peso', $historia->n_peso, ['class' => 'form-control' . ($errors->has('n_peso') ? ' is-invalid' : ''), 'placeholder' => 'Max: 999.9', 'maxlength' => '5', 'pattern' => '^\d{1,3}(\.\d)?$']) }}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                kg
+                            </span>
+                        </div>
+                    </div>
                     {!! $errors->first('n_peso', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('Temperatura del paciente') }}
-                    {{ Form::text('n_temp', $historia->n_temp, ['class' => 'form-control' . ($errors->has('n_temp') ? ' is-invalid' : ''), 'placeholder' => 'Temperatura del paciente']) }}
+                    <div class="input-group mb-3">
+                    {{ Form::text('n_temp', $historia->n_temp, ['class' => 'form-control' . ($errors->has('n_temp') ? ' is-invalid' : ''), 'placeholder' => 'Max:99.9', 'maxlength' => '4', 'pattern' => '^\d{1,2}(\.\d)?$']) }}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                °C
+                            </span>
+                        </div>
+                    </div>
                     {!! $errors->first('n_temp', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('Frecuencia respiratoria del paciente') }}
-                    {{ Form::text('n_frecresp', $historia->n_frecresp, ['class' => 'form-control' . ($errors->has('n_frecresp') ? ' is-invalid' : ''), 'placeholder' => 'Frecuencia Respiratoria del paciente']) }}
+                    <div class="input-group mb-3">
+                    {{ Form::text('n_frecresp', $historia->n_frecresp, ['class' => 'form-control' . ($errors->has('n_frecresp') ? ' is-invalid' : ''), 'placeholder' => 'Max:99','maxlength' => '2']) }}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                FR
+                            </span>
+                        </div>
+                    </div>
                     {!! $errors->first('n_frecresp', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('Frecuencia cardiaca del paciente') }}
-                    {{ Form::text('n_freccard', $historia->n_freccard, ['class' => 'form-control' . ($errors->has('n_freccard') ? ' is-invalid' : ''), 'placeholder' => 'Frecuencia Cardiaca del paciente']) }}
+                    <div class="input-group mb-3">
+                    {{ Form::text('n_freccard', $historia->n_freccard, ['class' => 'form-control' . ($errors->has('n_freccard') ? ' is-invalid' : ''), 'placeholder' => 'Max:999','maxlength' => '3']) }}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                FC
+                            </span>
+                        </div>
+                    </div>
                     {!! $errors->first('n_freccard', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>

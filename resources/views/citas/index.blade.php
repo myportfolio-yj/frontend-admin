@@ -37,9 +37,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Fecha de cita / Turno</th>
+                                    <th>Tipo de cita</th>
                                     <th>Nombre de la mascota</th>
                                     <th>Especie / Raza</th>
-                                    <th>Tipo de cita</th>
                                     <th>Dueño de la mascota</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -50,9 +50,9 @@
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
-                                        <td>{{ $cita['nombreMascota'] }}</td>
-                                        <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
                                         <td>{{ $cita['tipoCita'] }} </td>
+                                        <td>{{ $cita['mascota']['nombre'] }} {{ $cita['mascota']['apellido'] }}</td>
+                                        <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
                                         <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
                                             <form action=@if($cita['tipoCita'] == 'Cita Veterinaria')
@@ -98,9 +98,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Fecha de cita / Turno</th>
+                                    <th>Tipo de cita</th>
                                     <th>Nombre de la mascota</th>
                                     <th>Especie / Raza</th>
-                                    <th>Tipo de cita</th>
                                     <th>Dueño de la mascota</th>
                                 </tr>
                                 </thead>
@@ -110,9 +110,9 @@
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
-                                        <td>{{ $cita['nombreMascota'] }}</td>
-                                        <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
                                         <td>{{ $cita['tipoCita'] }} </td>
+                                        <td>{{ $cita['mascota']['nombre'] }} {{ $cita['mascota']['apellido'] }}</td>
+                                        <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
                                         <td>{{ $cita['cliente']['nombres'] }} {{ $cita['cliente']['apellidos'] }} </td>
                                         <td>
                                         </td>

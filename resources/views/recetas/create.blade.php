@@ -49,7 +49,7 @@
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $rs['medicamento']['medicamento'] }}</td>
-                                        <td>{{ $rs['dosis'] }}</td>
+                                        <td>{{ $rs['dosis'] ?? ''}}</td>
                                         <td>{{ $rs['cantidad'] }}</td>
                                         <td>{{ $rs['indicaciones'] ?? ''}}</td>
                                     </tr>

@@ -59,6 +59,7 @@ class RecetasController extends Controller
      */
     public function store(Request $request)
     {
+        request()->validate(Recetas::$rules);
         $response = Http::post('http://api3.v1.appomsv.com/receta', [
             'idCita' => $request->input('n_atencion'),
             'idMedicamento' => $request->input('n_medica'),
