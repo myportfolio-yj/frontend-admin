@@ -87,7 +87,7 @@
                             </form>
                             <div class="text-left">
                                 <strong>QR de identificación del paciente</strong> <br/>
-                                {!!QrCode::size(150)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'/identificacion/'.$cli['id']) !!}
+                                {!!QrCode::size(150)->generate( env('APP_URL', 'http://localhost/qrvet/public/').'/identificacion/'.$mascota['id']) !!}
                             </div>
                         </div>
                         </div>
