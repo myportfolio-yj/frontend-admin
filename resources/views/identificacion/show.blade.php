@@ -30,6 +30,11 @@
                      height="80">
             </a>
         </div>
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
             <section class="content container-fluid">
                 <div class="row">
                     <div class="col-md-12">

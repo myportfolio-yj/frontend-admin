@@ -14,7 +14,7 @@ define('API_URL', env('API2') . '/raza/');
 // Routes
 const ROUTE_INDEX = 'Razas';
 // Success
-const SUCCESS_CREATE = 'Alergia creada satisfactoriamente.';
+const SUCCESS_CREATE = 'Alergia creada con exito.';
 // Error
 const ERROR_CREATE = 'No se puedo crear la alergia.';
 
@@ -38,31 +38,7 @@ class RazasController extends Controller
         }
 
     }
-    /*public function index()
-    {
-        $response = Http::get('https://mascota-vet-933796c48a6c.herokuapp.com/raza');
 
-        if ($response->successful()) {
-            $razas = $response->json();
-
-            // Crear una instancia de Paginator manualmente
-            $page = Paginator::resolveCurrentPage() ?: 1;
-            $perPage = 10; // El número de elementos por página
-            $items = collect($razas);
-            $total = $items->count();
-            $slice = $items->slice(($page - 1) * $perPage, $perPage);
-            $razasPaginadas = new LengthAwarePaginator($slice, $total, $perPage, $page, [
-                'path' => Paginator::resolveCurrentPath(),
-                'pageName' => 'page',
-            ]);
-
-            return view('razas.index')->with('razas', $razasPaginadas);
-        } else {
-            // Manejar error
-            $error = $response->body();
-            return dd($error);
-        }
-    }*/
     /**
      * Show the form for creating a new resource.
      *
@@ -153,7 +129,7 @@ class RazasController extends Controller
         if ($response->successful()) {
             $datos = $response->json();
             return redirect()->route('razas')
-                ->with('success', 'Raza actualizada satisfactoriamente');
+                ->with('success', 'Raza actualizada con exito.');
         } else {
             // Manejar error
             $error = $response->body();
@@ -172,7 +148,7 @@ class RazasController extends Controller
         $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com/raza/' . $id);
         if ($response->successful()) {
             return redirect()->route('razas')
-                ->with('success', 'Raza eliminada satisfactoriamente');
+                ->with('success', 'Raza eliminada con exito.');
         } else {
             // Manejar error
             $error = $response->body();

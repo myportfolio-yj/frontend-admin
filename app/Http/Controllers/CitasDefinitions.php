@@ -47,9 +47,9 @@ define('URL_TIPOCITA', env('API3') . '/tipocita/');
  const ROUTE_INDEX = 'Citas';
 // Success
 const SUCCESS_CHECKIN = 'El checkin fue correcto';
-const SUCCESS_CREATE = 'Cita creada satisfactoriamente.';
-const SUCCESS_UPDATE = 'Cita actualizada satisfactoriamente.';
-const SUCCESS_DELETE = 'Cita eliminada satisfactoriamente.';
+const SUCCESS_CREATE = 'Cita creada con exito.';
+const SUCCESS_UPDATE = 'Cita actualizada con exito.';
+const SUCCESS_DELETE = 'Cita eliminada con exito.';
 // Error
 const ERROR_CHECKIN = 'Se presentó un problema. Intente más tarde.';
 const ERROR_CREATE = 'No se puedo crear la cita.';

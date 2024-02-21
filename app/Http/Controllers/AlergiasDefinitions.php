@@ -16,9 +16,9 @@ const VIEW_EDIT = 'alergias.edit';
 const ROUTE_INDEX = 'Alergias';
 
 // Success
-const SUCCESS_CREATE = 'Alergia creada satisfactoriamente.';
-const SUCCESS_UPDATE = 'Alergia actualizada satisfactoriamente.';
-const SUCCESS_DELETE = 'Alergia eliminada satisfactoriamente.';
+const SUCCESS_CREATE = 'Alergia creada con exito.';
+const SUCCESS_UPDATE = 'Alergia actualizada con exito.';
+const SUCCESS_DELETE = 'Alergia eliminada con exito.';
 
 // Error
 const ERROR_CREATE = 'No se puedo crear la alergia.';

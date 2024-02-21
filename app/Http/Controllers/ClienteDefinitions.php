@@ -18,9 +18,9 @@ const VIEW_EDIT = 'clientes.edit';
 // Routes
 const ROUTE_INDEX = 'Clientes';
 // Success
-const SUCCESS_CREATE = 'Cliente creado satisfactoriamente.';
-const SUCCESS_UPDATE = 'Cliente actualizado satisfactoriamente.';
-const SUCCESS_DELETE = 'Cliente eliminado satisfactoriamente.';
+const SUCCESS_CREATE = 'Cliente creado con exito.';
+const SUCCESS_UPDATE = 'Cliente actualizado con exito.';
+const SUCCESS_DELETE = 'Cliente eliminado con exito.';
 
 // Error
 const ERROR_CREATE = 'No se puedo crear el cliente.';

@@ -68,7 +68,7 @@ class PacientesController extends Controller
         $paciente = Mascotas::create($request->all());
 
         return redirect()->route('pacientes')
-            ->with('success', 'Paciente creado satisfactoriamente.');
+            ->with('success', 'Paciente creado con exito.');
     }
 
     /**
@@ -111,7 +111,7 @@ class PacientesController extends Controller
         $paciente = Mascotas::find($id);
         $paciente->update($request->all());
         return redirect()->route('pacientes')
-            ->with('success', 'Cliente actualizado satisfactoriamente');
+            ->with('success', 'Cliente actualizado con exito.');
     }
 
     /**

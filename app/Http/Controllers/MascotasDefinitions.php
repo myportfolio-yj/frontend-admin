@@ -26,9 +26,9 @@ const VIEW_EDIT = 'mascotas.edit';
 const ROUTE_INDEX = 'Mascotas';
 
 // Success
-const SUCCESS_CREATE = 'Mascota creada satisfactoriamente.';
-const SUCCESS_UPDATE = 'Mascota actualizada satisfactoriamente.';
-const SUCCESS_DELETE = 'Mascota eliminada satisfactoriamente.';
+const SUCCESS_CREATE = 'Mascota creada con exito.';
+const SUCCESS_UPDATE = 'Mascota actualizada con exito.';
+const SUCCESS_DELETE = 'Mascota eliminada con exito.';
 
 // Error
 const ERROR_CREATE = 'No se pudo crear la mascota.';

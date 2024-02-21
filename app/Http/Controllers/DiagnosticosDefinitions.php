@@ -17,9 +17,9 @@ const VIEW_EDIT = 'diagnosticos.edit';
 const ROUTE_INDEX = 'Diagnosticos';
 
 // Success
-const SUCCESS_CREATE = 'Diagnostico creado satisfactoriamente.';
-const SUCCESS_UPDATE = 'Diagnostico actualizado satisfactoriamente.';
-const SUCCESS_DELETE = 'Diagnostico eliminado satisfactoriamente.';
+const SUCCESS_CREATE = 'Diagnostico creado con exito.';
+const SUCCESS_UPDATE = 'Diagnostico actualizado con exito.';
+const SUCCESS_DELETE = 'Diagnostico eliminado con exito.';
 
 // Error
 const ERROR_CREATE = 'No se pudo crear el diagnostico.';

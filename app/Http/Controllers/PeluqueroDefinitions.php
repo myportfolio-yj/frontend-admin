@@ -17,9 +17,9 @@ const VIEW_EDIT = 'peluqueros.edit';
 // Routes
 const ROUTE_INDEX = 'Peluqueros';
 // Success
-const SUCCESS_CREATE = 'Peluquero creado satisfactoriamente.';
-const SUCCESS_UPDATE = 'Peluquero actualizado satisfactoriamente.';
-const SUCCESS_DELETE = 'Peluquero eliminado satisfactoriamente.';
+const SUCCESS_CREATE = 'Peluquero creado con exito.';
+const SUCCESS_UPDATE = 'Peluquero actualizado con exito.';
+const SUCCESS_DELETE = 'Peluquero eliminado con exito.';
 // Error
 const ERROR_CHECKIN = 'Se presentó un problema. Intente más tarde.';
 const ERROR_CREATE = 'No se pudo crear el peluquero.';

@@ -44,9 +44,9 @@ const VIEW_EDIT = 'historias.edit';
 const ROUTE_INDEX = 'Atenciones';
 
 // Success
-const SUCCESS_CREATE = 'Historia creada satisfactoriamente.';
-const SUCCESS_UPDATE = 'Historia actualizada satisfactoriamente.';
-const SUCCESS_DELETE = 'Historia eliminada satisfactoriamente.';
+const SUCCESS_CREATE = 'Historia creada con exito.';
+const SUCCESS_UPDATE = 'Historia actualizada con exito.';
+const SUCCESS_DELETE = 'Historia eliminada con exito.';
 
 // Error
 const ERROR_CREATE = 'No se pudo crear la historia.';

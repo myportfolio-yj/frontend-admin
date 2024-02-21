@@ -23,7 +23,7 @@ const VACUNAS = 'vacunas';
 const CLIENTES = 'clientes';
 const PACIENTE = 'paciente';
 const ALERGIAS = 'alergias';
-const SUCCESS_UPDATE = 'Mascota actualizada satisfactoriamente.';
+const SUCCESS_UPDATE = 'Mascota actualizada con exito.';
 const ERROR_UPDATE = 'No se pudo actualizar la mascota.';
 // Routes
 const ROUTE_INDEX = 'Atenciones';

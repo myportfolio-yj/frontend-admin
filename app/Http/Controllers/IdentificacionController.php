@@ -42,7 +42,8 @@ class IdentificacionController extends Controller
             'longitud' => $request->input('longitud'),
             'telefono' => $request->input('telefono')
         ]);
-        return redirect()->back();
+        return redirect()->back()
+            ->with('success', 'Reporte de mascota perdida enviado con exito.');
     }
 
     /*public function validarqr(Request $request)

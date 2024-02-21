@@ -16,7 +16,7 @@ define('API_URL_MASCOTA', env('API2') . '/mascota/');
 define('API_URL_ALERGIA', env('API2') . '/alergia/');
 const ALERGIA = 'alergia';
 const ALERGIAS = 'alergias';
-const SUCCESS_UPDATE = 'Mascota actualizada satisfactoriamente.';
+const SUCCESS_UPDATE = 'Mascota actualizada con exito.';
 const ERROR_UPDATE = 'No se pudo actualizar la mascota.';
 const ALERGIA_CREATE = 'pacienteHasAlergias.create';
 const PACIENTEHASALERGIAS = 'pacienteHasAlergias';

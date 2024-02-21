@@ -74,7 +74,7 @@ class UserController extends Controller
         if ($response->successful()) {
             $datos = $response->json();
             return redirect()->route('medicos.index')
-                ->with('success', 'Medico creado con exito satisfactoriamente');
+                ->with('success', 'Medico creado con exito.');
         } else {
             // Manejar error
             $error = $response->body();
@@ -142,7 +142,7 @@ class UserController extends Controller
         if ($response->successful()) {
             $datos = $response->json();
             return redirect()->route('medicos.index')
-                ->with('success', 'Medico actualizado satisfactoriamente');
+                ->with('success', 'Medico actualizado con exito.');
         } else {
             // Manejar error
             $error = $response->body();
@@ -160,7 +160,7 @@ class UserController extends Controller
         $response = Http::delete('https://usuario-vet-38fce36b3b4d.herokuapp.com/veterinario/' . $id);
         if ($response->successful()) {
             return redirect()->route('medicos.index')
-                ->with('success', 'Usuario eliminado satisfactoriamente');
+                ->with('success', 'Usuario eliminado con exito');
         } else {
             // Manejar error
             $error = $response->body();

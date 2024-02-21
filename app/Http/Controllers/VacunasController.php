@@ -87,7 +87,7 @@ class VacunasController extends Controller
         if ($response->successful()) {
             $datos = $response->json();
             return redirect()->route('Vacunas')
-                ->with('success', 'Vacuna creado con exito satisfactoriamente');
+                ->with('success', 'Vacuna creado con exito');
         } else {
             // Manejar error
             $error = $response->body();
@@ -142,7 +142,7 @@ class VacunasController extends Controller
         if ($response->successful()) {
             $datos = $response->json();
             return redirect()->route('Vacunas')
-                ->with('success', 'Vacuna actualizada satisfactoriamente');
+                ->with('success', 'Vacuna actualizada con exito.');
         } else {
             // Manejar error
             $error = $response->body();
@@ -161,7 +161,7 @@ class VacunasController extends Controller
         $response = Http::delete('https://mascota-vet-933796c48a6c.herokuapp.com/vacuna/' . $id);
         if ($response->successful()) {
             return redirect()->route('Vacunas')
-                ->with('success', 'Vacuna eliminado satisfactoriamente');
+                ->with('success', 'Vacuna eliminado con exito.');
         } else {
             // Manejar error
             $error = $response->body();

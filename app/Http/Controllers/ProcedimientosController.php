@@ -87,7 +87,7 @@ class ProcedimientosController extends Controller
         if ($response->successful()) {
             $datos = $response->json();
             return redirect()->route('Procedimientos')
-                ->with('success', 'Procedimiento creado con exito satisfactoriamente');
+                ->with('success', 'Procedimiento creado con exito.');
         } else {
             // Manejar error
             $error = $response->body();
@@ -144,7 +144,7 @@ class ProcedimientosController extends Controller
         if ($response->successful()) {
             $datos = $response->json();
             return redirect()->route('Procedimientos')
-                ->with('success', 'Procedimiento actualizada satisfactoriamente');
+                ->with('success', 'Procedimiento actualizada con exito.');
         } else {
             // Manejar error
             $error = $response->body();
@@ -163,7 +163,7 @@ class ProcedimientosController extends Controller
         $response = Http::delete('https://clinicas-vet-fefebe4de883.herokuapp.com/procedimiento/' . $id);
         if ($response->successful()) {
             return redirect()->route('Procedimientos')
-                ->with('success', 'Procedimiento eliminado satisfactoriamente');
+                ->with('success', 'Procedimiento eliminado con exito.');
         } else {
             // Manejar error
             $error = $response->body();
