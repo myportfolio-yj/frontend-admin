@@ -4,44 +4,48 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Cliente') }}
-                    {{ Form::select('cliente', $clientes, null, ['id' => 'clientes' , 'class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un cliente.']) }}
+                    {{ Form::select('cliente', $clientes, null, ['id' => 'clientes' , 'class' => 'form-control' . ($errors->has('clientes') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un cliente.', 'required' => 'required']) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Mascota') }}
-                    {{ Form::select('mascotas', [], null, ['id' => 'mascotas' , 'class' => 'form-control' . ($errors->has('mascotas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un cliente.']) }}
+                    {{ Form::select('mascotas', [], null, ['id' => 'mascotas' , 'class' => 'form-control' . ($errors->has('mascotas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione un cliente.', 'required' => 'required']) }}
+                    {!! $errors->first('mascotas', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Tipo de cita') }}
-                    {{ Form::select('tiposCita', $tiposCita, null, ['id' => 'tiposCita' , 'class' => 'form-control' . ($errors->has('tiposCita') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el tipo de cita.']) }}
+                    {{ Form::select('tiposCita', $tiposCita, null, ['id' => 'tiposCita' , 'class' => 'form-control' . ($errors->has('tiposCita') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el tipo de cita.', 'required' => 'required']) }}
+                    {!! $errors->first('tiposCita', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Empleado') }}<br>
-                    {{ Form::select('empleados', [], null, ['id' => 'empleados' , 'class' => 'form-control' . ($errors->has('empleados') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el tipo de cita.']) }}
-                    {!! $errors->first('razas', '<div class="invalid-feedback">:message</div>') !!}
+                    {{ Form::select('empleados', [], null, ['id' => 'empleados' , 'class' => 'form-control' . ($errors->has('empleados') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el tipo de cita.', 'required' => 'required']) }}
+                    {!! $errors->first('empleados', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Fechas disponibles') }}
-                    {{ Form::select('fechas', [], null, ['id' => 'fechas' , 'class' => 'form-control' . ($errors->has('fechas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el empleado.']) }}
+                    {{ Form::select('fechas', [], null, ['id' => 'fechas' , 'class' => 'form-control' . ($errors->has('fechas') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar el empleado.', 'required' => 'required']) }}
+                    {!! $errors->first('fechas', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Turnos disponibles') }}
-                    {{ Form::select('turnos', [], null, ['id' => 'turnos' , 'class' => 'form-control' . ($errors->has('turnos') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar la fecha.']) }}
+                    {{ Form::select('turnos', [], null, ['id' => 'turnos' , 'class' => 'form-control' . ($errors->has('turnos') ? ' is-invalid' : ''), 'placeholder' => 'Seleccionar la fecha.', 'required' => 'required']) }}
+                    {!! $errors->first('turnos', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('Observaciones') }}
-                    {{ Form::textarea('observaciones', $cliente['observaciones'] ?? '', ['class' => 'form-control' . ($errors->has('observaciones') ? ' is-invalid' : ''), 'placeholder' => 'Observaciones']) }}
+                    {{ Form::textarea('observaciones', $cliente['observaciones'] ?? '', ['class' => 'form-control' . ($errors->has('observaciones') ? ' is-invalid' : ''), 'placeholder' => 'Observaciones', 'required' => 'required']) }}
                     {!! $errors->first('observaciones', '<div class="invalid-feedback">:message</div>') !!}
                 </div>
             </div>

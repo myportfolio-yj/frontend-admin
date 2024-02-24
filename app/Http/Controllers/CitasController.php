@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
+use App\Models\Citas;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -220,7 +221,7 @@ class CitasController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        request()->validate(Cita::$rules);
+        request()->validate(Citas::$rules);
         return returnsRedirect(makeRequest('PUT', URL_CITAS . $id, fieldsCita($request)), [ROUTE_INDEX, SUCCESS_UPDATE, ERROR_UPDATE]);
     }
 

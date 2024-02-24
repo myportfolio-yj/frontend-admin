@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <strong>Fecha de cita / Turno:</strong>
-                            {{ $cita['fecha'] }} - {{ $cita['turno']}}
+                            {{ $cita['fecha'] }} - {{ $cita['turno'] ?? ''}}
                         </div>
                         <div class="form-group">
                             <strong>Observaciones:</strong>

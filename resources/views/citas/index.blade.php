@@ -49,7 +49,7 @@
                                 @foreach ($citasVigentes as $cita)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
+                                        <td>{{ $cita['fecha'] }} - {{ $cita['turno'] ?? ''}}</td>
                                         <td>{{ $cita['tipoCita'] }} </td>
                                         <td>{{ $cita['mascota']['nombre'] }} {{ $cita['mascota']['apellido'] }}</td>
                                         <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
@@ -109,7 +109,7 @@
                                 @foreach ($citas as $cita)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $cita['fecha'] }} - {{ $cita['turno']}}</td>
+                                        <td>{{ $cita['fecha'] }} - {{ $cita['turno'] ?? ''}}</td>
                                         <td>{{ $cita['tipoCita'] }} </td>
                                         <td>{{ $cita['mascota']['nombre'] }} {{ $cita['mascota']['apellido'] }}</td>
                                         <td>{{ $cita['mascota']['especie']['especie'] }} - {{ $cita['mascota']['raza']['raza'] }}</td>
