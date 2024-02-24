@@ -66,7 +66,12 @@
                                 <div class="card bg-light">
                                     <div class="card-body text-center">
                                         <p class="card-text">
-                                            <img width="150px" src="{{ $cli['lable'] }}" alt="{{ $cli['foto'] }}"><br>
+                                            @if(filter_var($cli['foto'], FILTER_VALIDATE_URL))
+                                            <img width="150px" src="{{ $cli['foto'] }}" alt="{{ $cli['lable'] }}">
+                                            @else
+                                            <img width="150px" src="{{ $cli['lable'] }}" alt="{{ $cli['foto'] }}">
+                                            @endif
+                                            <br>
                                             {{ $cli['codIdentificacion'] }}<br>
                                             {{ $cli['nombre'] }} {{ $cli['apellido'] }}<br>
                                             FN: {{ $cli['fechaNacimiento'] }}<br>
