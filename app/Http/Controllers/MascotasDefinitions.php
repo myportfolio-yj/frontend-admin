@@ -45,7 +45,7 @@ function fieldsMascotas($request){
         'idEspecie' => $request->input('especies'),
         'idRaza' => $request->input('razas'),
         'clientes' => [$request->input('clientes')],
-        'esterilizado' => true,
+        'esterilizado' => $request->input('esterilizado') == 'true',
         // 'esterilizado' => $request->input('esterilizado')
         'alergias' => [],
         'vacunas' => []
